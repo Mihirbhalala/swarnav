@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Yatra Inquiry Alert #{{ inquiry_ref }}</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f1f5f9; margin: 0; padding: 20px; color: #1e293b; font-size: 14px; line-height: 1.5; }
+        .email-container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .email-header { background: linear-gradient(135deg, #7c1a22 0%, #520f15 100%); color: #ffffff; padding: 24px 28px; text-align: center; }
+        .email-title { font-size: 22px; font-weight: bold; margin: 0 0 6px; color: #fef3c7; }
+        .email-subtitle { font-size: 13px; margin: 0; color: #fed7aa; }
+        .email-body { padding: 28px; }
+        .ref-box { background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 6px; padding: 12px; text-align: center; margin-bottom: 20px; }
+        .ref-num { font-size: 18px; font-weight: bold; color: #7c1a22; font-family: monospace; }
+        table.details-table { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+        table.details-table td { padding: 10px 8px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+        table.details-table td.label { color: #64748b; font-weight: 600; width: 35%; font-size: 13px; }
+        table.details-table td.value { color: #0f172a; font-weight: 600; font-size: 14px; }
+        .btn-action { display: inline-block; background: #7c1a22; color: #ffffff !important; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 14px; text-align: center; }
+        .btn-wa { display: inline-block; background: #25D366; color: #ffffff !important; text-decoration: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; font-size: 14px; text-align: center; margin-left: 8px; }
+        .email-footer { background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 16px 28px; font-size: 12px; color: #64748b; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="email-header">
+            <h1 class="email-title">🕉️ New Registration &amp; Booking Inquiry</h1>
+            <p class="email-subtitle">Swarnav Tour &amp; Travels &bull; Central Booking Desk</p>
+        </div>
+
+        <!-- Body -->
+        <div class="email-body">
+            <div class="ref-box">
+                <span style="font-size: 11px; text-transform: uppercase; color: #64748b; display: block; font-weight: 600;">Inquiry Reference</span>
+                <span class="ref-num">{{ inquiry_ref }}</span>
+            </div>
+
+            <p style="margin: 0 0 16px; font-size: 14px;">
+                A new customer registration &amp; booking inquiry has just been submitted on the official website. Details are below:
+            </p>
+
+            <table class="details-table">
+                <tr>
+                    <td class="label">Customer Name:</td>
+                    <td class="value">{{ inquiry.name }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Phone / WhatsApp:</td>
+                    <td class="value">
+                        <a href="tel:{{ inquiry.phone }}" style="color: #7c1a22; text-decoration: none;">{{ inquiry.phone }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Selected Tour:</td>
+                    <td class="value" style="color: #7c1a22;">{{ inquiry.get_tour_display }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Departure City:</td>
+                    <td class="value">{{ inquiry.departure_city|default:"Not specified" }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Total Pilgrims:</td>
+                    <td class="value">{{ inquiry.total_pilgrims|default:"1" }} Member(s)</td>
+                </tr>
+                <tr>
+                    <td class="label">Submission Time:</td>
+                    <td class="value">{{ inquiry.created_at|date:"d M Y, h:i A" }} (IST)</td>
+                </tr>
+                {% if inquiry.message %}
+                <tr>
+                    <td class="label">Customer Notes:</td>
+                    <td class="value" style="font-weight: normal; font-style: italic; color: #334155;">{{ inquiry.message }}</td>
+                </tr>
+                {% endif %}
+            </table>
+
+            <div style="text-align: center; margin: 24px 0 10px;">
+                <a href="{{ admin_url }}" class="btn-action">
+                    Open in Admin Panel →
+                </a>
+                <a href="{{ whatsapp_url }}" class="btn-wa">
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="email-footer">
+            This is an automated notification sent to the administrator of Swarnav Tour &amp; Travels.<br>
+            Office: Ring Road, Surat, Gujarat &bull; Helpline: +91 95868 25353
+        </div>
+    </div>
+</body>
+</html>

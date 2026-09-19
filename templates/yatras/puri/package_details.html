@@ -1,0 +1,85 @@
+{% extends 'yatras/puri/base_puri.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Package Details{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <div class="section-header">
+        <span class="section-badge">Transparency & Clarity</span>
+        <h2 class="yatra-section-title">Package Inclusions & Exclusions</h2>
+        <p class="section-subtitle">
+            A complete, itemized breakdown of what is provided within the standard package, what is excluded, and what services may be arranged conditionally.
+        </p>
+    </div>
+
+    <!-- Inclusions & Exclusions Grid -->
+    <div class="inclusions-exclusions-grid">
+        <!-- Inclusions Box -->
+        <div class="inclusion-exclusion-card included-card">
+            <div class="card-status-header">
+                <span class="status-icon">✓</span>
+                <h3 class="card-status-title">Package Inclusions</h3>
+            </div>
+            <p class="card-intro-note">The following services are included in the standard package:</p>
+            <ul class="status-items-list">
+                {% for item in package_details.inclusions %}
+                <li class="status-item">
+                    <span class="item-check">✓</span>
+                    <span>{{ item }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Exclusions Box -->
+        <div class="inclusion-exclusion-card excluded-card">
+            <div class="card-status-header">
+                <span class="status-icon">✕</span>
+                <h3 class="card-status-title">Package Exclusions</h3>
+            </div>
+            <p class="card-intro-note">The following services and expenses are not included in the standard package:</p>
+            <ul class="status-items-list">
+                {% for item in package_details.exclusions %}
+                <li class="status-item">
+                    <span class="item-cross">✕</span>
+                    <span>{{ item }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Conditional Services Section -->
+    <section class="yatra-section">
+        <div class="section-header">
+            <span class="section-badge">Optional & Conditional Arrangements</span>
+            <h3 class="yatra-section-title">Services Arranged Upon Request or at Additional Cost</h3>
+            <p class="section-subtitle">
+                Certain services depend on passenger requirements, third-party operators, or transit availability.
+            </p>
+        </div>
+
+        <div class="conditional-services-grid">
+            {% for cond in package_details.conditional_services %}
+            <div class="conditional-card">
+                <h4 class="cond-service-name">{{ cond.service }}</h4>
+                <p class="cond-service-desc">{{ cond.condition }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Important Notes Box -->
+    <section class="yatra-section">
+        <div class="notice-callout">
+            <h4 class="notice-callout-title">Important Package Guidelines</h4>
+            <ul class="notice-list">
+                {% for note in package_details.important_notes %}
+                <li>{{ note }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Breadcrumbs -->
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb-list">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li class="breadcrumb-separator">/</li>
+            {% if active_tab == 'overview' %}
+                <li class="breadcrumb-active" aria-current="page">Jagannath Puri Yatra</li>
+            {% else %}
+                <li><a href="{% url 'yatras:puri_overview' %}">Jagannath Puri Yatra</a></li>
+                <li class="breadcrumb-separator">/</li>
+                <li class="breadcrumb-active" aria-current="page">{% block breadcrumb_active %}{{ current_page_label|default:active_tab|title }}{% endblock %}</li>
+            {% endif %}
+        </ol>
+    </div>
+</nav>
+
+<!-- Package Header Banner -->
+<header class="yatra-hero">
+    <div class="container yatra-hero-inner">
+        <div class="yatra-hero-info">
+            <span class="yatra-badge">{{ package.tagline }}</span>
+            <h1 class="yatra-title">{{ package.name }}</h1>
+            <p class="yatra-subtitle">{{ package.subtitle }}</p>
+            
+            <div class="yatra-meta-strip">
+                <span class="meta-item">
+                    <span class="meta-label">Duration:</span>
+                    <strong>{{ package.duration_display }}</strong>
+                </span>
+                <span class="meta-divider">|</span>
+                <span class="meta-item">
+                    <span class="meta-label">Main Origin:</span>
+                    <strong>{{ package.starting_city }}</strong>
+                </span>
+                <span class="meta-divider">|</span>
+                <span class="meta-item">
+                    <span class="meta-label">Price:</span>
+                    <strong>{{ package.starting_price }}</strong> <small>per person</small>
+                </span>
+                <span class="meta-divider">|</span>
+                <span class="meta-item">
+                    <span class="meta-label">Batches:</span>
+                    <strong>Monthly &amp; Festival Departures</strong>
+                </span>
+            </div>
+        </div>
+
+        <div class="yatra-hero-cta">
+            <a href="tel:{{ PHONE_RAW }}" class="btn btn-primary" aria-label="Call {{ PHONE_NUMBER }}">
+                <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                </svg>
+                <span>Call for Dates</span>
+            </a>
+            <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" aria-label="WhatsApp Swarnav">
+                <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                </svg>
+                <span>WhatsApp Inquiry</span>
+            </a>
+        </div>
+    </div>
+</header>
+
+<!-- Secondary Puri Navigation Bar -->
+<nav class="yatra-nav-sticky" aria-label="Puri Package Navigation">
+    <div class="container">
+        <ul class="yatra-nav-tabs">
+            {% for tab in nav_tabs %}
+            <li class="yatra-tab-item">
+                <a href="{% url tab.url_name %}" 
+                   class="yatra-tab-link {% if active_tab == tab.slug %}is-active{% endif %}"
+                   {% if active_tab == tab.slug %}aria-current="page"{% endif %}>
+                    {{ tab.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Page Content -->
+<div class="yatra-content-area">
+    <div class="container">
+        {% block yatra_content %}{% endblock %}
+
+        <!-- Previous / Next Navigation Links -->
+        <nav class="yatra-page-pagination" aria-label="Package Section Navigation">
+            <div class="pagination-prev">
+                {% if prev_page %}
+                <a href="{% url prev_page.url_name %}" class="btn-pagination btn-prev">
+                    <span class="pagination-direction">← Previous Section</span>
+                    <span class="pagination-target">{{ prev_page.name }}</span>
+                </a>
+                {% endif %}
+            </div>
+            <div class="pagination-next">
+                {% if next_page %}
+                <a href="{% url next_page.url_name %}" class="btn-pagination btn-next">
+                    <span class="pagination-direction">Next Section →</span>
+                    <span class="pagination-target">{{ next_page.name }}</span>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</div>
+{% endblock %}

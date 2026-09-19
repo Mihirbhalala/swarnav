@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swarnav - Inquiries Master Register (PDF Report)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; padding: 25px; color: #1e293b; font-size: 13px; background: #f8fafc; }
+        .report-wrap { max-width: 1100px; margin: 0 auto; background: #ffffff; padding: 30px; border: 1px solid #cbd5e1; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #e2e8f0; }
+        .btn { padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 13px; text-decoration: none; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-print { background: #d4a017; color: #1e293b; font-weight: 700; }
+        .btn-excel { background: #15803d; color: #ffffff; }
+        .btn-back { background: #475569; color: #ffffff; }
+        .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; }
+        .brand { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 26px; color: #7c1a22; font-weight: 700; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 25px; }
+        .stat-card { background: #f1f5f9; padding: 12px 16px; border-radius: 6px; border-left: 4px solid #7c1a22; }
+        .stat-label { font-size: 11px; text-transform: uppercase; color: #64748b; font-weight: 600; }
+        .stat-val { font-size: 20px; font-weight: 700; color: #0f172a; margin-top: 2px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+        th { background: #7c1a22; color: #ffffff; text-align: left; padding: 10px 8px; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.03em; }
+        td { padding: 9px 8px; border-bottom: 1px solid #e2e8f0; color: #334155; }
+        tr:nth-child(even) td { background: #f8fafc; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .badge-new { background: #dbeafe; color: #1e40af; }
+        .badge-contacted { background: #fef3c7; color: #92400e; }
+        .badge-converted { background: #dcfce7; color: #166534; }
+        .badge-closed { background: #f1f5f9; color: #475569; }
+        .badge-spam { background: #fee2e2; color: #991b1b; }
+        @media print {
+            body { background: #ffffff; padding: 0; }
+            .toolbar { display: none !important; }
+            .report-wrap { border: none; box-shadow: none; padding: 0; max-width: 100%; }
+            th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="report-wrap">
+    <div class="toolbar">
+        <div>
+            <h2 style="font-size: 18px; color: #0f172a;">Swarnav Tour &amp; Travels &bull; Inquiry Master Register</h2>
+            <p style="font-size: 12px; color: #64748b;">Generated on: {{ now|date:"d M Y, h:i A" }}</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button onclick="window.print()" class="btn btn-print">🖨️ Print / Save PDF</button>
+            <a href="{% url 'core:inquiry_export_excel' %}" class="btn btn-excel">📥 Export Excel (.csv)</a>
+            <a href="/admin/core/inquiry/" class="btn btn-back">← Back to Admin</a>
+        </div>
+    </div>
+
+    <div class="header">
+        <div>
+            <div class="brand">Swarnav Tour &amp; Travels</div>
+            <p style="color: #64748b; font-size: 12px;">Spiritual Pilgrimages &amp; Nature Journeys &bull; Head Office: Ring Road, Surat, Gujarat</p>
+        </div>
+        <div style="text-align: right; font-size: 12px;">
+            <strong>Helpline:</strong> +91 95868 25353<br>
+            <strong>Email:</strong> info@swarnavtravels.com
+        </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Inquiries</div>
+            <div class="stat-val">{{ total_count }}</div>
+        </div>
+        <div class="stat-card" style="border-left-color: #2563eb;">
+            <div class="stat-label">New / Pending</div>
+            <div class="stat-val">{{ new_count }}</div>
+        </div>
+        <div class="stat-card" style="border-left-color: #d97706;">
+            <div class="stat-label">In Progress / Contacted</div>
+            <div class="stat-val">{{ contacted_count }}</div>
+        </div>
+        <div class="stat-card" style="border-left-color: #16a34a;">
+            <div class="stat-label">Converted</div>
+            <div class="stat-val">{{ converted_count }}</div>
+        </div>
+    </div>
+
+    <!-- Records Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Ref ID</th>
+                <th>Date</th>
+                <th>Customer Name</th>
+                <th>Phone</th>
+                <th>Tour</th>
+                <th>Departure City</th>
+                <th>Pilgrims</th>
+                <th>Status</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inq in inquiries %}
+            <tr>
+                <td><strong>#SW-INQ-{{ inq.id|stringformat:"04d" }}</strong></td>
+                <td>{{ inq.created_at|date:"d M Y" }}</td>
+                <td><strong>{{ inq.name }}</strong></td>
+                <td>{{ inq.phone }}</td>
+                <td>{{ inq.get_tour_display }}</td>
+                <td>{{ inq.departure_city|default:"—" }}</td>
+                <td>{{ inq.total_pilgrims|default:"1" }}</td>
+                <td>
+                    <span class="badge badge-{{ inq.status }}">{{ inq.get_status_display }}</span>
+                </td>
+                <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    {{ inq.message|default:inq.admin_notes|default:"—" }}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" style="text-align: center; padding: 20px; color: #64748b;">
+                    No inquiries recorded yet.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

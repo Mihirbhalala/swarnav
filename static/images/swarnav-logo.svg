@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" fill="none" role="img" aria-label="Swarnav Tour & Travels Logo">
+  <defs>
+    <linearGradient id="swarnavGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5A93C"/>
+      <stop offset="50%" stop-color="#C87A1E"/>
+      <stop offset="100%" stop-color="#9A5208"/>
+    </linearGradient>
+    <linearGradient id="swarnavSunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FCD34D" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#D97706" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="swarnavMountainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A2F"/>
+      <stop offset="100%" stop-color="#0F241C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon Emblem (Left) -->
+  <g transform="translate(6, 6)">
+    <!-- Aura Ring -->
+    <circle cx="34" cy="34" r="32" fill="url(#swarnavSunGrad)" stroke="url(#swarnavGoldGrad)" stroke-width="1.5" stroke-dasharray="2 2"/>
+    
+    <!-- Sacred Mountain Peaks -->
+    <polygon points="12,50 28,24 44,50" fill="url(#swarnavMountainGrad)"/>
+    <polygon points="26,50 38,30 52,50" fill="#2D5545" opacity="0.9"/>
+    
+    <!-- Mountain Snow Cap -->
+    <polygon points="28,24 23,32 28,30 33,32" fill="#FFFFFF" opacity="0.95"/>
+    <polygon points="38,30 34,36 38,35 42,36" fill="#FFFFFF" opacity="0.95"/>
+
+    <!-- Sacred Golden Sun Rising -->
+    <circle cx="34" cy="18" r="7" fill="url(#swarnavGoldGrad)"/>
+
+    <!-- Temple Kalash Pinnacle / Diya Peak -->
+    <path d="M34,8 L36,12 L32,12 Z" fill="#D97706"/>
+    
+    <!-- Flowing Holy River Stream -->
+    <path d="M22,50 C26,45 32,48 34,44 C36,48 42,45 46,50" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Typography (Right) -->
+  <g transform="translate(82, 0)">
+    <!-- Brand Name "SWARNAV" -->
+    <text x="0" y="38" font-family="'Cormorant Garamond', 'Georgia', serif" font-size="34" font-weight="700" letter-spacing="2.5" fill="#183B2B">
+      SWARNAV
+    </text>
+    
+    <!-- Tagline "TOUR & TRAVELS" -->
+    <text x="2" y="58" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="11" font-weight="600" letter-spacing="4" fill="#B45309">
+      TOUR &amp; TRAVELS
+    </text>
+    <text x="2" y="70" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-size="8.5" font-weight="500" letter-spacing="1.2" fill="#64748B">
+      Spiritual Pilgrimages &amp; Nature Journeys
+    </text>
+  </g>
+</svg>

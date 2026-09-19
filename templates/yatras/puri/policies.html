@@ -1,0 +1,84 @@
+{% extends 'yatras/puri/base_puri.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Booking & Cancellation Policies{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <div class="section-header">
+        <span class="section-badge">Terms & Conditions</span>
+        <h2 class="yatra-section-title">Booking Terms & Cancellation Policies</h2>
+        <p class="section-subtitle">
+            Transparent payment guidelines, written confirmation rules, and time-based cancellation refund brackets for Swarnav’s Jagannath Puri & Eastern Pilgrimage.
+        </p>
+    </div>
+
+    <!-- 1. Booking Conditions Section -->
+    <section class="policy-section">
+        <div class="policy-header">
+            <span class="policy-badge">Payment & Reservation</span>
+            <h3 class="policy-title">Booking & Payment Conditions</h3>
+        </div>
+
+        <div class="booking-terms-card">
+            <ul class="policy-list">
+                {% for term in policies.booking_conditions %}
+                <li class="policy-item">
+                    <span class="policy-bullet">✦</span>
+                    <span>{{ term }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- 2. Cancellation Table Section -->
+    <section class="policy-section">
+        <div class="policy-header">
+            <span class="policy-badge">Cancellation Schedule</span>
+            <h3 class="policy-title">Cancellation Deductions & Timelines</h3>
+            <p class="section-subtitle">
+                Cancellation requests must be submitted in writing via WhatsApp or email. Deductions are calculated from the scheduled departure date.
+            </p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="policy-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Time of Cancellation Notice</th>
+                        <th scope="col">Deduction from Package Cost</th>
+                        <th scope="col">Estimated Refund Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bracket in policies.cancellation_brackets %}
+                    <tr>
+                        <td class="bracket-timeline"><strong>{{ bracket.timeline }}</strong></td>
+                        <td class="bracket-deduction">{{ bracket.deduction }}</td>
+                        <td class="bracket-refund">{{ bracket.refund_estimate }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 3. Refund Terms & Unexpected Circumstances -->
+    <section class="policy-section">
+        <div class="policy-header">
+            <span class="policy-badge">Refund & Operational Terms</span>
+            <h3 class="policy-title">Refund Processing & Operational Contingencies</h3>
+        </div>
+
+        <div class="refund-rules-grid">
+            {% for rule in policies.cancellation_rules %}
+            <div class="refund-rule-card">
+                <span class="rule-icon">⚖️</span>
+                <p class="rule-text">{{ rule }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'yatras/char_dham/base_char_dham.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Stay & Travel{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <div class="section-header">
+        <span class="section-badge">Logistics & Comfort</span>
+        <h2 class="yatra-section-title">Accommodation, Meals & Transportation Standards</h2>
+        <p class="section-subtitle">
+            Clear, practical details regarding where you will stay, what meals are served, and how you will travel throughout the 13-day yatra.
+        </p>
+    </div>
+
+    <!-- 1. Accommodation Section -->
+    <section class="pillar-section" id="accommodation-info">
+        <div class="pillar-header">
+            <div class="pillar-icon-badge">🏨</div>
+            <div>
+                <h3 class="pillar-title">1. Accommodation Information</h3>
+                <p class="pillar-subtitle">Category: {{ stay_and_travel.accommodation.category }}</p>
+            </div>
+        </div>
+
+        <div class="pillar-grid">
+            <div class="pillar-card">
+                <h4 class="card-subheading">Triple-Sharing Basis</h4>
+                <p>{{ stay_and_travel.accommodation.room_sharing }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Private Room Option</h4>
+                <p>{{ stay_and_travel.accommodation.private_room }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Hot-Water Facilities</h4>
+                <p>{{ stay_and_travel.accommodation.hot_water }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Remote-Area Realities</h4>
+                <p>{{ stay_and_travel.accommodation.remote_limitations }}</p>
+            </div>
+
+            <div class="pillar-card full-span">
+                <h4 class="card-subheading">Hotel Substitution Policy</h4>
+                <p>{{ stay_and_travel.accommodation.hotel_changes }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Meals Section -->
+    <section class="pillar-section" id="meals-info">
+        <div class="pillar-header">
+            <div class="pillar-icon-badge">🍲</div>
+            <div>
+                <h3 class="pillar-title">2. Meal Arrangements</h3>
+                <p class="pillar-subtitle">{{ stay_and_travel.meals.overview }}</p>
+            </div>
+        </div>
+
+        <div class="pillar-grid">
+            <div class="pillar-card">
+                <h4 class="card-subheading">Daily Lunch & Dinner</h4>
+                <p>{{ stay_and_travel.meals.included_meals }} Wholesome vegetarian meals prepared for pilgrims.</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Breakfast Service</h4>
+                <p>{{ stay_and_travel.meals.breakfast_rule }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Trek & Travel Days</h4>
+                <p>{{ stay_and_travel.meals.trek_days }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Personal Refreshments</h4>
+                <p>{{ stay_and_travel.meals.extra_refreshments }}</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Transportation Section -->
+    <section class="pillar-section" id="transportation-info">
+        <div class="pillar-header">
+            <div class="pillar-icon-badge">🚆</div>
+            <div>
+                <h3 class="pillar-title">3. Transportation & Transit</h3>
+                <p class="pillar-subtitle">Main Mode: {{ stay_and_travel.transportation.main_mode }}</p>
+            </div>
+        </div>
+
+        <div class="pillar-grid">
+            <div class="pillar-card">
+                <h4 class="card-subheading">Train Journey from Surat</h4>
+                <p>{{ stay_and_travel.transportation.train_journey }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Mountain Road Transport</h4>
+                <p>{{ stay_and_travel.transportation.road_transport }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Local Shuttle & Jeeps</h4>
+                <p>{{ stay_and_travel.transportation.local_transport }}</p>
+            </div>
+
+            <div class="pillar-card">
+                <h4 class="card-subheading">Pickup & Drop Points</h4>
+                <p>{{ stay_and_travel.transportation.pickup_drop }}</p>
+            </div>
+
+            <div class="pillar-card full-span highlight-pillar-card">
+                <h4 class="card-subheading">Travellers Joining from Other Parts of Gujarat</h4>
+                <p>{{ stay_and_travel.transportation.gujarat_travellers }}</p>
+            </div>
+        </div>
+
+        <div class="notice-callout mt-lg">
+            <h4 class="notice-callout-title">Mountain Travel Advisory</h4>
+            <p class="notice-callout-text">
+                {{ stay_and_travel.transportation.travel_time_notice }} {{ stay_and_travel.transportation.vehicle_allocation }}
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock %}

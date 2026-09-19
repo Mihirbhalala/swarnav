@@ -1,0 +1,94 @@
+{% extends 'yatras/char_dham/base_char_dham.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}13-Day Itinerary{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <!-- Header Summary & Controls -->
+    <div class="itinerary-intro-bar">
+        <div>
+            <span class="section-badge">Day-by-Day Schedule</span>
+            <h2 class="yatra-section-title">Complete 13-Day Pilgrimage Itinerary</h2>
+            <p class="section-subtitle">
+                Carefully planned route covering Yamunotri, Gangotri, Kedarnath, and Badrinath starting and ending in Surat.
+            </p>
+        </div>
+
+        <div class="itinerary-controls">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-expand-all">
+                Expand All Days
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-collapse-all">
+                Collapse All Days
+            </button>
+        </div>
+    </div>
+
+    <!-- Itinerary Timeline -->
+    <div class="itinerary-timeline" id="itinerary-accordion">
+        {% for day in itinerary_days %}
+        <details class="itinerary-day-card" {% if forloop.first or forloop.counter <= 3 %}open{% endif %}>
+            <summary class="day-summary">
+                <div class="day-badge-wrap">
+                    <span class="day-num">Day {{ day.day }}</span>
+                </div>
+                <div class="day-title-wrap">
+                    <h3 class="day-headline">{{ day.title }}</h3>
+                    <span class="day-route-meta">
+                        {{ day.starting_point }} ➔ {{ day.destination }}
+                    </span>
+                </div>
+                <span class="accordion-toggle-icon" aria-hidden="true">+</span>
+            </summary>
+
+            <div class="day-content-body">
+                <!-- Day Narrative -->
+                <div class="day-narrative">
+                    <p>{{ day.intro }}</p>
+                </div>
+
+                <!-- Structured Day Specifications -->
+                <div class="day-specs-grid">
+                    <div class="day-spec-item">
+                        <span class="spec-label">Places Covered:</span>
+                        <span class="spec-value">
+                            {% for place in day.places_covered %}
+                                {{ place.name }}{% if not forloop.last %} • {% endif %}
+                            {% endfor %}
+                        </span>
+                    </div>
+
+                    <div class="day-spec-item">
+                        <span class="spec-label">Meals:</span>
+                        <span class="spec-value">{{ day.meals }}</span>
+                    </div>
+
+                    <div class="day-spec-item">
+                        <span class="spec-label">Accommodation:</span>
+                        <span class="spec-value">
+                            <strong>{{ day.accommodation.night_stay }}</strong> ({{ day.accommodation.type }}{% if day.accommodation.hotel_name %} — {{ day.accommodation.hotel_name }}{% endif %})
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Day Action Link -->
+                <div class="day-action-bar">
+                    <a href="{% url 'yatras:char_dham_day_detail' day.day %}" class="btn btn-primary btn-sm">
+                        <span>View Details for Day {{ day.day }} →</span>
+                    </a>
+                </div>
+            </div>
+        </details>
+        {% endfor %}
+    </div>
+
+    <!-- Itinerary Important Advisory Note -->
+    <div class="notice-callout">
+        <h4 class="notice-callout-title">Important Itinerary Information</h4>
+        <p class="notice-callout-text">
+            The itinerary is flexible and subject to modification based on mountain weather conditions, road safety, temple darshan timings, and local government authority instructions. All sightseeing visits are subject to available time and road accessibility.
+        </p>
+    </div>
+</div>
+{% endblock %}

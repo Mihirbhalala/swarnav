@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquiry Summary Slip #{{ inquiry_ref }} | Swarnav Tour & Travels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #7c1a22;
+            --primary-dark: #520f15;
+            --gold: #d4a017;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+            background: #f1f5f9;
+            color: var(--text-main);
+            padding: 30px 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .pdf-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .action-bar {
+            background: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .action-btn {
+            background: #25D366;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn-print {
+            background: var(--gold);
+            color: #1a1a1a;
+        }
+
+        .action-btn-secondary {
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
+        }
+
+        .slip-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #ffffff;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--gold);
+        }
+
+        .brand-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fef3c7;
+            letter-spacing: 0.02em;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: #fed7aa;
+            margin-top: 2px;
+        }
+
+        .header-ref-box {
+            text-align: right;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header-ref-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fed7aa;
+        }
+
+        .header-ref-num {
+            font-size: 20px;
+            font-weight: 800;
+            font-family: monospace;
+            color: #ffffff;
+            margin-top: 2px;
+        }
+
+        .slip-body {
+            padding: 30px;
+        }
+
+        .meta-strip {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-light);
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 24px;
+            font-size: 13px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 6px;
+            margin-bottom: 14px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .data-item {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+        }
+
+        .data-item-full {
+            grid-column: 1 / -1;
+        }
+
+        .data-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .data-val {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .data-val-highlight {
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        .notice-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--gold);
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            font-size: 12px;
+            color: #92400e;
+            margin-bottom: 24px;
+        }
+
+        .slip-footer {
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer-contacts strong {
+            color: var(--text-main);
+        }
+
+        @media print {
+            body {
+                background: #ffffff;
+                padding: 0;
+            }
+            .action-bar {
+                display: none !important;
+            }
+            .pdf-container {
+                border: none;
+                box-shadow: none;
+                max-width: 100%;
+            }
+            .slip-header {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pdf-container">
+        <!-- Web Action Toolbar -->
+        <div class="action-bar">
+            <div>
+                <strong>Swarnav Official Yatra Inquiry Slip</strong>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="window.print()" class="action-btn action-btn-print">
+                    🖨️ Print / Save as PDF
+                </button>
+                <a href="{{ whatsapp_url }}" target="_blank" rel="noopener noreferrer" class="action-btn">
+                    💬 Open WhatsApp
+                </a>
+                <a href="{% url 'core:inquiry_success' inquiry.id %}" class="action-btn action-btn-secondary">
+                    ← Back
+                </a>
+            </div>
+        </div>
+
+        <!-- Official Header -->
+        <div class="slip-header">
+            <div>
+                <div class="brand-title">Swarnav Tour &amp; Travels</div>
+                <div class="brand-subtitle">Spiritual Pilgrimages &amp; Nature Journeys Across India &amp; Nepal</div>
+            </div>
+            <div class="header-ref-box">
+                <div class="header-ref-label">Inquiry Reference</div>
+                <div class="header-ref-num">{{ inquiry_ref }}</div>
+            </div>
+        </div>
+
+        <!-- Slip Body -->
+        <div class="slip-body">
+            
+            <div class="meta-strip">
+                <div><strong>Submission Date:</strong> {{ inquiry.created_at|date:"d M Y, h:i A" }}</div>
+                <div><strong>Status:</strong> <span style="color: var(--primary); font-weight:700;">{{ inquiry.get_status_display }}</span></div>
+                <div><strong>Head Office:</strong> Ring Road, Surat, Gujarat</div>
+            </div>
+
+            <!-- Pilgrim Details -->
+            <div class="section-title">1. Pilgrim Information</div>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="data-label">Pilgrim Full Name</div>
+                    <div class="data-val">{{ inquiry.name }}</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">Contact / WhatsApp Number</div>
+                    <div class="data-val">{{ inquiry.phone }}</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">Departure / Home City</div>
+                    <div class="data-val">{{ inquiry.departure_city|default:"Surat / Gujarat (Standard)" }}</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-label">Total Pilgrims in Party</div>
+                    <div class="data-val">{{ inquiry.total_pilgrims|default:"1" }} Member(s)</div>
+                </div>
+            </div>
+
+            <!-- Tour Details -->
+            <div class="section-title">2. Selected Pilgrimage Package</div>
+            <div class="data-grid">
+                <div class="data-item data-item-full">
+                    <div class="data-label">Tour Name &amp; Circuit</div>
+                    <div class="data-val data-val-highlight">{{ inquiry.get_tour_display }}</div>
+                </div>
+                {% if inquiry.message %}
+                <div class="data-item data-item-full">
+                    <div class="data-label">Special Requests / Preferred Month / Notes</div>
+                    <div class="data-val" style="font-weight: normal;">{{ inquiry.message }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Notice Callout -->
+            <div class="notice-box">
+                <strong>Next Steps:</strong> This document serves as your verified digital inquiry record. Our on-ground pilgrimage coordination team from Surat will reach out via Phone/WhatsApp to confirm upcoming departure dates, home city train/flight connections, and mandatory government biometric registration.
+            </div>
+
+        </div>
+
+        <!-- Slip Footer -->
+        <div class="slip-footer">
+            <div class="footer-contacts">
+                <strong>Helpline:</strong> {{ PHONE_NUMBER|default:"+91 95868 25353" }} &nbsp;|&nbsp; 
+                <strong>WhatsApp:</strong> +91 95868 25353 &nbsp;|&nbsp; 
+                <strong>Email:</strong> info@swarnavtravels.com
+            </div>
+            <div>
+                Swarnav Official Verification &bull; {{ CURRENT_YEAR|default:"2026" }}
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- 1. Breadcrumbs -->
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container day-detail-container">
+        <ol class="breadcrumb-list">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li class="breadcrumb-separator">/</li>
+            <li><a href="{% url 'yatras:puri_overview' %}">Jagannath Puri Yatra</a></li>
+            <li class="breadcrumb-separator">/</li>
+            <li><a href="{% url 'yatras:puri_itinerary' %}">11-Day Itinerary</a></li>
+            <li class="breadcrumb-separator">/</li>
+            <li class="breadcrumb-active" aria-current="page">Day {{ day.day }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Secondary Puri Navigation Bar -->
+<nav class="yatra-nav-sticky" aria-label="Puri Package Navigation">
+    <div class="container day-detail-container">
+        <ul class="yatra-nav-tabs">
+            {% for tab in nav_tabs %}
+            <li class="yatra-tab-item">
+                <a href="{% url tab.url_name %}" 
+                   class="yatra-tab-link {% if active_tab == tab.slug %}is-active{% endif %}"
+                   {% if active_tab == tab.slug %}aria-current="page"{% endif %}>
+                    {{ tab.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Day Detail Page -->
+<div class="day-detail-page-wrapper">
+    <div class="container day-detail-container">
+
+        <!-- 2. Header: Title & One-Sentence Intro -->
+        <header class="day-intro-header">
+            <span class="day-badge-label">Day {{ day.day }} of 11</span>
+            <h1 class="day-page-title">Day {{ day.day }}: {{ day.title }}</h1>
+            <p class="day-intro-sentence">{{ day.intro }}</p>
+        </header>
+
+        <!-- 3. Attractive Route Journey Strip -->
+        <section class="day-timeline-card" aria-label="Route Journey for Day {{ day.day }}">
+            <h2 class="timeline-card-heading">Day {{ day.day }} Route Journey</h2>
+            
+            <div class="route-timeline-track">
+                {% for node in day.route_nodes %}
+                <div class="timeline-step timeline-step-{{ node.badge_class }}">
+                    <div class="timeline-marker-col">
+                        <span class="timeline-node-circle"></span>
+                        {% if not forloop.last %}
+                        <span class="timeline-connector-line"></span>
+                        {% endif %}
+                    </div>
+                    <div class="timeline-info-col">
+                        <span class="timeline-stop-name">{{ node.name }}</span>
+                        {% if node.badge_class == 'night-stay' %}
+                        <span class="timeline-stop-badge">Night Stay</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 4. Places Covered Today: Description on Left, Picture on Right -->
+        <section class="places-gallery-section" aria-label="Places Covered on Day {{ day.day }}">
+            <h2 class="places-gallery-heading">Places Covered Today</h2>
+
+            <div class="places-horizontal-list">
+                {% for place in day.places_covered %}
+                <article class="place-horizontal-card">
+                    <!-- Left Side: Place Name & Description -->
+                    <div class="place-info-col">
+                        <h3 class="place-title-text">{{ place.name }}</h3>
+                        {% if place.point %}
+                        <p class="place-point-text">{{ place.point }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Right Side: Small Picture (320x240) -->
+                    {% if place.image %}
+                    <div class="place-media-col">
+                        <img src="{% static 'images/'|add:place.image %}" 
+                             alt="{{ place.image_alt|default:place.name }}" 
+                             class="place-thumb-img" 
+                             width="320" 
+                             height="240" 
+                             loading="lazy">
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 5. Accommodation & Night Stay Section -->
+        <section class="accommodation-box-section" aria-label="Accommodation for Day {{ day.day }}">
+            <div class="accommodation-styled-card">
+                <div class="accommodation-card-header">
+                    <svg class="accommodation-svg-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <h2 class="accommodation-section-heading">Accommodation & Night Stay</h2>
+                </div>
+                
+                <div class="accommodation-content-lines">
+                    <div class="acc-line-item">
+                        <strong class="acc-label">Night Stay:</strong>
+                        <span class="acc-val">{{ day.accommodation.night_stay }}</span>
+                    </div>
+                    <div class="acc-line-item">
+                        <strong class="acc-label">Accommodation:</strong>
+                        <span class="acc-val">{{ day.accommodation.type }}</span>
+                    </div>
+                    {% if day.accommodation.hotel_name %}
+                    <div class="acc-line-item">
+                        <strong class="acc-label">Hotel:</strong>
+                        <span class="acc-val">{{ day.accommodation.hotel_name }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ONLY TWO NAVIGATION BUTTONS: Previous Day & Next Day -->
+        <nav class="day-pagination-nav" aria-label="Itinerary Navigation">
+            <div class="day-pagination-two-buttons">
+                {% if prev_day %}
+                <a href="{% url 'yatras:puri_day_detail' prev_day.day %}" class="day-nav-btn day-nav-prev-btn">
+                    <span class="day-nav-symbol">←</span>
+                    <span class="day-nav-label-group">
+                        <span class="day-nav-subtext">Previous Day</span>
+                        <strong class="day-nav-maintext">Day {{ prev_day.day }}: {{ prev_day.title }}</strong>
+                    </span>
+                </a>
+                {% else %}
+                <div class="day-nav-placeholder"></div>
+                {% endif %}
+
+                {% if next_day %}
+                <a href="{% url 'yatras:puri_day_detail' next_day.day %}" class="day-nav-btn day-nav-next-btn">
+                    <span class="day-nav-label-group text-right">
+                        <span class="day-nav-subtext">Next Day</span>
+                        <strong class="day-nav-maintext">Day {{ next_day.day }}: {{ next_day.title }}</strong>
+                    </span>
+                    <span class="day-nav-symbol">→</span>
+                </a>
+                {% else %}
+                <div class="day-nav-placeholder"></div>
+                {% endif %}
+            </div>
+        </nav>
+
+    </div>
+</div>
+{% endblock %}

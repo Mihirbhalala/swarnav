@@ -1,0 +1,90 @@
+{% extends 'yatras/puri/base_puri.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Travel Guide{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <div class="section-header">
+        <span class="section-badge">Preparation & Safety</span>
+        <h2 class="yatra-section-title">Jagannath Puri Travel Guide & Yatra Preparation</h2>
+        <p class="section-subtitle">
+            Essential guidance for senior citizens, families, and devotees to prepare physically and practically for the sacred Eastern pilgrimage circuit.
+        </p>
+    </div>
+
+    <!-- Health & Age Advisory Section -->
+    <section class="guide-section">
+        <div class="guide-header">
+            <span class="guide-badge">Medical & Physical Preparedness</span>
+            <h3 class="guide-title">Age Guidelines & Health Requirements</h3>
+        </div>
+
+        <div class="health-advisory-card">
+            <h4 class="advisory-title">Age & Journey Advisory</h4>
+            <p>{{ travel_guide.age_restrictions.guidance }}</p>
+            <p class="advisory-highlight">{{ travel_guide.age_restrictions.advisory }}</p>
+            <p class="advisory-warning"><em>{{ travel_guide.age_restrictions.safety_restriction }}</em></p>
+        </div>
+
+        <div class="health-checklist-card">
+            <h4 class="checklist-title">Key Health Recommendations</h4>
+            <ul class="guide-list">
+                {% for req in travel_guide.health_requirements %}
+                <li class="guide-item">
+                    <span class="guide-bullet">✦</span>
+                    <span>{{ req }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- Documents Required Section -->
+    <section class="guide-section">
+        <div class="guide-header">
+            <span class="guide-badge">Mandatory Verification</span>
+            <h3 class="guide-title">Compulsory Documents to Carry</h3>
+            <p class="section-subtitle">Keep original documents and physical photocopies easily accessible in your hand luggage.</p>
+        </div>
+
+        <div class="documents-grid">
+            {% for doc in travel_guide.documents_required %}
+            <div class="document-item-card">
+                <span class="doc-check">📄</span>
+                <span class="doc-text">{{ doc }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Packing & Items to Carry Section -->
+    <section class="guide-section">
+        <div class="guide-header">
+            <span class="guide-badge">Packing Checklist</span>
+            <h3 class="guide-title">What to Pack for the Eastern Pilgrimage</h3>
+            <p class="section-subtitle">{{ travel_guide.packing_advice }} Lightweight clothing and comfortable footwear recommended.</p>
+        </div>
+
+        <div class="packing-grid">
+            {% for item in travel_guide.items_to_carry %}
+            <div class="packing-item-card">
+                <span class="pack-icon">✓</span>
+                <span class="pack-text">{{ item }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Weather Advisory Box -->
+    <section class="guide-section">
+        <div class="weather-callout">
+            <div class="weather-icon-wrap">⛅</div>
+            <div class="weather-text-wrap">
+                <h4 class="weather-title">Regional Weather Advisory</h4>
+                <p class="weather-desc">{{ travel_guide.weather_info }}</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

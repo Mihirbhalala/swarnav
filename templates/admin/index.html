@@ -1,0 +1,209 @@
+{% extends 'admin/base.html' %}
+
+{% load i18n static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Welcome & Hero Header -->
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950/40 p-6 md:p-8 text-white border border-slate-700/60 shadow-xl">
+        <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-semibold uppercase tracking-wider">
+                    <span class="material-symbols-outlined text-sm">temple_hindu</span>
+                    Swarnav Tour & Travels
+                </div>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+                    Spiritual Yatra Operations Hub
+                </h1>
+                <p class="text-slate-300 text-sm max-w-2xl leading-relaxed">
+                    Manage pilgrim inquiries, monitor tour circuits and daily itineraries, track conversion milestones, and reach out to travelers via WhatsApp or official PDF vouchers.
+                </p>
+            </div>
+
+            <!-- Quick Action Hub -->
+            <div class="flex flex-wrap items-center gap-2.5">
+                <a href="{% url 'core:inquiry_master_pdf' %}" target="_blank"
+                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs md:text-sm shadow-md transition transform active:scale-95">
+                    <span class="material-symbols-outlined text-base">picture_as_pdf</span>
+                    <span>Master PDF</span>
+                </a>
+                <a href="{% url 'core:inquiry_export_excel' %}"
+                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs md:text-sm shadow-md transition transform active:scale-95">
+                    <span class="material-symbols-outlined text-base">table_view</span>
+                    <span>Export Excel</span>
+                </a>
+                <a href="/" target="_blank"
+                   class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-200 border border-slate-600 font-semibold text-xs md:text-sm transition">
+                    <span class="material-symbols-outlined text-base">open_in_new</span>
+                    <span>Live Site</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live KPI Summary Metric Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Total Inquiries -->
+        <a href="{% url 'admin:core_inquiry_changelist' %}" class="group block p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-amber-500/50 transition duration-200">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Inquiries</span>
+                <span class="p-2.5 rounded-xl bg-amber-500/10 text-amber-500 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-xl">contact_mail</span>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+                {{ kpi.total_inquiries|default:"0" }}
+            </div>
+            <div class="mt-2 flex items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span class="text-emerald-500 dark:text-emerald-400 flex items-center mr-1">
+                    <span class="material-symbols-outlined text-sm">schedule</span> +{{ kpi.today_inquiries|default:"0" }}
+                </span>
+                received today
+            </div>
+        </a>
+
+        <!-- Action Needed (New + Follow-up) -->
+        <a href="{% url 'admin:core_inquiry_changelist' %}?status__exact=new" class="group block p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-orange-500/50 transition duration-200">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Action Needed</span>
+                <span class="p-2.5 rounded-xl bg-orange-500/10 text-orange-500 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-xl">notification_important</span>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-orange-600 dark:text-orange-400 tracking-tight">
+                {{ kpi.action_needed|default:"0" }}
+            </div>
+            <div class="mt-2 flex items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span>{{ kpi.new_inquiries|default:"0" }} new • {{ kpi.follow_up_inquiries|default:"0" }} follow-ups</span>
+            </div>
+        </a>
+
+        <!-- Converted Pilgrims -->
+        <a href="{% url 'admin:core_inquiry_changelist' %}?status__exact=converted" class="group block p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition duration-200">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Converted Bookings</span>
+                <span class="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-xl">verified_user</span>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-emerald-600 dark:text-emerald-400 tracking-tight">
+                {{ kpi.converted_inquiries|default:"0" }}
+            </div>
+            <div class="mt-2 flex items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span class="text-emerald-500 dark:text-emerald-400 mr-1 font-bold">{{ kpi.conversion_rate|default:"0" }}%</span>
+                conversion rate
+            </div>
+        </a>
+
+        <!-- Active Tour Packages -->
+        <a href="{% url 'admin:yatras_tourpackage_changelist' %}" class="group block p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md hover:border-blue-500/50 transition duration-200">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active Circuits</span>
+                <span class="p-2.5 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-110 transition">
+                    <span class="material-symbols-outlined text-xl">travel_explore</span>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-blue-600 dark:text-blue-400 tracking-tight">
+                {{ kpi.active_tours|default:"0" }}
+            </div>
+            <div class="mt-2 flex items-center text-xs font-semibold text-slate-500 dark:text-slate-400">
+                <span>out of {{ kpi.total_tours|default:"0" }} total packages</span>
+            </div>
+        </a>
+    </div>
+
+    <!-- Recent Inquiries Section -->
+    {% if recent_inquiries %}
+    <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <span class="material-symbols-outlined text-amber-500">mark_email_unread</span>
+                <h2 class="text-base font-bold text-slate-900 dark:text-white">Recent Pilgrim Inquiries</h2>
+            </div>
+            <a href="{% url 'admin:core_inquiry_changelist' %}" class="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1">
+                View all inquiries <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
+                    <tr>
+                        <th class="px-6 py-3.5">Ref #</th>
+                        <th class="px-6 py-3.5">Pilgrim</th>
+                        <th class="px-6 py-3.5">Tour Circuit</th>
+                        <th class="px-6 py-3.5">City / Group</th>
+                        <th class="px-6 py-3.5">Status</th>
+                        <th class="px-6 py-3.5 text-right">Quick Contact</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
+                    {% for inq in recent_inquiries %}
+                    <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                        <td class="px-6 py-3.5 font-mono text-xs font-bold text-slate-500">
+                            #SW-{{ inq.id|stringformat:"04d" }}
+                        </td>
+                        <td class="px-6 py-3.5">
+                            <div class="font-bold text-slate-900 dark:text-white">{{ inq.name }}</div>
+                            <div class="text-xs text-slate-500">{{ inq.phone }}</div>
+                        </td>
+                        <td class="px-6 py-3.5">
+                            <span class="font-medium">{{ inq.get_tour_display }}</span>
+                        </td>
+                        <td class="px-6 py-3.5 text-xs text-slate-500">
+                            {{ inq.departure_city|default:"Surat" }} • {{ inq.total_pilgrims }} pilgrims
+                        </td>
+                        <td class="px-6 py-3.5">
+                            {% if inq.status == 'new' %}
+                                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30">New</span>
+                            {% elif inq.status == 'follow_up' %}
+                                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-500/15 text-purple-600 dark:text-purple-400 border border-purple-500/30">Follow-up</span>
+                            {% elif inq.status == 'converted' %}
+                                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">Converted</span>
+                            {% elif inq.status == 'contacted' %}
+                                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30">Contacted</span>
+                            {% else %}
+                                <span class="inline-block px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-slate-500/15 text-slate-600 dark:text-slate-400 border border-slate-500/30">{{ inq.get_status_display }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-3.5 text-right">
+                            <div class="inline-flex items-center gap-2">
+                                <a href="{% url 'core:inquiry_pdf' inq.id %}" target="_blank" title="Official PDF Slip"
+                                   class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-amber-500/20 text-slate-700 dark:text-slate-300 hover:text-amber-500 transition">
+                                    <span class="material-symbols-outlined text-base">description</span>
+                                </a>
+                                <a href="https://wa.me/91{{ inq.phone }}?text=Namaste%20{{ inq.name|urlencode }}%2C%20this%20is%20Swarnav%20Tour%20%26%20Travels"
+                                   target="_blank" title="Chat on WhatsApp"
+                                   class="p-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 transition">
+                                    <span class="material-symbols-outlined text-base">chat</span>
+                                </a>
+                                <a href="{% url 'admin:core_inquiry_change' inq.id %}" title="Edit / Manage"
+                                   class="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition">
+                                    <span class="material-symbols-outlined text-base">edit</span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Applications & System Administration Grid -->
+    <div class="flex flex-col lg:flex-row lg:gap-8">
+        <div class="grow">
+            {% include "unfold/helpers/app_list_default.html" %}
+        </div>
+
+        {% include "unfold/helpers/history.html" %}
+    </div>
+</div>
+{% endblock %}

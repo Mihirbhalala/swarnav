@@ -1,0 +1,456 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- 1. Hero Section with Vivid Nature Background & Official Swarnav Logo -->
+<section class="hero-section" id="home-top">
+    <!-- Scenic Mountain & Nature Background -->
+    <div class="hero-bg-media" aria-hidden="true">
+        <img src="{% static 'images/snow-mountain-trekking-hero.jpg' %}" 
+             alt="Trekkers on Sacred Snow Mountain Trail in the Himalayas" 
+             class="hero-bg-img"
+             width="1920" 
+             height="1280"
+             loading="eager">
+        <div class="hero-bg-overlay"></div>
+    </div>
+
+    <div class="container hero-inner">
+        <!-- Center Glass Card Banner -->
+        <div class="hero-card-banner">
+            <!-- Official Swarnav Logo -->
+            <div class="hero-brand-emblem">
+                <img src="{% static 'images/swarnav-logo.png' %}" alt="Swarnav Tour & Travels" class="hero-logo-img" width="360" height="138">
+            </div>
+
+            <div class="hero-eyebrow">
+                <span class="eyebrow-accent">🕉️</span>
+                <span class="eyebrow-text">Trusted Pilgrimages &amp; Nature Journeys Across India &amp; Nepal</span>
+            </div>
+
+            <h1 class="hero-title">
+                Sacred Spiritual Yatras &amp; Family Tour Packages
+            </h1>
+
+            <p class="hero-lead">
+                Welcome to <strong>Swarnav Tour &amp; Travels</strong>. We organize heartfelt, well-coordinated spiritual yatras and peaceful holiday tours. Experience the divine Garhwal Himalayas (<strong>Char Dham &amp; Panch Kedar</strong>), the sacred southern shores of <strong>Rameshwaram &amp; Kerala</strong>, the holy circuit of <strong>Jagannath Puri &amp; Baidyanath</strong>, and the Himalayan kingdom of <strong>Nepal</strong>.
+            </p>
+
+            <!-- Important Surat Departure & Home City Connect Banner -->
+            <div class="home-city-banner">
+                <div class="hcb-icon">🚆 ✈️</div>
+                <div class="hcb-text">
+                    <strong>All Tours Start from Surat (Gujarat)</strong>
+                    <span>We arrange train or flight tickets directly from your home city (Ahmedabad, Vadodara, Rajkot, Mumbai, Delhi, etc.) to join the group seamlessly!</span>
+                </div>
+            </div>
+
+            <!-- Key Offerings Chips -->
+            <div class="hero-features-strip">
+                <div class="hero-feature-item">
+                    <span class="feature-icon">🛡️</span>
+                    <span>Transparent Planning</span>
+                </div>
+                <div class="hero-feature-item">
+                    <span class="feature-icon">🍲</span>
+                    <span>Daily Satvik Veg Meals</span>
+                </div>
+                <div class="hero-feature-item">
+                    <span class="feature-icon">🏨</span>
+                    <span>Clean Verified Stays</span>
+                </div>
+                <div class="hero-feature-item">
+                    <span class="feature-icon">👨‍💼</span>
+                    <span>Dedicated Coordinators</span>
+                </div>
+            </div>
+
+            <!-- Call to Actions -->
+            <div class="hero-actions">
+                <a href="#all-tours" class="btn btn-primary" id="hero-explore-tours-btn">
+                    <span>Explore All Tours &amp; Packages</span>
+                    <svg class="icon-arrow" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <button type="button" class="btn btn-secondary open-inquiry-btn" data-tour="General Pilgrimage Inquiry">
+                    <span>Quick Yatra Inquiry</span>
+                </button>
+                <a href="tel:{{ PHONE_RAW }}" class="btn btn-call-hero">
+                    <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                    </svg>
+                    <span>Helpline: {{ PHONE_NUMBER }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. Tour Circuits Showcase (All Tours, Packages, Prices & Brief Guide) -->
+<section class="section tours-showcase-section" id="all-tours">
+    <div class="container">
+        <!-- Section Header -->
+        <div class="section-header text-center">
+            <span class="section-badge">Complete Tour Directory</span>
+            <h2 class="section-title">Our Pilgrimage Circuits &amp; Tour Packages</h2>
+            <p class="section-subtitle">
+                All tours start from Surat, Gujarat with train or flight connectivity arranged from your home city. Transparent pricing, verified accommodations, and wholesome satvik meals.
+            </p>
+        </div>
+
+        <!-- Filter Tabs for Regions -->
+        <div class="tour-filter-bar" role="tablist" aria-label="Filter tours by region">
+            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
+                <span>All Tours ({{ total_tours }})</span>
+            </button>
+            <button class="filter-tab" data-filter="north-india" role="tab" aria-selected="false">
+                <span>🏔️ North India (3)</span>
+            </button>
+            <button class="filter-tab" data-filter="south-india" role="tab" aria-selected="false">
+                <span>🛕 South India (2)</span>
+            </button>
+            <button class="filter-tab" data-filter="east-india" role="tab" aria-selected="false">
+                <span>🌊 East India (2)</span>
+            </button>
+            <button class="filter-tab" data-filter="nepal-tour" role="tab" aria-selected="false">
+                <span>🇳🇵 Nepal Tour (1)</span>
+            </button>
+        </div>
+
+        <!-- Tour Cards Grid -->
+        <div class="tours-master-grid">
+            {% for category in tour_categories %}
+                {% for tour in category.tours %}
+                <article class="tour-card" data-category="{{ category.id }}" id="tour-{{ tour.id }}">
+                    <!-- Card Media & Badge -->
+                    <div class="tour-card-media">
+                        <img src="{% static tour.image %}" 
+                             alt="{{ tour.name }} - Swarnav Tour & Travels" 
+                             class="tour-img" 
+                             width="400" 
+                             height="260" 
+                             loading="lazy">
+                        <span class="tour-region-pill">{{ category.name }}</span>
+                        
+                        {% if tour.next_batch %}
+                            <span class="tour-status-tag" style="background: #f59e0b; color: #78350f; font-weight: 700;">★ Next Batch: {{ tour.next_batch }}</span>
+                        {% elif tour.is_completed %}
+                            <span class="tour-status-tag status-completed">★ Complete Guide</span>
+                        {% else %}
+                            <span class="tour-status-tag status-upcoming">● Upcoming Batches</span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="tour-card-body">
+                        <div class="tour-meta-row">
+                            <span class="tour-duration-badge">⏱️ {{ tour.duration_display }}</span>
+                            <span class="tour-origin-tag">📍 {{ tour.origin }}</span>
+                        </div>
+
+                        <h3 class="tour-card-title">{{ tour.name }}</h3>
+                        <p class="tour-card-tagline">{{ tour.tagline }}</p>
+
+                        <!-- Home City Connect Note -->
+                        <div class="tour-connect-badge">
+                            <span class="connect-icon">🚆✈️</span>
+                            <span class="connect-text"><strong>Home City Connect:</strong> Train / flight from your city arranged</span>
+                        </div>
+
+                        <!-- Brief Guide Summary -->
+                        <div class="tour-brief-guide">
+                            <p>{{ tour.brief_guide }}</p>
+                        </div>
+
+                        <!-- Key Highlights -->
+                        <ul class="tour-highlights-list">
+                            {% for highlight in tour.highlights|slice:":3" %}
+                            <li>
+                                <span class="bullet-gold">✓</span>
+                                <span>{{ highlight }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <!-- Pricing and Actions Footer -->
+                        <div class="tour-card-footer">
+                            <div class="tour-pricing-wrap">
+                                <span class="price-from-label">Starting Package</span>
+                                <div class="price-main">
+                                    <span class="price-amount">{{ tour.starting_price }}</span>
+                                    <span class="price-qualifier">/ person</span>
+                                </div>
+                                <span class="price-note">{{ tour.price_note }}</span>
+                            </div>
+
+                            <div class="tour-actions-wrap">
+                                {% if tour.is_completed and tour.link %}
+                                    <a href="{% url tour.link %}" class="btn btn-card-primary">
+                                        {% if tour.id == 'char-dham' %}
+                                            <span>Explore Char Dham →</span>
+                                        {% elif tour.id == 'jagannath-puri' %}
+                                            <span>Explore Jagannath Puri →</span>
+                                        {% else %}
+                                            <span>Explore {{ tour.name }} →</span>
+                                        {% endif %}
+                                    </a>
+                                {% else %}
+                                    <button type="button" class="btn btn-card-inquire open-inquiry-btn" data-tour="{{ tour.name }} ({{ tour.duration_display }} - {{ tour.starting_price }})">
+                                        <span>Quick Inquiry</span>
+                                    </button>
+                                {% endif %}
+                                <a href="https://wa.me/919586825353?text=Namaste%20Swarnav%20Travels,%20I%20want%20inquiry%20for%20{{ tour.name|urlencode }}%20(Starts%20from%20Surat)." target="_blank" rel="noopener noreferrer" class="btn-icon-wa" aria-label="WhatsApp inquiry for {{ tour.name }}">
+                                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 3. What Swarnav Tour & Travels Provides (Trust & Services) -->
+<section class="section services-section" id="what-we-provide">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">Pilgrimage Care &amp; Support</span>
+            <h2 class="section-title">What Swarnav Provides for Your Journey</h2>
+            <p class="section-subtitle">
+                We manage the end-to-end travel logistics from your home city so you and your family can immerse yourselves in prayer, peace, and sacred darshan.
+            </p>
+        </div>
+
+        <div class="why-grid">
+            {% for item in why_swarnav %}
+            <div class="why-card">
+                <div class="why-icon-wrap">{{ item.icon }}</div>
+                <h3 class="why-title">{{ item.title }}</h3>
+                <p class="why-desc">{{ item.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 4. Featured Spotlight: Char Dham Yatra Gateway -->
+<section class="section char-dham-spotlight-section">
+    <div class="container">
+        <div class="spotlight-card">
+            <div class="spotlight-content">
+                <span class="spotlight-badge">🔔 Next Confirmed Batch: 1st Nov – 13th Nov (Bookings Open)</span>
+                <h2 class="spotlight-title">Char Dham Yatra (13 Days / 12 Nights)</h2>
+                <p class="spotlight-tagline">Yamunotri • Gangotri • Kedarnath • Badrinath</p>
+                <p class="spotlight-description">
+                    Our flagship pilgrimage journey starting from Surat, Gujarat (with connecting train/flight arranged from anywhere across Gujarat &amp; India). <strong>Next confirmed batch departs 1st November to 13th November</strong>. Package includes Surat to Haridwar return train, mountain coaches across Uttarakhand, triple-sharing accommodation, and wholesome satvik meals.
+                </p>
+
+                <div class="spotlight-highlights-grid">
+                    <div class="spotlight-item" style="border-left: 3px solid #b45309; background: rgba(217, 119, 6, 0.08);">
+                        <span class="spotlight-num" style="color: #b45309; font-size: 19px;">1–13 Nov</span>
+                        <span class="spotlight-label" style="font-weight: 700; color: #92400e;">Upcoming Batch</span>
+                    </div>
+                    <div class="spotlight-item">
+                        <span class="spotlight-num">₹30,000</span>
+                        <span class="spotlight-label">Starting Price</span>
+                    </div>
+                    <div class="spotlight-item">
+                        <span class="spotlight-num">13 Days</span>
+                        <span class="spotlight-label">Full Itinerary</span>
+                    </div>
+                    <div class="spotlight-item">
+                        <span class="spotlight-num">Surat, Guj</span>
+                        <span class="spotlight-label">Main Departure</span>
+                    </div>
+                </div>
+
+                <div class="spotlight-actions">
+                    <a href="{% url 'yatras:char_dham_overview' %}" class="btn btn-spotlight-primary">
+                        <span>Open 13-Day Char Dham Guide →</span>
+                    </a>
+                    <button type="button" onclick="openQuickInquiry('char-dham')" class="btn" style="background: #b45309; color: #ffffff; padding: 12px 20px; border-radius: 6px; font-weight: 600; font-size: 14px; border: none; cursor: pointer;">
+                        <span>Register for Nov 1–13 Batch</span>
+                    </button>
+                    <a href="tel:{{ PHONE_RAW }}" class="btn btn-spotlight-call">
+                        <span>Call: {{ PHONE_NUMBER }}</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="spotlight-image-panel">
+                <img src="{% static 'images/badrinath-temple.jpg' %}" 
+                     alt="Sacred Badrinath Temple in Garhwal Himalayas" 
+                     class="spotlight-img" 
+                     width="560" 
+                     height="400" 
+                     loading="lazy">
+                <div class="spotlight-caption">
+                    <strong>Badrinath &amp; Kedarnath Dham</strong>
+                    <span>Sacred Himalayan Tirthas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. Inquiry & Booking Section (#inquiry) -->
+<section class="section inquiry-section" id="inquiry">
+    <div class="container">
+        <div class="inquiry-panel-card">
+            <div class="inquiry-text-col">
+                <span class="section-badge section-badge-gold">Pilgrim Assistance</span>
+                <h2 class="inquiry-heading">Plan Your Pilgrimage with Swarnav</h2>
+                <p class="inquiry-intro">
+                    Whether you are planning for <strong>Char Dham</strong>, <strong>Panch Kedar</strong>, <strong>Kashmir</strong>, <strong>Rameshwaram</strong>, <strong>Kerala</strong>, <strong>Jagannath Puri</strong>, <strong>Jharkhand</strong>, or <strong>Nepal</strong>, all tours start from Surat with connecting transport arranged from your city.
+                </p>
+
+                <div class="inquiry-contact-bullets">
+                    <div class="inquiry-bullet-item">
+                        <span class="bullet-icon">📍</span>
+                        <div>
+                            <strong>Head Office:</strong>
+                            <p>{{ OFFICE_ADDRESS }}</p>
+                        </div>
+                    </div>
+                    <div class="inquiry-bullet-item">
+                        <span class="bullet-icon">🚆</span>
+                        <div>
+                            <strong>Home City Travel:</strong>
+                            <p>Train &amp; flight bookings coordinated for pilgrims joining from across Gujarat &amp; India.</p>
+                        </div>
+                    </div>
+                    <div class="inquiry-bullet-item">
+                        <span class="bullet-icon">📞</span>
+                        <div>
+                            <strong>Direct Phone Helpline:</strong>
+                            <p><a href="tel:{{ PHONE_RAW }}">{{ PHONE_NUMBER }}</a> (7:00 AM – 9:30 PM)</p>
+                        </div>
+                    </div>
+                    <div class="inquiry-bullet-item">
+                        <span class="bullet-icon">💬</span>
+                        <div>
+                            <strong>WhatsApp Desk:</strong>
+                            <p><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer">{{ WHATSAPP_NUMBER }}</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="inquiry-form-col">
+                <form id="home-inquiry-form" class="inquiry-form-box" method="POST" action="{% url 'core:submit_inquiry' %}" onsubmit="handleInquirySubmit(event)">
+                    {% csrf_token %}
+                    <h3 class="form-box-title">Send Yatra Inquiry</h3>
+
+                    <div id="home-inquiry-alert" class="inquiry-alert" style="display:none; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.95rem; font-weight: 500;"></div>
+
+                    <div class="form-group">
+                        <label for="home-tour-select" class="form-label">Select Your Tour *</label>
+                        <select id="home-tour-select" name="tour" class="form-select" required>
+                            <option value="">-- Choose Tour / Yatra --</option>
+                            <optgroup label="North India">
+                                <option value="char-dham" selected>Char Dham Yatra (13 Days – ₹30,000)</option>
+                                <option value="panch-kedar">Panch Kedar Yatra (10 Days – ₹26,500)</option>
+                                <option value="kashmir-paradise">Kashmir Tour (7 Days – ₹22,500)</option>
+                            </optgroup>
+                            <optgroup label="South India">
+                                <option value="rameshwaram-circuit">Rameshwaram &amp; South Circuit (8 Days – ₹24,000)</option>
+                                <option value="kerala-tour">Kerala Tour (6 Days – ₹19,500)</option>
+                            </optgroup>
+                            <optgroup label="East India">
+                                <option value="jagannath-puri">Jagannath Puri Odisha (11 Days – ₹24,500)</option>
+                                <option value="jharkhand-tour">Jharkhand Spiritual Yatra (5 Days – ₹14,500)</option>
+                            </optgroup>
+                            <optgroup label="Nepal Tour">
+                                <option value="nepal-pashupatinath-muktinath">Nepal Pashupatinath Muktinath (8 Days – ₹34,500)</option>
+                            </optgroup>
+                            <option value="general">General Pilgrimage Inquiry</option>
+                        </select>
+                        <div class="field-error" id="home-tour-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="home-user-name" class="form-label">Your Name *</label>
+                            <input type="text" id="home-user-name" name="name" class="form-input" placeholder="e.g. Ramesh Patel" required>
+                            <div class="field-error" id="home-name-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="home-user-phone" class="form-label">Phone / WhatsApp *</label>
+                            <input type="tel" id="home-user-phone" name="phone" class="form-input" placeholder="e.g. 9586825353" required>
+                            <div class="field-error" id="home-phone-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="home-travel-city" class="form-label">Departure City (Home City)</label>
+                            <input type="text" id="home-travel-city" name="departure_city" class="form-input" placeholder="e.g. Surat, Ahmedabad, Rajkot">
+                        </div>
+                        <div class="form-group">
+                            <label for="home-pilgrim-count" class="form-label">Total Pilgrims</label>
+                            <input type="number" id="home-pilgrim-count" name="total_pilgrims" class="form-input" min="1" max="100" placeholder="e.g. 4">
+                            <div class="field-error" id="home-pilgrims-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="home-notes" class="form-label">Message / Preferred Month</label>
+                        <textarea id="home-notes" name="message" class="form-textarea" rows="2" placeholder="Tell us if you need flight/train tickets from your city or have senior citizen requirements..."></textarea>
+                    </div>
+
+                    <div class="form-group form-checkbox-group" style="margin-top: 10px; margin-bottom: 16px;">
+                        <label class="form-checkbox-label" style="display: flex; align-items: flex-start; gap: 8px; font-size: 0.88rem; color: #475569; cursor: pointer; line-height: 1.4;">
+                            <input type="checkbox" id="home-consent" name="consent_given" class="form-checkbox" required style="margin-top: 3px; cursor: pointer; accent-color: #7c1a22;">
+                            <span>I agree that Swarnav may contact me regarding this yatra inquiry. *</span>
+                        </label>
+                        <div class="field-error" id="home-consent-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                    </div>
+
+                    <button type="submit" id="home-submit-btn" class="btn btn-primary btn-full">
+                        <span>Send Yatra Inquiry via WhatsApp →</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 6. Direct Contact Section (#contact) -->
+<section class="section contact-section" id="contact">
+    <div class="container">
+        <div class="contact-box">
+            <div class="contact-content text-center">
+                <span class="section-badge section-badge-gold">Get in Touch</span>
+                <h2 class="contact-heading">Contact Swarnav Tour &amp; Travels</h2>
+                <p class="contact-desc">
+                    Speak directly with our yatra coordination team for upcoming departure dates, home city train/flight arrangements, group bookings, and official registration verification.
+                </p>
+
+                <div class="contact-action-group">
+                    <a href="tel:{{ PHONE_RAW }}" class="btn btn-contact-call">
+                        <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                        </svg>
+                        <span>Call {{ PHONE_NUMBER }}</span>
+                    </a>
+                    <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="btn btn-contact-wa">
+                        <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                        </svg>
+                        <span>WhatsApp Inquiries</span>
+                    </a>
+                </div>
+
+                <div class="contact-footer-note">
+                    <p>📍 Office: {{ OFFICE_ADDRESS }} | Working Hours: {{ OPERATING_HOURS }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

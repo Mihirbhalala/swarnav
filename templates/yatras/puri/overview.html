@@ -1,0 +1,175 @@
+{% extends 'yatras/puri/base_puri.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Overview{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <!-- Introduction Section -->
+    <section class="yatra-section">
+        <div class="editorial-intro-grid">
+            <div class="editorial-text">
+                <span class="section-badge">About the Pilgrimage</span>
+                <h2 class="yatra-section-title">Sacred Eastern Pilgrimage Circuit</h2>
+                <div class="intro-paragraphs">
+                    {% for paragraph in package.introduction %}
+                    <p>{{ paragraph }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="editorial-sidebar">
+                <div class="quick-facts-card">
+                    <h3 class="quick-facts-title">Package Summary</h3>
+                    <ul class="quick-facts-list">
+                        <li>
+                            <span class="qf-label">Starting Point:</span>
+                            <span class="qf-value">{{ package.starting_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Ending Point:</span>
+                            <span class="qf-value">{{ package.ending_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Total Duration:</span>
+                            <span class="qf-value">{{ package.duration_display }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Starting Price:</span>
+                            <span class="qf-value"><strong>{{ package.starting_price }}</strong> <small>/ person</small></span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Departures:</span>
+                            <span class="qf-value">Monthly &amp; Festival Batches</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Accommodation:</span>
+                            <span class="qf-value">Economy (Triple-sharing)</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Meals:</span>
+                            <span class="qf-value">Lunch &amp; Dinner per itinerary</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Transport:</span>
+                            <span class="qf-value">Train + Dedicated group vehicle</span>
+                        </li>
+                    </ul>
+                    <div class="qf-action">
+                        <a href="tel:{{ PHONE_RAW }}" class="btn btn-primary btn-full">
+                            <span>Call for Upcoming Dates</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 4 Main Shrines of the Circuit -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Sacred Tirthas</span>
+            <h2 class="yatra-section-title">The Four Main Spiritual Shrines Covered</h2>
+            <p class="section-subtitle">
+                A grand sacred circuit connecting the divine abodes of Lord Jagannath, holy Gangasagar ocean snan, Baba Baidyanath Jyotirlinga, and Kashi Vishwanath.
+            </p>
+        </div>
+
+        <div class="dhams-overview-grid">
+            {% for dham in package.dhams %}
+            <div class="dham-overview-card">
+                <div class="dham-card-top">
+                    <span class="dham-step-num">{{ dham.highlight }}</span>
+                    <h3 class="dham-card-name">{{ dham.name }}</h3>
+                    <p class="dham-card-significance">{{ dham.significance }}</p>
+                </div>
+                <p class="dham-card-desc">{{ dham.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Route Path Ribbon -->
+    <section class="yatra-section route-ribbon-section">
+        <div class="route-ribbon-card">
+            <h3 class="route-ribbon-title">Complete 11-Day Pilgrimage Route</h3>
+            <p class="route-ribbon-desc">
+                Surat ➔ Puri ➔ Konark ➔ Bhubaneswar ➔ Kolkata ➔ Gangasagar ➔ Deoghar (Jasidih) ➔ Varanasi ➔ Sarnath ➔ Surat
+            </p>
+            <div class="route-actions">
+                <a href="{% url 'yatras:puri_itinerary' %}" class="btn btn-secondary">
+                    <span>View Day-by-Day Itinerary (Days 1 to 11) →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Hub Cards -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Explore Every Detail</span>
+            <h2 class="yatra-section-title">Essential Package Information</h2>
+            <p class="section-subtitle">
+                Review complete details regarding daily schedule, inclusions, hotel standards, travel guide, and cancellation terms.
+            </p>
+        </div>
+
+        <div class="hub-grid">
+            <a href="{% url 'yatras:puri_itinerary' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📅</span>
+                    <h3 class="hub-title">11-Day Itinerary</h3>
+                </div>
+                <p class="hub-desc">Full day-wise schedule from Surat departure to Puri, Konark, Kolkata, Gangasagar, Deoghar, and Varanasi.</p>
+                <span class="hub-link-text">Read Day-by-Day Plan →</span>
+            </a>
+
+            <a href="{% url 'yatras:puri_package_details' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📋</span>
+                    <h3 class="hub-title">Package Details</h3>
+                </div>
+                <p class="hub-desc">Detailed breakdown of included services, exclusions, conditional options, and coordinator support.</p>
+                <span class="hub-link-text">View Inclusions & Exclusions →</span>
+            </a>
+
+            <a href="{% url 'yatras:puri_stay_and_travel' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🏨</span>
+                    <h3 class="hub-title">Stay & Travel</h3>
+                </div>
+                <p class="hub-desc">Information on triple-sharing economy accommodation, meal arrangements, and train/road transportation.</p>
+                <span class="hub-link-text">Review Accommodation & Transit →</span>
+            </a>
+
+            <a href="{% url 'yatras:puri_travel_guide' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🏔</span>
+                    <h3 class="hub-title">Travel Guide</h3>
+                </div>
+                <p class="hub-desc">Temple dress codes, Gangasagar snan preparation, mandatory verification documents, and packing list.</p>
+                <span class="hub-link-text">Read Travel Preparation →</span>
+            </a>
+
+            <a href="{% url 'yatras:puri_policies' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">⚖️</span>
+                    <h3 class="hub-title">Policies</h3>
+                </div>
+                <p class="hub-desc">Advance payment terms, balance deadlines, and structured percentage-based cancellation refund schedule.</p>
+                <span class="hub-link-text">View Terms & Policies →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Important Notice Box -->
+    <section class="yatra-section">
+        <div class="notice-callout">
+            <h4 class="notice-callout-title">Important Notice Regarding Booking & Availability</h4>
+            <p class="notice-callout-text">
+                {{ package.confirmation_note }} Valid government photo identification is mandatory for all travellers during train travel and hotel check-in.
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock %}

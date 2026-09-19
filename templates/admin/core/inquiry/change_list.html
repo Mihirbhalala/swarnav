@@ -1,0 +1,21 @@
+{% extends "admin/change_list.html" %}
+{% load i18n admin_urls static %}
+
+{% block actions-items %}
+    <li class="mr-2 mb-2 lg:mb-0">
+        <a href="{% url 'core:inquiry_master_pdf' %}" target="_blank"
+           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-xs font-bold transition">
+            <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+            <span>Master PDF</span>
+        </a>
+    </li>
+    <li class="mr-2 mb-2 lg:mb-0">
+        <a href="{% url 'core:inquiry_export_excel' %}"
+           class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-bold transition">
+            <span class="material-symbols-outlined text-sm">table_view</span>
+            <span>Export Excel</span>
+        </a>
+    </li>
+    {{ block.super }}
+{% endblock %}
+

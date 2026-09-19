@@ -1,0 +1,581 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block meta_description %}{{ meta_description|default:'Swarnav Tour & Travels offers carefully organized spiritual pilgrimages and nature journeys across North India, South India, East India, and Nepal. Departures organized from Surat & across Gujarat.' }}{% endblock %}">
+    <title>{% block title %}{{ page_title|default:'Swarnav Tour & Travels | Spiritual Pilgrimages & Nature Tours' }}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/favicon.svg' %}">
+    
+    <!-- Google Fonts: Cormorant Garamond for warm regal headings & Plus Jakarta Sans for crisp modern readability -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- 1. Top Contact & Utility Bar -->
+    <div class="top-contact-strip" role="region" aria-label="Quick Contact and Helpline Bar">
+        <div class="container strip-inner">
+            <div class="strip-left">
+                <span class="strip-badge">🕉️ Official Pilgrimage Portal</span>
+                <span class="strip-location">Departures & Support from <strong>{{ PRIMARY_REGION }}</strong></span>
+            </div>
+            <div class="strip-right">
+                <div class="strip-lang-wrap" aria-label="Select Language">
+                    <span class="strip-lang-icon" aria-hidden="true">🌐</span>
+                    <div class="strip-lang-pills">
+                        <button type="button" class="strip-lang-pill is-active" data-lang="en" title="Translate to English">EN</button>
+                        <span class="strip-lang-sep">|</span>
+                        <button type="button" class="strip-lang-pill" data-lang="hi" title="Translate to Hindi">हिन्दी</button>
+                        <span class="strip-lang-sep">|</span>
+                        <button type="button" class="strip-lang-pill" data-lang="gu" title="Translate to Gujarati">ગુજરાતી</button>
+                    </div>
+                </div>
+                <span class="strip-hours">{{ OPERATING_HOURS }}</span>
+                <a href="tel:{{ PHONE_RAW }}" class="strip-link phone-link" aria-label="Call Swarnav at {{ PHONE_NUMBER }}">
+                    <svg class="icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                    </svg>
+                    <span>Helpline: <strong>{{ PHONE_NUMBER }}</strong></span>
+                </a>
+                <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="strip-link whatsapp-link" aria-label="WhatsApp Swarnav Tour & Travels">
+                    <svg class="icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                    </svg>
+                    <span>WhatsApp</span>
+                </a>
+                <a href="/admin/" target="_blank" class="strip-link" style="background: rgba(212, 160, 23, 0.25); border: 1px solid #d4a017; padding: 2px 9px; border-radius: 4px; color: #fef3c7; font-weight: 600; text-decoration: none;" aria-label="Admin Portal">
+                    <span>🔐 Admin</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Main Navigation Header -->
+    <header class="site-header" id="site-header">
+        <div class="container header-inner">
+            <!-- Brand Logo -->
+            <a href="{% url 'core:home' %}" class="brand-logo" aria-label="Swarnav Tour & Travels Homepage">
+                <img src="{% static 'images/swarnav-logo.png' %}" alt="Swarnav Tour & Travels Logo" class="brand-logo-img" width="240" height="92">
+            </a>
+
+            <!-- Mobile Navigation Toggle -->
+            <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <nav class="primary-nav" id="primary-nav" aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <!-- Home Button -->
+                    <li class="nav-item">
+                        <a href="{% url 'core:home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' and not request.GET.section %}active{% endif %}">
+                            Home
+                        </a>
+                    </li>
+
+                    <!-- Tours Mega Dropdown -->
+                    <li class="nav-item nav-item-has-dropdown" id="tours-menu-item">
+                        <button class="nav-link nav-dropdown-btn {% if 'char-dham' in request.path or 'yatras' in request.path %}active{% endif %}" aria-expanded="false" aria-haspopup="true">
+                            <span>Tours</span>
+                            <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dropdown Menu with 4 Regional Circuits -->
+                        <div class="tours-dropdown-menu" role="menu">
+                            <div class="dropdown-grid">
+                                <!-- 1. North India -->
+                                <div class="dropdown-col">
+                                    <div class="dropdown-col-header">
+                                        <span class="dropdown-region-icon">🏔️</span>
+                                        <span class="dropdown-region-title">North India Tours</span>
+                                    </div>
+                                    <ul class="dropdown-sublinks">
+                                        <li>
+                                            <a href="{% url 'yatras:char_dham_overview' %}" class="dropdown-link featured-link">
+                                                <strong>Char Dham Yatra</strong>
+                                                <span class="link-meta">13 Days • Yamunotri, Gangotri, Kedarnath, Badrinath</span>
+                                                <span class="badge-featured">Active Guide</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'core:home' %}#tour-panch-kedar" class="dropdown-link">
+                                                <strong>Panch Kedar Yatra</strong>
+                                                <span class="link-meta">10 Days • Tungnath & Holy Shiva Temples</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'core:home' %}#tour-kashmir-paradise" class="dropdown-link">
+                                                <strong>Kashmir Tour</strong>
+                                                <span class="link-meta">7 Days • Srinagar, Gulmarg & Pahalgam</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- 2. South India -->
+                                <div class="dropdown-col">
+                                    <div class="dropdown-col-header">
+                                        <span class="dropdown-region-icon">🛕</span>
+                                        <span class="dropdown-region-title">South India Tours</span>
+                                    </div>
+                                    <ul class="dropdown-sublinks">
+                                        <li>
+                                            <a href="{% url 'core:home' %}#tour-rameshwaram-circuit" class="dropdown-link">
+                                                <strong>Rameshwaram Tour</strong>
+                                                <span class="link-meta">8 Days • Madurai, Rameshwaram, Kanyakumari</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'core:home' %}#tour-kerala-tour" class="dropdown-link">
+                                                <strong>Kerala Tour</strong>
+                                                <span class="link-meta">6 Days • Munnar Hills & Alleppey Backwaters</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- 3. East India -->
+                                <div class="dropdown-col">
+                                    <div class="dropdown-col-header">
+                                        <span class="dropdown-region-icon">🌊</span>
+                                        <span class="dropdown-region-title">East India Tours</span>
+                                    </div>
+                                    <ul class="dropdown-sublinks">
+                                        <li>
+                                            <a href="{% url 'yatras:puri_overview' %}" class="dropdown-link featured-link">
+                                                <strong>Jagannath Puri Yatra</strong>
+                                                <span class="link-meta">11 Days • Puri, Kolkata, Gangasagar, Deoghar, Kashi</span>
+                                                <span class="badge-featured">Active Guide</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'core:home' %}#tour-jharkhand-tour" class="dropdown-link">
+                                                <strong>Jharkhand Spiritual Tour</strong>
+                                                <span class="link-meta">5 Days • Baidyanath Jyotirlinga (Deoghar)</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- 4. Nepal Tour -->
+                                <div class="dropdown-col">
+                                    <div class="dropdown-col-header">
+                                        <span class="dropdown-region-icon">🇳🇵</span>
+                                        <span class="dropdown-region-title">Nepal Tour</span>
+                                    </div>
+                                    <ul class="dropdown-sublinks">
+                                        <li>
+                                            <a href="{% url 'core:home' %}#tour-nepal-pashupatinath-muktinath" class="dropdown-link">
+                                                <strong>Pashupatinath & Muktinath</strong>
+                                                <span class="link-meta">8 Days • Kathmandu, Pokhara, Muktinath Dham</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="dropdown-footer-cta">
+                                        <a href="{% url 'core:home' %}#all-tours" class="dropdown-all-btn">
+                                            <span>View All Tours & Packages →</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Inquiry Button -->
+                    <li class="nav-item">
+                        <a href="{% url 'core:home' %}#inquiry" class="nav-link" id="nav-inquiry-link">
+                            Inquiry
+                        </a>
+                    </li>
+
+                    <!-- Contact Button -->
+                    <li class="nav-item">
+                        <a href="{% url 'core:home' %}#contact" class="nav-link" id="nav-contact-link">
+                            Contact
+                        </a>
+                    </li>
+
+                    <!-- AI Assistant Button -->
+                    <li class="nav-item">
+                        <button type="button" class="nav-link nav-ai-btn" id="open-ai-assistant-btn" aria-label="Open Swarnav AI Pilgrimage Assistant">
+                            <span class="ai-sparkle">✨</span>
+                            <span>AI Assistant</span>
+                        </button>
+                    </li>
+
+                    <!-- Language Translation Dropdown -->
+                    <li class="nav-item nav-item-has-dropdown nav-lang-switcher" id="lang-menu-item">
+                        <button type="button" class="nav-link nav-dropdown-btn lang-nav-btn" id="lang-dropdown-btn" aria-expanded="false" aria-haspopup="true" aria-label="Language Selector">
+                            <span class="lang-nav-icon">🌐</span>
+                            <span class="lang-nav-label" id="main-nav-lang-label">Language</span>
+                            <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M6 9l6 6 6-6"/>
+                            </svg>
+                        </button>
+
+                        <div class="lang-nav-dropdown-menu" id="lang-nav-dropdown-menu" role="menu">
+                            <button type="button" class="lang-option-row is-active" data-lang="en" role="menuitem">
+                                <span class="lang-flag">🇬🇧</span>
+                                <div class="lang-name-col">
+                                    <strong class="lang-title">English</strong>
+                                    <span class="lang-sub">Default</span>
+                                </div>
+                                <span class="lang-tick">✓</span>
+                            </button>
+                            <button type="button" class="lang-option-row" data-lang="hi" role="menuitem">
+                                <span class="lang-flag">🇮🇳</span>
+                                <div class="lang-name-col">
+                                    <strong class="lang-title">हिन्दी</strong>
+                                    <span class="lang-sub">Hindi</span>
+                                </div>
+                                <span class="lang-tick">✓</span>
+                            </button>
+                            <button type="button" class="lang-option-row" data-lang="gu" role="menuitem">
+                                <span class="lang-flag">🇮🇳</span>
+                                <div class="lang-name-col">
+                                    <strong class="lang-title">ગુજરાતી</strong>
+                                    <span class="lang-sub">Gujarati</span>
+                                </div>
+                                <span class="lang-tick">✓</span>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- Header Call CTA -->
+                <div class="nav-cta">
+                    <a href="tel:{{ PHONE_RAW }}" class="btn btn-header-call">
+                        <svg class="icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                        </svg>
+                        <span>{{ PHONE_NUMBER }}</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 3. Main Page Content -->
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 4. Site Down Bar & Comprehensive Footer -->
+    <footer class="site-footer" id="footer-contact">
+        <!-- Main Footer Information Grid -->
+        <div class="container footer-grid">
+            <!-- Brand & Company Info Column -->
+            <div class="footer-col footer-brand-col">
+                <div class="footer-brand-header">
+                    <img src="{% static 'images/swarnav-logo.png' %}" alt="Swarnav Tour & Travels" class="footer-logo-img" width="220" height="84">
+                </div>
+                <p class="footer-tagline">{{ BUSINESS_TAGLINE }}</p>
+                <p class="footer-description">
+                    Swarnav Tour & Travels is dedicated to organizing sacred temple pilgrimages and peaceful nature journeys across India and Nepal. We provide planned train and coach transport, verified accommodations, pure vegetarian meals, and dedicated on-ground coordinator assistance from Gujarat.
+                </p>
+                <div class="footer-trust-chips">
+                    <span class="trust-chip">✓ Verified Stays</span>
+                    <span class="trust-chip">✓ Satvik Meals</span>
+                    <span class="trust-chip">✓ Senior Citizen Care</span>
+                </div>
+            </div>
+
+            <!-- Regional Tours Column -->
+            <div class="footer-col">
+                <h3 class="footer-heading">Our Tour Circuits</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'yatras:char_dham_overview' %}"><strong>North India:</strong> Char Dham Yatra</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-panch-kedar"><strong>North India:</strong> Panch Kedar Yatra</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-kashmir-paradise"><strong>North India:</strong> Kashmir Valley Tour</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-rameshwaram-circuit"><strong>South India:</strong> Rameshwaram Circuit</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-kerala-tour"><strong>South India:</strong> Kerala Backwaters</a></li>
+                    <li><a href="{% url 'yatras:puri_overview' %}"><strong>East India:</strong> Jagannath Puri (11 Days)</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-jharkhand-tour"><strong>East India:</strong> Baidyanath Jyotirlinga</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-nepal-pashupatinath-muktinath"><strong>Nepal Tour:</strong> Pashupatinath Muktinath</a></li>
+                </ul>
+            </div>
+
+            <!-- Char Dham Quick Links -->
+            <div class="footer-col">
+                <h3 class="footer-heading">Char Dham Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="{% url 'yatras:char_dham_overview' %}">Char Dham Overview</a></li>
+                    <li><a href="{% url 'yatras:char_dham_itinerary' %}">13-Day Itinerary Guide</a></li>
+                    <li><a href="{% url 'yatras:char_dham_package_details' %}">Inclusions & Package Pricing</a></li>
+                    <li><a href="{% url 'yatras:char_dham_stay_and_travel' %}">Stay & Transport Details</a></li>
+                    <li><a href="{% url 'yatras:char_dham_travel_guide' %}">Pilgrim Preparation & Health</a></li>
+                    <li><a href="{% url 'yatras:char_dham_policies' %}">Booking & Cancellation Terms</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Information Down Bar -->
+            <div class="footer-col footer-contact-col">
+                <h3 class="footer-heading">Direct Contact & Office</h3>
+                <div class="footer-contact-details">
+                    <div class="contact-detail-row">
+                        <span class="detail-icon">📍</span>
+                        <div class="detail-text">
+                            <strong>Head Office:</strong>
+                            <p>{{ OFFICE_ADDRESS }}</p>
+                        </div>
+                    </div>
+                    <div class="contact-detail-row">
+                        <span class="detail-icon">📞</span>
+                        <div class="detail-text">
+                            <strong>Phone Helpline:</strong>
+                            <p><a href="tel:{{ PHONE_RAW }}">{{ PHONE_NUMBER }}</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-detail-row">
+                        <span class="detail-icon">💬</span>
+                        <div class="detail-text">
+                            <strong>WhatsApp Inquiries:</strong>
+                            <p><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer">{{ WHATSAPP_NUMBER }}</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-detail-row">
+                        <span class="detail-icon">⏰</span>
+                        <div class="detail-text">
+                            <strong>Support Hours:</strong>
+                            <p>{{ OPERATING_HOURS }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-contact-actions">
+                    <a href="tel:{{ PHONE_RAW }}" class="btn btn-footer-action">
+                        <span>Call {{ PHONE_NUMBER }}</span>
+                    </a>
+                    <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="btn btn-footer-whatsapp">
+                        <span>WhatsApp Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Down Bar Bottom Copyright -->
+        <div class="footer-bottom">
+            <div class="container footer-bottom-inner">
+                <p class="copyright">
+                    &copy; {{ CURRENT_YEAR }} {{ BUSINESS_NAME }}. All rights reserved. Spiritual Pilgrimages &amp; Nature Journeys.
+                </p>
+                <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                    <p class="license-note" style="margin: 0;">
+                        Photography credits: Wikimedia Commons (Public Domain &amp; CC Licensed).
+                    </p>
+                    <a href="/admin/" target="_blank" style="color: #cbd5e1; font-size: 0.8rem; text-decoration: none; opacity: 0.8; font-weight: 500;" aria-label="Staff and Admin Portal">
+                        🔐 Staff / Admin Portal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 5. Interactive AI Pilgrimage Assistant Drawer / Modal -->
+    <div class="ai-modal-overlay" id="ai-modal-overlay" aria-hidden="true">
+        <div class="ai-modal-container" role="dialog" aria-modal="true" aria-labelledby="ai-modal-title">
+            <div class="ai-modal-header">
+                <div class="ai-header-brand">
+                    <div class="ai-avatar">✨</div>
+                    <div>
+                        <div class="ai-title-row">
+                            <h3 class="ai-modal-title" id="ai-modal-title">Swarnav AI Yatra Assistant</h3>
+                            <span class="ai-badge-live">Gemini RAG Agent</span>
+                        </div>
+                        <p class="ai-modal-subtitle">Instant verified guidance • Itineraries, prices, darshan &amp; WhatsApp booking</p>
+                    </div>
+                </div>
+                <div class="ai-header-actions">
+                    <button type="button" class="ai-reset-btn" id="ai-reset-chat-btn" title="Start New Conversation" aria-label="Start New Conversation">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>
+                        </svg>
+                        <span>New Chat</span>
+                    </button>
+                    <button type="button" class="ai-modal-close" id="close-ai-modal-btn" aria-label="Close Assistant">&times;</button>
+                </div>
+            </div>
+
+            <!-- Language Indicator / Quick Switcher -->
+            <div class="ai-lang-bar">
+                <span class="ai-lang-label">Languages Supported:</span>
+                <span class="ai-lang-pill active">English</span>
+                <span class="ai-lang-pill">ગુજરાતી</span>
+                <span class="ai-lang-pill">हिंदी</span>
+            </div>
+
+            <div class="ai-modal-body" id="ai-chat-messages">
+                <div class="ai-msg ai-msg-bot">
+                    <div class="ai-bubble">
+                        🙏 <strong>Jai Shri Krishna / Har Har Mahadev!</strong>
+                        <p>Welcome to <strong>Swarnav Tour & Travels</strong>. I am your advanced AI pilgrimage guide, powered by real-time tour itineraries, route elevations, satvik meal plans, and booking records.</p>
+                        <p>You can ask me questions in <strong>English, ગુજરાતી, or हिंदी</strong> about our <strong>Char Dham (13 Days)</strong>, <strong>Panch Kedar</strong>, <strong>Jagannath Puri</strong>, <strong>Nepal</strong>, <strong>South India</strong>, or <strong>Kashmir</strong> tours.</p>
+                        <p>How may I serve your pilgrimage journey today?</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Suggested Prompts (Dynamic) -->
+            <div class="ai-suggestions-wrap">
+                <span class="suggestions-label">Suggested Inquiries:</span>
+                <div class="suggestions-chips" id="ai-suggestions-chips">
+                    <button type="button" class="ai-chip" data-prompt="What is the 13-day Char Dham Yatra itinerary and price?">Char Dham Itinerary &amp; Price</button>
+                    <button type="button" class="ai-chip" data-prompt="Are these pilgrimages suitable for senior citizens? What about Kedarnath doli or helicopter?">Senior Citizen &amp; Palki / Heli</button>
+                    <button type="button" class="ai-chip" data-prompt="How much for 4 people on the Char Dham Yatra from Gujarat?">Estimate for 4 Pilgrims</button>
+                    <button type="button" class="ai-chip" data-prompt="Tell me about the Nepal Pashupatinath Muktinath tour.">Nepal Tour Details</button>
+                    <button type="button" class="ai-chip" data-prompt="Tell me about the 11-day Jagannath Puri and Varanasi tour.">Jagannath Puri Circuit</button>
+                </div>
+            </div>
+
+            <div class="ai-modal-footer">
+                <form id="ai-chat-form" class="ai-chat-input-form">
+                    {% csrf_token %}
+                    <input type="text" id="ai-user-input" class="ai-chat-input" placeholder="Ask in English, ગુજરાતી or हिंदी (e.g. Kedarnath trek, price, meals)..." autocomplete="off">
+                    <button type="submit" class="ai-send-btn" id="ai-send-submit-btn" aria-label="Send question">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                        </svg>
+                    </button>
+                </form>
+                <div class="ai-connect-human">
+                    <span>Prefer speaking with our coordinators?</span>
+                    <a href="tel:{{ PHONE_RAW }}" class="ai-direct-call">Call {{ PHONE_NUMBER }}</a>
+                    <span>or</span>
+                    <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="ai-direct-wa">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. Quick Tour Inquiry Modal -->
+    <div class="inquiry-modal-overlay" id="inquiry-modal-overlay" aria-hidden="true">
+        <div class="inquiry-modal-container" role="dialog" aria-modal="true" aria-labelledby="inquiry-modal-title">
+            <div class="inquiry-modal-header">
+                <div>
+                    <span class="modal-badge">Plan Your Pilgrimage</span>
+                    <h3 class="inquiry-modal-title" id="inquiry-modal-title">Quick Yatra Inquiry</h3>
+                </div>
+                <button type="button" class="inquiry-modal-close" id="close-inquiry-modal-btn" aria-label="Close Inquiry">&times;</button>
+            </div>
+
+            <div class="inquiry-modal-body">
+                <div id="inquiry-alert" class="inquiry-alert" style="display:none; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.95rem; font-weight: 500;"></div>
+                <form id="quick-inquiry-form" class="inquiry-form-grid" method="POST" action="{% url 'core:submit_inquiry' %}" onsubmit="handleInquirySubmit(event)">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="modal-tour-select" class="form-label">Select Tour / Yatra *</label>
+                        <select id="modal-tour-select" name="tour" class="form-select" required>
+                            <option value="">-- Choose Your Destination --</option>
+                            <optgroup label="North India">
+                                <option value="char-dham">Char Dham Yatra (13 Days – ₹30,000)</option>
+                                <option value="panch-kedar">Panch Kedar Yatra (10 Days – ₹26,500)</option>
+                                <option value="kashmir-paradise">Kashmir Tour (7 Days – ₹22,500)</option>
+                            </optgroup>
+                            <optgroup label="South India">
+                                <option value="rameshwaram-circuit">Rameshwaram &amp; South Circuit (8 Days – ₹24,000)</option>
+                                <option value="kerala-tour">Kerala Tour (6 Days – ₹19,500)</option>
+                            </optgroup>
+                            <optgroup label="East India">
+                                <option value="jagannath-puri">Jagannath Puri Odisha (11 Days – ₹24,500)</option>
+                                <option value="jharkhand-tour">Jharkhand Spiritual Yatra (5 Days – ₹14,500)</option>
+                            </optgroup>
+                            <optgroup label="Nepal Tour">
+                                <option value="nepal-pashupatinath-muktinath">Nepal Pashupatinath Muktinath (8 Days – ₹34,500)</option>
+                            </optgroup>
+                            <option value="general">General Pilgrimage Inquiry</option>
+                        </select>
+                        <div class="field-error" id="modal-tour-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="modal-user-name" class="form-label">Full Name *</label>
+                            <input type="text" id="modal-user-name" name="name" class="form-input" placeholder="e.g. Ramesh Patel" required>
+                            <div class="field-error" id="modal-name-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-user-phone" class="form-label">Phone / WhatsApp Number *</label>
+                            <input type="tel" id="modal-user-phone" name="phone" class="form-input" placeholder="e.g. 9586825353" required>
+                            <div class="field-error" id="modal-phone-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row-2">
+                        <div class="form-group">
+                            <label for="modal-travel-city" class="form-label">Departure City (in Gujarat / India)</label>
+                            <input type="text" id="modal-travel-city" name="departure_city" class="form-input" placeholder="e.g. Surat, Ahmedabad, Vadodara, Rajkot">
+                        </div>
+                        <div class="form-group">
+                            <label for="modal-pilgrim-count" class="form-label">Number of Pilgrims</label>
+                            <input type="number" id="modal-pilgrim-count" name="total_pilgrims" class="form-input" min="1" max="100" placeholder="e.g. 4">
+                            <div class="field-error" id="modal-pilgrims-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modal-notes" class="form-label">Special Requirements (Senior citizens, month of travel, etc.)</label>
+                        <textarea id="modal-notes" name="message" class="form-textarea" rows="2" placeholder="Tell us your preferred month or any health requirements..."></textarea>
+                    </div>
+
+                    <div class="form-group form-checkbox-group" style="margin-top: 8px; margin-bottom: 16px;">
+                        <label class="form-checkbox-label" style="display: flex; align-items: flex-start; gap: 8px; font-size: 0.88rem; color: #475569; cursor: pointer; line-height: 1.4;">
+                            <input type="checkbox" id="modal-consent" name="consent_given" class="form-checkbox" required style="margin-top: 3px; cursor: pointer; accent-color: #7c1a22;">
+                            <span>I agree that Swarnav may contact me regarding this yatra inquiry. *</span>
+                        </label>
+                        <div class="field-error" id="modal-consent-error" style="display:none; color: #dc2626; font-size: 0.82rem; margin-top: 4px;"></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="modal-submit-btn" class="btn btn-primary btn-full">
+                            <span>Save Inquiry &amp; Continue to WhatsApp →</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. Floating Action Buttons (AI Assistant & WhatsApp) -->
+    <div class="floating-actions" role="region" aria-label="Quick Actions">
+        <button type="button" class="floating-btn floating-ai-btn" id="floating-ai-trigger" aria-label="Ask Swarnav AI Assistant">
+            <span class="floating-icon">✨</span>
+            <span class="floating-tooltip">Ask AI Assistant</span>
+        </button>
+        <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="floating-btn floating-wa-btn" aria-label="Chat on WhatsApp">
+            <svg class="floating-icon-svg" viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+            </svg>
+            <span class="floating-tooltip">Chat with Coordinator</span>
+        </a>
+    </div>
+
+    <!-- Google Translate Container (Hidden) -->
+    <div id="google_translate_element" style="display:none;" aria-hidden="true"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,gu',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Scripts -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

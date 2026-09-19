@@ -1,0 +1,209 @@
+{% extends 'yatras/char_dham/base_char_dham.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Overview{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <!-- Introduction Section -->
+    <section class="yatra-section">
+        <div class="editorial-intro-grid">
+            <div class="editorial-text">
+                <span class="section-badge">About the Pilgrimage</span>
+                <h2 class="yatra-section-title">Sacred Four-Shrine Circuit of Uttarakhand</h2>
+                <div class="intro-paragraphs">
+                    {% for paragraph in package.introduction %}
+                    <p>{{ paragraph }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="editorial-sidebar">
+                <div class="quick-facts-card">
+                    <h3 class="quick-facts-title">Package Summary</h3>
+                    <ul class="quick-facts-list">
+                        <li>
+                            <span class="qf-label">Starting Point:</span>
+                            <span class="qf-value">{{ package.starting_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Ending Point:</span>
+                            <span class="qf-value">{{ package.ending_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Total Duration:</span>
+                            <span class="qf-value">{{ package.duration_display }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Starting Price:</span>
+                            <span class="qf-value"><strong>{{ package.starting_price }}</strong> <small>/ person</small></span>
+                        </li>
+                        <li style="background: rgba(217, 119, 6, 0.08); padding: 8px; border-radius: 4px; border-left: 3px solid #b45309;">
+                            <span class="qf-label" style="color: #92400e; font-weight: 700;">Upcoming Batch:</span>
+                            <span class="qf-value" style="color: #92400e; font-weight: 700;">1st Nov – 13th Nov</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Departures:</span>
+                            <span class="qf-value">Scheduled seasonal batches</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Accommodation:</span>
+                            <span class="qf-value">Economy (Triple-sharing)</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Meals:</span>
+                            <span class="qf-value">Lunch & Dinner per itinerary</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Transport:</span>
+                            <span class="qf-value">Train + Mountain road vehicle</span>
+                        </li>
+                    </ul>
+                    <div class="qf-action">
+                        <button type="button" onclick="openQuickInquiry('char-dham')" class="btn btn-primary btn-full" style="margin-bottom: 8px;">
+                            <span>Register for Nov 1–13 Batch</span>
+                        </button>
+                        <a href="tel:{{ PHONE_RAW }}" class="btn btn-secondary btn-full">
+                            <span>Call: {{ PHONE_NUMBER }}</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Confirmed Batch Banner Card -->
+    <section class="yatra-section batch-announcement-section" style="margin-top: 10px; margin-bottom: 30px;">
+        <div class="batch-spotlight-card" style="background: linear-gradient(135deg, #7c1a22 0%, #4a0c12 100%); color: #ffffff; border-radius: 12px; padding: 28px 32px; box-shadow: 0 8px 24px rgba(124, 26, 34, 0.18); border: 1px solid rgba(254, 243, 199, 0.2);">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+                <div>
+                    <span style="display: inline-block; background: #f59e0b; color: #78350f; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px;">
+                        Confirmed Autumn Departure
+                    </span>
+                    <h3 style="font-size: 24px; font-weight: 700; color: #fef3c7; margin: 0 0 8px;">
+                        Next Confirmed Batch: 1st November to 13th November
+                    </h3>
+                    <p style="font-size: 15px; color: #fed7aa; margin: 0; max-width: 680px; line-height: 1.5;">
+                        Join our organized 13-Day sacred yatra covering Yamunotri, Gangotri, Kedarnath, and Badrinath. Starts from Surat with train/flight connectivity arranged from Ahmedabad, Vadodara, Mumbai, and your home city.
+                    </p>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px; min-width: 220px;">
+                    <button type="button" onclick="openQuickInquiry('char-dham')" class="btn" style="background: #fef3c7; color: #7c1a22; font-weight: 700; padding: 12px 20px; border-radius: 6px; text-align: center; border: none; cursor: pointer; font-size: 14px;">
+                        Register for Nov Batch →
+                    </button>
+                    <a href="https://wa.me/919586825353?text=Namaste%20Swarnav,%20I%20want%20to%20inquire%20and%20register%20for%20the%20Char%20Dham%20Batch%20(1st%20Nov%20to%2013th%20Nov)." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding: 10px 18px; font-size: 13px; text-align: center;">
+                        WhatsApp Instant Booking
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The 4 Dhams in Sacred Sequence -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">West to East Sequence</span>
+            <h2 class="yatra-section-title">The Four Sacred Dhams Covered</h2>
+            <p class="section-subtitle">
+                According to tradition, completing the Char Dham Yatra in the prescribed sequence brings divine spiritual blessings and peace.
+            </p>
+        </div>
+
+        <div class="dhams-overview-grid">
+            {% for dham in package.dhams %}
+            <div class="dham-overview-card">
+                <div class="dham-card-top">
+                    <span class="dham-step-num">{{ dham.highlight }}</span>
+                    <h3 class="dham-card-name">{{ dham.name }}</h3>
+                    <p class="dham-card-significance">{{ dham.significance }}</p>
+                </div>
+                <p class="dham-card-desc">{{ dham.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Route Path Ribbon -->
+    <section class="yatra-section route-ribbon-section">
+        <div class="route-ribbon-card">
+            <h3 class="route-ribbon-title">Complete 13-Day Pilgrimage Route</h3>
+            <p class="route-ribbon-desc">
+                Surat ➔ Haridwar ➔ Barkot ➔ Yamunotri ➔ Uttarkashi ➔ Gangotri ➔ Sonprayag ➔ Kedarnath ➔ Pipalkoti ➔ Badrinath & Mana Village ➔ Rishikesh ➔ Haridwar ➔ Surat
+            </p>
+            <div class="route-actions">
+                <a href="{% url 'yatras:char_dham_itinerary' %}" class="btn btn-secondary">
+                    <span>View Day-by-Day Itinerary (Days 1 to 13) →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Hub Cards -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Explore Every Detail</span>
+            <h2 class="yatra-section-title">Essential Package Information</h2>
+            <p class="section-subtitle">
+                Review complete details regarding daily schedule, inclusions, hotel standards, travel guide, and cancellation terms.
+            </p>
+        </div>
+
+        <div class="hub-grid">
+            <a href="{% url 'yatras:char_dham_itinerary' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📅</span>
+                    <h3 class="hub-title">13-Day Itinerary</h3>
+                </div>
+                <p class="hub-desc">Full day-wise schedule from Surat departure to Haridwar, Yamunotri, Gangotri, Kedarnath, and Badrinath.</p>
+                <span class="hub-link-text">Read Day-by-Day Plan →</span>
+            </a>
+
+            <a href="{% url 'yatras:char_dham_package_details' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📋</span>
+                    <h3 class="hub-title">Package Details</h3>
+                </div>
+                <p class="hub-desc">Detailed breakdown of included services, exclusions, conditional options, and coordinator support.</p>
+                <span class="hub-link-text">View Inclusions & Exclusions →</span>
+            </a>
+
+            <a href="{% url 'yatras:char_dham_stay_and_travel' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🏨</span>
+                    <h3 class="hub-title">Stay & Travel</h3>
+                </div>
+                <p class="hub-desc">Information on triple-sharing economy accommodation, meal arrangements, and train/road transportation.</p>
+                <span class="hub-link-text">Review Accommodation & Transit →</span>
+            </a>
+
+            <a href="{% url 'yatras:char_dham_travel_guide' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🏔</span>
+                    <h3 class="hub-title">Travel Guide</h3>
+                </div>
+                <p class="hub-desc">High-altitude health preparation, mandatory registration documents, weather advice, and packing list.</p>
+                <span class="hub-link-text">Read Travel Preparation →</span>
+            </a>
+
+            <a href="{% url 'yatras:char_dham_policies' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">⚖️</span>
+                    <h3 class="hub-title">Policies</h3>
+                </div>
+                <p class="hub-desc">Advance payment terms, balance deadlines, and structured percentage-based cancellation refund schedule.</p>
+                <span class="hub-link-text">View Terms & Policies →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Important Notice Box -->
+    <section class="yatra-section">
+        <div class="notice-callout">
+            <h4 class="notice-callout-title">Important Notice Regarding Booking & Availability</h4>
+            <p class="notice-callout-text">
+                {{ package.confirmation_note }} Government registration with the Uttarakhand Char Dham portal and valid photo identification are mandatory for all travellers.
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock %}
