@@ -14,8 +14,8 @@ def send_admin_inquiry_notification(inquiry, site_url="http://127.0.0.1:8000"):
     Dispatches both HTML and plain-text formats.
     Handled with robust error catching so inquiry saving is never interrupted.
     """
-    admin_email = getattr(settings, 'ADMIN_NOTIFICATION_EMAIL', 'admin@swarnavtravels.com')
-    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Swarnav Tour & Travels <no-reply@swarnavtravels.com>')
+    admin_email = getattr(settings, 'ADMIN_NOTIFICATION_EMAIL', 'swarnavtours01@gmail.com')
+    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Swarnav Tour & Travels <swarnavtours01@gmail.com>')
 
     ref_id = f"SW-INQ-{inquiry.id:04d}"
     subject = f"🕉️ New Registration Inquiry #{ref_id}: {inquiry.name} - {inquiry.get_tour_display()}"

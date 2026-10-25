@@ -209,10 +209,10 @@ EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'False').lower() in ('true', '1'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 
-ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'mihirbhalala5154@gmail.com')
+ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'swarnavtours01@gmail.com')
 DEFAULT_FROM_EMAIL = os.environ.get(
     'DEFAULT_FROM_EMAIL',
-    f'Swarnav Tour & Travels <{EMAIL_HOST_USER}>' if EMAIL_HOST_USER else 'Swarnav Tour & Travels <no-reply@swarnavtravels.com>'
+    f'Swarnav Tour & Travels <{EMAIL_HOST_USER}>' if EMAIL_HOST_USER else 'Swarnav Tour & Travels <swarnavtours01@gmail.com>'
 )
 
 # Base site URL for admin email links (set your domain in production or local Wi-Fi IP for phone access)

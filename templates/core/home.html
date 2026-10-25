@@ -482,10 +482,16 @@
                         </svg>
                         <span>WhatsApp Inquiries</span>
                     </a>
+                    <a href="mailto:{{ EMAIL }}" class="btn btn-contact-email" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; border-radius: 8px; background: #0f172a; color: #f8fafc; font-weight: 600; text-decoration: none; border: 1px solid #334155; transition: all 0.2s ease;">
+                        <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        <span>{{ EMAIL }}</span>
+                    </a>
                 </div>
 
                 <div class="contact-footer-note">
-                    <p>📍 Office: {{ OFFICE_ADDRESS }} | Working Hours: {{ OPERATING_HOURS }}</p>
+                    <p>📍 Office: {{ OFFICE_ADDRESS }} | ✉️ Email: <a href="mailto:{{ EMAIL }}" style="color: #d4a017; text-decoration: none; font-weight: 600;">{{ EMAIL }}</a> | Working Hours: {{ OPERATING_HOURS }}</p>
                 </div>
             </div>
         </div>
