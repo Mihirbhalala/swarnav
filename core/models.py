@@ -47,9 +47,9 @@ class Inquiry(models.Model):
     TOUR_CHOICES = [
         ('char-dham', 'Char Dham Yatra (13 Days – ₹30,000)'),
         ('panch-kedar', 'Panch Kedar Yatra (10 Days – ₹26,500)'),
-        ('kashmir-paradise', 'Kashmir Tour (7 Days – ₹22,500)'),
-        ('rameshwaram-circuit', 'Rameshwaram & South Circuit (8 Days – ₹24,000)'),
-        ('kerala-tour', 'Kerala Tour (6 Days – ₹19,500)'),
+        ('kashmir-paradise', 'Kashmir Tour (11 Days – ₹30,000 – Dec Batch)'),
+        ('rameshwaram-circuit', 'Rameshwaram & South Circuit (12 Days – ₹30,000)'),
+        ('kerala-tour', 'Kerala Tour (13 Days – ₹32,000)'),
         ('jagannath-puri', 'Jagannath Puri Odisha (11 Days – ₹24,500)'),
         ('jharkhand-tour', 'Jharkhand Spiritual Yatra (5 Days – ₹14,500)'),
         ('nepal-pashupatinath-muktinath', 'Nepal Pashupatinath Muktinath (8 Days – ₹34,500)'),
@@ -129,21 +129,47 @@ class Inquiry(models.Model):
     def __str__(self):
         return f"Inquiry #{self.id}: {self.name} - {self.get_tour_display()}"
 
+    @property
+    def whatsapp_url(self):
+        """Sanitized international WhatsApp direct chat link without 404 formatting bugs."""
+        import re, urllib.parse
+        digits = re.sub(r'\D', '', str(self.phone or ''))
+        if len(digits) == 12 and digits.startswith('91'):
+            pass
+        elif len(digits) == 10:
+            digits = f"91{digits}"
+        elif len(digits) == 11 and digits.startswith('0'):
+            digits = f"91{digits[1:]}"
+        elif len(digits) > 12 and digits.startswith('9191'):
+            digits = digits[2:]
+        greeting = f"Namaste {self.name}, this is Swarnav Tour & Travels regarding your {self.get_tour_display()} inquiry (#SW-{self.id:04d})."
+        return f"https://wa.me/{digits}?text={urllib.parse.quote(greeting)}"
+
 
 
 class Testimonial(models.Model):
-    """Pilgrim testimonials and reviews."""
+    """Pilgrim testimonials and reviews with detailed sub-category ratings."""
     pilgrim_name = models.CharField(max_length=150)
     city = models.CharField(max_length=100, blank=True, help_text="e.g. Surat, Ahmedabad, Mumbai")
     yatra_name = models.CharField(max_length=200, help_text="e.g. Char Dham Yatra")
-    rating = models.PositiveSmallIntegerField(default=5, help_text="1 to 5 stars")
-    review_text = models.TextField()
+    
+    # Primary Overall Rating (1 to 5 stars)
+    rating = models.PositiveSmallIntegerField(default=5, help_text="Overall rating (1 to 5 stars)")
+    
+    # Sub-category ratings (1 to 5 stars, optional per pilgrim)
+    rating_food = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Food Quality & Dining Experience")
+    rating_transport = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Transportation & Travel Comfort")
+    rating_accommodation = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Accommodation & Hospitality")
+    rating_coordination = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Tour Coordination & Management")
+    rating_safety = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Safety & Traveller Assistance")
+
+    review_text = models.TextField(blank=True, default='', help_text="Optional written review / feedback")
     is_featured = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = "Testimonial"
-        verbose_name_plural = "Testimonials"
+        verbose_name = "Pilgrim Review"
+        verbose_name_plural = "Pilgrim Reviews"
         ordering = ['-created_at']
 
     def __str__(self):

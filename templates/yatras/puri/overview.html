@@ -40,19 +40,19 @@
                         </li>
                         <li>
                             <span class="qf-label">Departures:</span>
-                            <span class="qf-value">Monthly &amp; Festival Batches</span>
+                            <span class="qf-value">{{ package.departures_summary|default:"Monthly &amp; Festival Batches" }}</span>
                         </li>
                         <li>
                             <span class="qf-label">Accommodation:</span>
-                            <span class="qf-value">Economy (Triple-sharing)</span>
+                            <span class="qf-value">{{ package.accommodation_summary|default:"Economy (Triple-sharing)" }}</span>
                         </li>
                         <li>
                             <span class="qf-label">Meals:</span>
-                            <span class="qf-value">Lunch &amp; Dinner per itinerary</span>
+                            <span class="qf-value">{{ package.meals_summary|default:"Lunch &amp; Dinner per itinerary" }}</span>
                         </li>
                         <li>
                             <span class="qf-label">Transport:</span>
-                            <span class="qf-value">Train + Dedicated group vehicle</span>
+                            <span class="qf-value">{{ package.transport_summary|default:"Train + Dedicated group vehicle" }}</span>
                         </li>
                     </ul>
                     <div class="qf-action">
@@ -92,13 +92,13 @@
     <!-- Route Path Ribbon -->
     <section class="yatra-section route-ribbon-section">
         <div class="route-ribbon-card">
-            <h3 class="route-ribbon-title">Complete 11-Day Pilgrimage Route</h3>
+            <h3 class="route-ribbon-title">Complete {{ package.duration_days|default:"11" }}-Day Pilgrimage Route</h3>
             <p class="route-ribbon-desc">
                 Surat ➔ Puri ➔ Konark ➔ Bhubaneswar ➔ Kolkata ➔ Gangasagar ➔ Deoghar (Jasidih) ➔ Varanasi ➔ Sarnath ➔ Surat
             </p>
             <div class="route-actions">
                 <a href="{% url 'yatras:puri_itinerary' %}" class="btn btn-secondary">
-                    <span>View Day-by-Day Itinerary (Days 1 to 11) →</span>
+                    <span>View Day-by-Day Itinerary (Days 1 to {{ package.duration_days|default:"11" }}) →</span>
                 </a>
             </div>
         </div>
@@ -118,7 +118,7 @@
             <a href="{% url 'yatras:puri_itinerary' %}" class="hub-card">
                 <div class="hub-header">
                     <span class="hub-icon">📅</span>
-                    <h3 class="hub-title">11-Day Itinerary</h3>
+                    <h3 class="hub-title">{{ package.duration_days|default:"11" }}-Day Itinerary</h3>
                 </div>
                 <p class="hub-desc">Full day-wise schedule from Surat departure to Puri, Konark, Kolkata, Gangasagar, Deoghar, and Varanasi.</p>
                 <span class="hub-link-text">Read Day-by-Day Plan →</span>

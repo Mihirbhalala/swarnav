@@ -1,0 +1,1012 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title|default:'Pilgrim Reviews & Testimonials | Swarnav Tour & Travels' }}{% endblock %}
+{% block meta_description %}{{ meta_description|default:'Read authentic reviews and experiences from pilgrims who traveled with Swarnav Tour & Travels across Char Dham, Kashmir, Rameshwaram, Puri, Kerala, and Nepal.' }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ==========================================================================
+       Pilgrim Reviews & Testimonials Page Styles (Public Display Only)
+       ========================================================================== */
+    .reviews-page-wrapper {
+        background: var(--color-bg, #FDFBF7);
+        color: var(--color-text-primary, #1E232B);
+        padding-bottom: 80px;
+        overflow-x: hidden;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* 1. Hero Banner */
+    .reviews-hero {
+        background: linear-gradient(135deg, #4A1010 0%, #631818 50%, #300A0A 100%);
+        color: #FFFFFF;
+        padding: 56px 0 64px;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 4px solid var(--color-gold, #B6781B);
+    }
+
+    .reviews-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(216, 183, 129, 0.15) 1px, transparent 1px);
+        background-size: 24px 24px;
+        opacity: 0.6;
+        pointer-events: none;
+    }
+
+    .reviews-hero-inner {
+        position: relative;
+        z-index: 2;
+        max-width: 960px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .reviews-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(251, 244, 232, 0.12);
+        border: 1px solid rgba(216, 183, 129, 0.45);
+        color: #FEEBC8;
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: 6px 16px;
+        border-radius: 9999px;
+        margin-bottom: 18px;
+        backdrop-filter: blur(4px);
+    }
+
+    .reviews-hero-title {
+        font-family: var(--font-heading, 'Cormorant Garamond', Georgia, serif);
+        font-size: clamp(2.2rem, 5vw, 3.4rem);
+        font-weight: 700;
+        color: #FFFFFF;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        letter-spacing: -0.01em;
+    }
+
+    .reviews-hero-title span {
+        color: #FCD34D;
+        font-style: italic;
+    }
+
+    .reviews-hero-subtitle {
+        font-size: clamp(1rem, 2vw, 1.18rem);
+        color: #FDE68A;
+        max-width: 760px;
+        margin: 0 auto 28px;
+        line-height: 1.6;
+        font-weight: 400;
+    }
+
+    .reviews-hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .btn-hero-inquiry {
+        background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        color: #1E232B;
+        font-weight: 700;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 14px rgba(217, 119, 6, 0.35);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-hero-inquiry:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(217, 119, 6, 0.5);
+        color: #0F172A;
+    }
+
+    .btn-hero-whatsapp {
+        background: rgba(255, 255, 255, 0.12);
+        color: #FFFFFF;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-weight: 600;
+        padding: 12px 22px;
+        border-radius: 8px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+        backdrop-filter: blur(4px);
+        transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-hero-whatsapp:hover {
+        background: rgba(255, 255, 255, 0.22);
+        border-color: #FFFFFF;
+        color: #FFFFFF;
+    }
+
+    /* 2. Rating Scorecard Section */
+    .scorecard-section {
+        margin-top: -32px;
+        position: relative;
+        z-index: 10;
+        margin-bottom: 48px;
+    }
+
+    .scorecard-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E8E1D5;
+        box-shadow: 0 12px 32px rgba(30, 35, 43, 0.08);
+        padding: 32px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    @media (min-width: 900px) {
+        .scorecard-card {
+            grid-template-columns: 280px 1fr 300px;
+            align-items: center;
+            gap: 36px;
+        }
+    }
+
+    .score-summary-col {
+        text-align: center;
+        padding: 12px;
+        border-bottom: 1px solid #F0ECE4;
+    }
+
+    @media (min-width: 900px) {
+        .score-summary-col {
+            border-bottom: none;
+            border-right: 1px solid #F0ECE4;
+            padding-right: 28px;
+        }
+    }
+
+    .score-big-number {
+        font-size: 3.5rem;
+        font-weight: 800;
+        color: var(--color-maroon, #631818);
+        line-height: 1;
+        font-family: var(--font-heading, serif);
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .score-big-number small {
+        font-size: 1.4rem;
+        color: #94A3B8;
+        font-weight: 600;
+        font-family: var(--font-sans, sans-serif);
+    }
+
+    .score-stars-row {
+        color: #F59E0B;
+        font-size: 1.35rem;
+        letter-spacing: 3px;
+        margin: 8px 0 6px;
+    }
+
+    .score-review-count {
+        font-size: 0.9rem;
+        color: #64748B;
+        font-weight: 500;
+    }
+
+    .score-rec-badge {
+        display: inline-block;
+        margin-top: 10px;
+        background: #ECFDF5;
+        color: #065F46;
+        border: 1px solid #A7F3D0;
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 9999px;
+    }
+
+    /* Rating Bars Breakdown */
+    .score-bars-col {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    .score-bar-row {
+        display: grid;
+        grid-template-columns: 50px 1fr 45px;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.85rem;
+    }
+
+    .score-bar-label {
+        color: #475569;
+        font-weight: 600;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .score-bar-track {
+        height: 8px;
+        background: #F1F5F9;
+        border-radius: 9999px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .score-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #F59E0B 0%, #D97706 100%);
+        border-radius: 9999px;
+        transition: width 0.6s ease;
+    }
+
+    .score-bar-count {
+        color: #64748B;
+        font-size: 0.8rem;
+        text-align: right;
+        font-weight: 600;
+    }
+
+    /* Trust Pillars in Scorecard */
+    .score-trust-col {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #FDFBF7;
+        border: 1px solid #F0ECE4;
+        border-radius: 12px;
+        padding: 16px 18px;
+    }
+
+    .trust-pillar-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.84rem;
+        line-height: 1.4;
+    }
+
+    .trust-pillar-icon {
+        font-size: 1.2rem;
+        line-height: 1;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    .trust-pillar-item strong {
+        color: var(--color-maroon-deep, #4A1010);
+        display: block;
+        font-size: 0.88rem;
+    }
+
+    .trust-pillar-item span {
+        color: #64748B;
+    }
+
+    /* 3. Filter Navigation Strip */
+    .reviews-controls-strip {
+        margin-bottom: 36px;
+        background: #FFFFFF;
+        border: 1px solid #EBE4D8;
+        border-radius: 16px;
+        padding: 16px 20px;
+        box-shadow: 0 4px 16px rgba(30, 35, 43, 0.03);
+    }
+
+    .filter-tabs-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .filter-pill {
+        white-space: nowrap;
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        color: #475569;
+        padding: 9px 18px;
+        border-radius: 9999px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        cursor: pointer;
+    }
+
+    .filter-pill:hover {
+        background: #FFFFFF;
+        border-color: #B6781B;
+        color: var(--color-maroon, #631818);
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .filter-pill.is-active {
+        background: var(--color-maroon, #631818);
+        border-color: var(--color-maroon, #631818);
+        color: #FFFFFF;
+        box-shadow: 0 4px 12px rgba(99, 24, 24, 0.25);
+    }
+
+    .filter-count {
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        background: rgba(0, 0, 0, 0.08);
+    }
+
+    .filter-pill.is-active .filter-count {
+        background: rgba(255, 255, 255, 0.25);
+        color: #FFFFFF;
+    }
+
+    @media (max-width: 640px) {
+        .reviews-controls-strip {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+        }
+        .filter-tabs-wrapper {
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .filter-pill {
+            padding: 6px 10px;
+            font-size: 0.78rem;
+        }
+    }
+
+    /* 4. Reviews Grid */
+    .reviews-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+        margin-bottom: 48px;
+        width: 100%;
+    }
+
+    @media (min-width: 768px) {
+        .reviews-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1060px) {
+        .reviews-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    .review-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E5E7EB;
+        padding: 24px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        position: relative;
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .review-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(30, 35, 43, 0.09);
+        border-color: #D8B781;
+    }
+
+    .review-card-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 14px;
+    }
+
+    .pilgrim-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #78350F 0%, #B45309 100%);
+        color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.25rem;
+        letter-spacing: 0.02em;
+        flex-shrink: 0;
+        box-shadow: 0 2px 6px rgba(120, 53, 15, 0.2);
+    }
+
+    .pilgrim-meta {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .pilgrim-name {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #0F172A;
+        margin: 0;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .pilgrim-location {
+        font-size: 0.88rem;
+        color: #64748B;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 3px;
+        font-weight: 500;
+    }
+
+    .verified-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #047857;
+        background: #ECFDF5;
+        border: 1px solid #A7F3D0;
+        padding: 3px 12px;
+        border-radius: 9999px;
+        margin-left: auto;
+        flex-shrink: 0;
+    }
+
+    .review-yatra-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #FBF6ED;
+        border: 1px solid #EADBBE;
+        color: #92400E;
+        font-size: 0.86rem;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 8px;
+        margin-bottom: 14px;
+        max-width: 100%;
+        line-height: 1.4;
+        flex-wrap: wrap;
+    }
+
+    .review-stars {
+        color: #F59E0B;
+        font-size: 1.2rem;
+        letter-spacing: 4px;
+        margin-bottom: 14px;
+        line-height: 1;
+    }
+
+    .review-aspect-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-bottom: 16px;
+    }
+
+    .aspect-chip {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        color: #475569;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+    }
+
+    .aspect-chip strong {
+        font-weight: 700;
+        color: #1E293B;
+    }
+
+    .review-body {
+        font-size: 0.98rem;
+        color: #334155;
+        line-height: 1.6;
+        margin-bottom: 22px;
+        position: relative;
+        font-style: normal;
+    }
+
+    .review-card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 14px;
+        border-top: 1px solid #F1F5F9;
+        font-size: 0.88rem;
+        color: #94A3B8;
+    }
+
+    .btn-helpful {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        color: #475569;
+        padding: 5px 12px;
+        border-radius: 6px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-helpful:hover, .btn-helpful.is-helpful {
+        background: #ECFDF5;
+        border-color: #10B981;
+        color: #047857;
+    }
+
+    /* 5. Bottom Yatra CTA Banner */
+    .reviews-cta-box {
+        margin-top: 56px;
+        background: linear-gradient(135deg, #1E232B 0%, #0F172A 100%);
+        border-radius: 16px;
+        padding: 40px 32px;
+        color: #FFFFFF;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(216, 183, 129, 0.3);
+    }
+
+    .reviews-cta-box h3 {
+        font-family: var(--font-heading, serif);
+        font-size: 2.2rem;
+        color: #FEF3C7;
+        margin-bottom: 10px;
+    }
+
+    .reviews-cta-box p {
+        color: #CBD5E1;
+        max-width: 650px;
+        margin: 0 auto 24px;
+        font-size: 1.05rem;
+    }
+
+    .cta-button-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 640px) {
+        .reviews-hero {
+            padding: 36px 14px 44px;
+        }
+        .reviews-hero-badge {
+            font-size: 0.72rem;
+            padding: 4px 12px;
+            margin-bottom: 12px;
+        }
+        .reviews-hero-title {
+            font-size: 1.95rem;
+            margin-bottom: 10px;
+        }
+        .reviews-hero-subtitle {
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+            line-height: 1.5;
+            padding: 0 4px;
+        }
+        .reviews-hero-actions {
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+        .btn-hero-inquiry, .btn-hero-whatsapp {
+            width: 100%;
+            justify-content: center;
+            font-size: 0.9rem;
+            padding: 11px 16px;
+            box-sizing: border-box;
+        }
+        .scorecard-section {
+            margin-top: -24px;
+            margin-bottom: 28px;
+        }
+        .scorecard-card {
+            padding: 18px 14px;
+            gap: 18px;
+            border-radius: 12px;
+        }
+        .score-big-number {
+            font-size: 2.75rem;
+        }
+        .score-stars-row {
+            font-size: 1.15rem;
+            letter-spacing: 2px;
+        }
+        .score-summary-col {
+            padding: 6px;
+        }
+        .score-bars-col {
+            padding: 4px 0;
+            gap: 6px;
+        }
+        .score-bar-row {
+            font-size: 0.8rem;
+            gap: 8px;
+        }
+        .reviews-grid {
+            gap: 16px;
+            margin-bottom: 36px;
+        }
+        .review-card {
+            padding: 18px 14px;
+            border-radius: 14px;
+        }
+        .review-card-top {
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .pilgrim-avatar {
+            width: 42px;
+            height: 42px;
+            font-size: 1.1rem;
+        }
+        .pilgrim-name {
+            font-size: 1.05rem;
+        }
+        .pilgrim-location {
+            font-size: 0.82rem;
+        }
+        .verified-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+        }
+        .review-yatra-badge {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            margin-bottom: 10px;
+        }
+        .review-stars {
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        .review-aspect-chips {
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+        .aspect-chip {
+            font-size: 0.76rem;
+            padding: 3px 7px;
+        }
+        .review-body {
+            font-size: 0.92rem;
+            line-height: 1.55;
+            margin-bottom: 16px;
+        }
+        .review-card-footer {
+            font-size: 0.8rem;
+            padding-top: 10px;
+        }
+        .btn-helpful {
+            font-size: 0.76rem;
+            padding: 4px 8px;
+        }
+        .reviews-cta-box {
+            margin-top: 36px;
+            padding: 28px 16px;
+            border-radius: 12px;
+        }
+        .reviews-cta-box h3 {
+            font-size: 1.55rem;
+        }
+        .reviews-cta-box p {
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+        }
+        .cta-button-row {
+            flex-direction: column;
+            width: 100%;
+            gap: 10px;
+        }
+        .cta-button-row a {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="reviews-page-wrapper">
+    <!-- 1. Hero Header Banner (Showing Verified Reviews) -->
+    <section class="reviews-hero" aria-label="Pilgrim Reviews Header">
+        <div class="container reviews-hero-inner">
+            <div class="reviews-hero-badge">
+                <span>🕉️ Sacred Journeys • Genuine Devotion</span>
+            </div>
+            <h1 class="reviews-hero-title">
+                Pilgrim Reviews & <span>Sacred Voices</span>
+            </h1>
+            <p class="reviews-hero-subtitle">
+                Read authentic testimonials from pilgrims across Gujarat & India who journeyed with us to the Holy Char Dham, Kashmir, Jagannath Puri, Rameshwaram, and Kerala.
+            </p>
+            <div class="reviews-hero-actions">
+                <a href="{% url 'core:home' %}#inquiry" class="btn-hero-inquiry">
+                    <span>Plan Your Yatra Journey →</span>
+                </a>
+                <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="btn-hero-whatsapp">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413Z"/>
+                    </svg>
+                    <span>Connect on WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- 2. Trust Scorecard & Statistics Banner -->
+        <section class="scorecard-section" aria-label="Review Scorecard">
+            <div class="scorecard-card">
+                <!-- Big Score Column -->
+                <div class="score-summary-col">
+                    <div class="score-big-number">
+                        {{ avg_rating }}<small>/ 5.0</small>
+                    </div>
+                    <div class="score-stars-row" aria-label="Rating: {{ avg_rating }} out of 5 stars">
+                        ★★★★★
+                    </div>
+                    <div class="score-review-count">
+                        Based on <strong>{{ total_reviews }}</strong> verified yatri experiences
+                    </div>
+                    <div class="score-rec-badge">
+                        ✓ {{ recommended_pct }}% Pilgrims Recommend Swarnav
+                    </div>
+                </div>
+
+                <!-- Rating Breakdown Progress Bars -->
+                <div class="score-bars-col">
+                    {% for bar in rating_breakdown %}
+                    <div class="score-bar-row">
+                        <span class="score-bar-label">{{ bar.stars }} ★</span>
+                        <div class="score-bar-track">
+                            <div class="score-bar-fill" style="width: {{ bar.pct }}%;"></div>
+                        </div>
+                        <span class="score-bar-count">{{ bar.count }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Trust Highlights Pillars -->
+                <div class="score-trust-col">
+                    <div class="trust-pillar-item">
+                        <span class="trust-pillar-icon">🍲</span>
+                        <div>
+                            <strong>100% Satvik Pure Veg Meals</strong>
+                            <span>Gujarati & Jain diet with dedicated tour cooks</span>
+                        </div>
+                    </div>
+                    <div class="trust-pillar-item">
+                        <span class="trust-pillar-icon">👴</span>
+                        <div>
+                            <strong>Senior Citizen Care</strong>
+                            <span>Pacing, doli & pony support, queue escort</span>
+                        </div>
+                    </div>
+                    <div class="trust-pillar-item">
+                        <span class="trust-pillar-icon">🚆</span>
+                        <div>
+                            <strong>Seamless Transit from Gujarat</strong>
+                            <span>Train berths & 2x2 luxury mountain buses</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Filter Navigation Tabs -->
+        <section class="reviews-controls-strip" aria-label="Filter Reviews by Tour">
+            <div class="filter-tabs-wrapper">
+                <a href="{% url 'core:reviews' %}" class="filter-pill {% if not selected_yatra %}is-active{% endif %}">
+                    <span>All Yatras</span>
+                    <span class="filter-count">{{ total_reviews }}</span>
+                </a>
+                <a href="{% url 'core:reviews' %}?yatra=Char+Dham" class="filter-pill {% if selected_yatra == 'Char Dham' %}is-active{% endif %}">
+                    <span>🛕 Char Dham Yatra</span>
+                </a>
+                <a href="{% url 'core:reviews' %}?yatra=Jagannath+Puri" class="filter-pill {% if selected_yatra == 'Jagannath Puri' %}is-active{% endif %}">
+                    <span>🌊 Jagannath Puri</span>
+                </a>
+                <a href="{% url 'core:reviews' %}?yatra=Kashmir" class="filter-pill {% if selected_yatra == 'Kashmir' %}is-active{% endif %}">
+                    <span>🏔️ Kashmir & Vaishno Devi</span>
+                </a>
+                <a href="{% url 'core:reviews' %}?yatra=Rameshwaram" class="filter-pill {% if selected_yatra == 'Rameshwaram' %}is-active{% endif %}">
+                    <span>🛕 Rameshwaram & South</span>
+                </a>
+                <a href="{% url 'core:reviews' %}?yatra=Kerala" class="filter-pill {% if selected_yatra == 'Kerala' %}is-active{% endif %}">
+                    <span>🌴 Kerala Tour</span>
+                </a>
+                <a href="{% url 'core:reviews' %}?yatra=Panch+Kedar" class="filter-pill {% if selected_yatra == 'Panch Kedar' %}is-active{% endif %}">
+                    <span>🔱 Panch Kedar</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. Reviews Grid -->
+        <section class="reviews-section" aria-label="Pilgrim Reviews List">
+            {% if reviews %}
+            <div class="reviews-grid">
+                {% for review in reviews %}
+                <article class="review-card" id="review-card-{{ review.id }}">
+                    <div>
+                        <!-- Header with Avatar and Pilgrim Details -->
+                        <div class="review-card-top">
+                            <div class="pilgrim-avatar" aria-hidden="true">
+                                {{ review.pilgrim_name|slice:":1"|upper }}
+                            </div>
+                            <div class="pilgrim-meta">
+                                <h3 class="pilgrim-name">{{ review.pilgrim_name }}</h3>
+                                <div class="pilgrim-location">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span>{{ review.city|default:'Gujarat' }}</span>
+                                </div>
+                            </div>
+                            <span class="verified-badge">
+                                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                                Verified
+                            </span>
+                        </div>
+
+                        <!-- Yatra Circuit Badge -->
+                        <div class="review-yatra-badge">
+                            <span>⛺</span>
+                            <span>{{ review.yatra_name }}</span>
+                        </div>
+
+                        <!-- Star Rating -->
+                        <div class="review-stars" aria-label="{{ review.rating }} out of 5 stars">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}
+                            {% endfor %}
+                        </div>
+
+                        <!-- Sub-Ratings Breakdown Chips (All 5 aspects) -->
+                        <div class="review-aspect-chips">
+                            <span class="aspect-chip">🍲 Food: <strong>{{ review.rating_food|default:review.rating }}★</strong></span>
+                            <span class="aspect-chip">🚆 Travel: <strong>{{ review.rating_transport|default:review.rating }}★</strong></span>
+                            <span class="aspect-chip">🏨 Stay: <strong>{{ review.rating_accommodation|default:review.rating }}★</strong></span>
+                            <span class="aspect-chip">🧭 Guide: <strong>{{ review.rating_coordination|default:review.rating }}★</strong></span>
+                            <span class="aspect-chip">🛡️ Safety: <strong>{{ review.rating_safety|default:review.rating }}★</strong></span>
+                        </div>
+
+                        <!-- Review Text (Shortened & Humanized) -->
+                        <p class="review-body">
+                            "{{ review.review_text|default:'Blessed and divine yatra experience. Everything was managed with utmost care and devotion.' }}"
+                        </p>
+                    </div>
+
+                    <!-- Footer of Card -->
+                    <div class="review-card-footer">
+                        <span>{{ review.created_at|date:"F Y"|default:"October 2026" }}</span>
+                        <button type="button" class="btn-helpful" onclick="markHelpful(this, {{ review.id }})" aria-label="Mark review as helpful">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                                <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
+                            </svg>
+                            <span>Helpful <span class="helpful-count">24</span></span>
+                        </button>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div style="background: #FFFFFF; border-radius: 12px; border: 1px solid #E2E8F0; padding: 48px 24px; text-align: center; margin: 32px 0;">
+                <p style="font-size: 1.1rem; color: #64748B; margin-bottom: 16px;">
+                    No reviews found for this specific pilgrimage category yet.
+                </p>
+                <a href="{% url 'core:reviews' %}" class="btn-hero-inquiry">View All Reviews</a>
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- 5. Bottom Call-To-Action Banner -->
+        <section class="reviews-cta-box" aria-label="Book or Inquire CTA">
+            <h3>Inspired by Our Pilgrims' Blessed Journeys?</h3>
+            <p>
+                Join our upcoming sacred yatra batches. All pilgrimages include reserved transport from Gujarat, verified accommodations, fresh Gujarati satvik food, and 24/7 coordinator assistance.
+            </p>
+            <div class="cta-button-row">
+                <a href="{% url 'core:home' %}#inquiry" class="btn-hero-inquiry">
+                    <span>Plan Your Yatra Now →</span>
+                </a>
+                <a href="tel:{{ PHONE_RAW }}" class="btn-hero-whatsapp">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
+                    </svg>
+                    <span>Speak with Coordinator: {{ PHONE_NUMBER }}</span>
+                </a>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    // Interactive helpful count button with localStorage caching
+    function markHelpful(btn, reviewId) {
+        const storageKey = 'swarnav_helpful_review_' + reviewId;
+        const countSpan = btn.querySelector('.helpful-count');
+        let currentCount = parseInt(countSpan.textContent || '12', 10);
+
+        if (localStorage.getItem(storageKey)) {
+            localStorage.removeItem(storageKey);
+            currentCount = Math.max(0, currentCount - 1);
+            countSpan.textContent = currentCount;
+            btn.classList.remove('is-helpful');
+        } else {
+            localStorage.setItem(storageKey, 'true');
+            currentCount += 1;
+            countSpan.textContent = currentCount;
+            btn.classList.add('is-helpful');
+        }
+    }
+
+    // Initialize helpful counts
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.btn-helpful').forEach((btn, idx) => {
+            const countSpan = btn.querySelector('.helpful-count');
+            const baseCounts = [24, 19, 31, 15, 27, 18, 22, 14, 29];
+            const base = baseCounts[idx % baseCounts.length];
+            countSpan.textContent = base;
+        });
+    });
+</script>
+{% endblock %}

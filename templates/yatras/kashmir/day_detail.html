@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- 1. Breadcrumbs -->
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="container day-detail-container">
+        <ol class="breadcrumb-list">
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li class="breadcrumb-separator">/</li>
+            <li><a href="{% url 'yatras:kashmir_overview' %}">Kashmir Tour</a></li>
+            <li class="breadcrumb-separator">/</li>
+            <li><a href="{% url 'yatras:kashmir_itinerary' %}">{{ package.duration_days|default:"11" }}-Day Itinerary</a></li>
+            <li class="breadcrumb-separator">/</li>
+            <li class="breadcrumb-active" aria-current="page">Day {{ day.day }}</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Secondary Kashmir Navigation Bar -->
+<nav class="yatra-nav-sticky" aria-label="Kashmir Package Navigation">
+    <div class="container day-detail-container">
+        <ul class="yatra-nav-tabs">
+            {% for tab in nav_tabs %}
+            <li class="yatra-tab-item">
+                <a href="{% url tab.url_name %}" 
+                   class="yatra-tab-link {% if active_tab == tab.slug %}is-active{% endif %}"
+                   {% if active_tab == tab.slug %}aria-current="page"{% endif %}>
+                    {{ tab.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>
+
+<!-- Main Day Detail Page -->
+<div class="day-detail-page-wrapper">
+    <div class="container day-detail-container">
+
+        <!-- 2. Header: Title & One-Sentence Intro -->
+        <header class="day-intro-header">
+            <span class="day-badge-label">Day {{ day.day }} of 11</span>
+            <h1 class="day-page-title">Day {{ day.day }}: {{ day.title }}</h1>
+            <p class="day-intro-sentence">{{ day.intro }}</p>
+        </header>
+
+        <!-- 3. Attractive Route Journey Strip -->
+        <section class="day-timeline-card" aria-label="Route Journey for Day {{ day.day }}">
+            <h2 class="timeline-card-heading">Day {{ day.day }} Route Journey</h2>
+            
+            <div class="route-timeline-track">
+                {% for node in day.route_nodes %}
+                <div class="timeline-step timeline-step-{{ node.badge_class }}">
+                    <div class="timeline-marker-col">
+                        <span class="timeline-node-circle"></span>
+                        {% if not forloop.last %}
+                        <span class="timeline-connector-line"></span>
+                        {% endif %}
+                    </div>
+                    <div class="timeline-info-col">
+                        <span class="timeline-stop-name">{{ node.name }}</span>
+                        {% if node.badge_class == 'night-stay' %}
+                        <span class="timeline-stop-badge">Night Stay</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 4. Places Covered Today: Description on Left, Picture on Right -->
+        <section class="places-gallery-section" aria-label="Places Covered on Day {{ day.day }}">
+            <h2 class="places-gallery-heading">Places Covered Today</h2>
+
+            <div class="places-horizontal-list">
+                {% for place in day.places_covered %}
+                <article class="place-horizontal-card">
+                    <!-- Left Side: Place Name & Description -->
+                    <div class="place-info-col">
+                        <h3 class="place-title-text">{{ place.name }}</h3>
+                        {% if place.point %}
+                        <p class="place-point-text">{{ place.point }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Right Side: Picture -->
+                    {% if place.image %}
+                    <div class="place-media-col">
+                        <img src="{% static 'images/'|add:place.image %}" 
+                             alt="{{ place.image_alt|default:place.name }}" 
+                             class="place-thumb-img" 
+                             width="320" 
+                             height="240" 
+                             loading="lazy">
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- 5. Day Specifications Grid -->
+        <section class="day-specs-card" aria-label="Day Specifications">
+            <h2 class="specs-card-heading">Day {{ day.day }} Specifications</h2>
+
+            <div class="specs-data-grid">
+                <div class="spec-data-row">
+                    <span class="spec-name">Night Stay</span>
+                    <span class="spec-content">
+                        <strong>{{ day.accommodation.night_stay }}</strong> 
+                        ({{ day.accommodation.type }}{% if day.accommodation.hotel_name %} — {{ day.accommodation.hotel_name }}{% endif %})
+                    </span>
+                </div>
+
+                <div class="spec-data-row">
+                    <span class="spec-name">Meals Included</span>
+                    <span class="spec-content">{{ day.meals }}</span>
+                </div>
+
+                <div class="spec-data-row">
+                    <span class="spec-name">Transit Route</span>
+                    <span class="spec-content">{{ day.route_summary }}</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Next & Previous Day Navigation -->
+        <nav class="day-pagination-bar" aria-label="Day Navigation">
+            <div class="pagination-cell-prev">
+                {% if prev_day %}
+                <a href="{% url 'yatras:kashmir_day_detail' prev_day.day %}" class="day-nav-btn day-nav-prev">
+                    <span class="day-nav-arrow">←</span>
+                    <span class="day-nav-text">
+                        <span class="day-nav-sub">Previous</span>
+                        <span class="day-nav-main">Day {{ prev_day.day }}: {{ prev_day.title|truncatechars:28 }}</span>
+                    </span>
+                </a>
+                {% endif %}
+            </div>
+
+            <div class="pagination-cell-center">
+                <a href="{% url 'yatras:kashmir_itinerary' %}" class="btn-all-days">
+                    <span>View All 11 Days</span>
+                </a>
+            </div>
+
+            <div class="pagination-cell-next">
+                {% if next_day %}
+                <a href="{% url 'yatras:kashmir_day_detail' next_day.day %}" class="day-nav-btn day-nav-next">
+                    <span class="day-nav-text">
+                        <span class="day-nav-sub">Next</span>
+                        <span class="day-nav-main">Day {{ next_day.day }}: {{ next_day.title|truncatechars:28 }}</span>
+                    </span>
+                    <span class="day-nav-arrow">→</span>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+
+    </div>
+</div>
+{% endblock %}

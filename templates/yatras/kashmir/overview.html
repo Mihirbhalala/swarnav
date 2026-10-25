@@ -1,0 +1,201 @@
+{% extends 'yatras/kashmir/base_kashmir.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Overview{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+
+    <!-- December Batch Special Highlight Banner -->
+    <section class="yatra-section" style="margin-bottom: 2rem;">
+        <div style="background: linear-gradient(135deg, #1e3a8a, #065f46); color: white; border-radius: 14px; padding: 1.5rem 2rem; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.25rem; border: 1px solid rgba(255, 255, 255, 0.2);">
+            <div>
+                <div style="display: inline-block; background: #fbbf24; color: #1e3a8a; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 10px; border-radius: 9999px; margin-bottom: 8px;">
+                    ⚡ Winter Special Announcement
+                </div>
+                <h2 style="color: #ffffff; font-size: 1.4rem; font-weight: 800; margin: 0 0 6px 0; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                    Opening New Batch in December
+                </h2>
+                <p style="color: #e0e7ff; margin: 0; font-size: 0.95rem; max-width: 650px; line-height: 1.5;">
+                    Experience Kashmir in magical winter snowfall alongside Mata Vaishno Devi &amp; Amritsar! Exact travel dates are currently being finalized. Pre-register your family now to secure reserved AC train berths.
+                </p>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp" style="padding: 10px 18px; font-weight: 700;">
+                    <span>Pre-Book on WhatsApp</span>
+                </a>
+                <a href="tel:{{ PHONE_RAW }}" class="btn btn-primary" style="padding: 10px 18px; font-weight: 700; background: #f59e0b; border-color: #d97706; color: #111827;">
+                    <span>Call Coordinator</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="yatra-section">
+        <div class="editorial-intro-grid">
+            <div class="editorial-text">
+                <span class="section-badge">About the Journey</span>
+                <h2 class="yatra-section-title">Heaven on Earth &amp; Sacred Himalayan Shrines</h2>
+                <div class="intro-paragraphs">
+                    {% for paragraph in package.introduction %}
+                    <p>{{ paragraph }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="editorial-sidebar">
+                <div class="quick-facts-card">
+                    <h3 class="quick-facts-title">Package Summary</h3>
+                    <ul class="quick-facts-list">
+                        <li>
+                            <span class="qf-label">Starting Point:</span>
+                            <span class="qf-value">{{ package.starting_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Ending Point:</span>
+                            <span class="qf-value">{{ package.ending_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Total Duration:</span>
+                            <span class="qf-value">{{ package.duration_display }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Starting Price:</span>
+                            <span class="qf-value"><strong>{{ package.starting_price }}</strong> <small>/ person</small></span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Departures:</span>
+                            <span class="qf-value" style="color: #059669; font-weight: 700;">{{ package.departures_summary|default:"Opening in December" }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Accommodation:</span>
+                            <span class="qf-value">{{ package.accommodation_summary|default:"Deluxe / Economy (Triple-sharing)" }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Meals:</span>
+                            <span class="qf-value">{{ package.meals_summary|default:"Lunch &amp; Dinner per itinerary (Breakfast if included in package)" }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Transport:</span>
+                            <span class="qf-value">{{ package.transport_summary|default:"AC Train + Dedicated 2x2 Coach" }}</span>
+                        </li>
+                    </ul>
+                    <div class="qf-action">
+                        <a href="tel:{{ PHONE_RAW }}" class="btn btn-primary btn-full">
+                            <span>Call for December Dates</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Key Highlights / Spiritual & Scenic Shrines -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Key Destinations</span>
+            <h2 class="yatra-section-title">Grand Highlights Covered Across 11 Days</h2>
+            <p class="section-subtitle">
+                From the divine darshan of Mata Vaishno Devi to snow-draped Gulmarg meadows and the golden glory of Harmandir Sahib.
+            </p>
+        </div>
+
+        <div class="dhams-overview-grid">
+            {% for dham in package.dhams %}
+            <div class="dham-overview-card">
+                <div class="dham-card-top">
+                    <span class="dham-step-num">{{ dham.highlight }}</span>
+                    <h3 class="dham-card-name">{{ dham.name }}</h3>
+                    <p class="dham-card-significance">{{ dham.significance }}</p>
+                </div>
+                <p class="dham-card-desc">{{ dham.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Route Path Ribbon -->
+    <section class="yatra-section route-ribbon-section">
+        <div class="route-ribbon-card">
+            <h3 class="route-ribbon-title">Complete {{ package.duration_days|default:"11" }}-Day Tour Route</h3>
+            <p class="route-ribbon-desc">
+                Surat ➔ Katra (Vaishno Devi) ➔ Shivkhori ➔ Srinagar ➔ Sonmarg ➔ Gulmarg ➔ Pahalgam ➔ Dal Lake ➔ Amritsar ➔ Surat
+            </p>
+            <div class="route-actions">
+                <a href="{% url 'yatras:kashmir_itinerary' %}" class="btn btn-secondary">
+                    <span>View Day-by-Day Itinerary (Days 1 to {{ package.duration_days|default:"11" }}) →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Hub Cards -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Explore Every Detail</span>
+            <h2 class="yatra-section-title">Essential Package Information</h2>
+            <p class="section-subtitle">
+                Review complete details regarding daily schedule, inclusions, hotel standards, winter travel guide, and cancellation terms.
+            </p>
+        </div>
+
+        <div class="hub-grid">
+            <a href="{% url 'yatras:kashmir_itinerary' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📅</span>
+                    <h3 class="hub-title">{{ package.duration_days|default:"11" }}-Day Itinerary</h3>
+                </div>
+                <p class="hub-desc">Full day-wise schedule from Surat departure to Katra, Vaishno Devi, Shivkhori, Srinagar, Sonmarg, Gulmarg, Pahalgam, and Amritsar.</p>
+                <span class="hub-link-text">Read Day-by-Day Plan →</span>
+            </a>
+
+            <a href="{% url 'yatras:kashmir_package_details' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📋</span>
+                    <h3 class="hub-title">Package Details</h3>
+                </div>
+                <p class="hub-desc">Detailed breakdown of included services, exclusions, conditional options, and coordinator support.</p>
+                <span class="hub-link-text">View Inclusions & Exclusions →</span>
+            </a>
+
+            <a href="{% url 'yatras:kashmir_stay_and_travel' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🏨</span>
+                    <h3 class="hub-title">Stay & Travel</h3>
+                </div>
+                <p class="hub-desc">Information on triple-sharing hotels in Katra, Srinagar and Amritsar, daily pure veg meals, and AC train/coach transits.</p>
+                <span class="hub-link-text">Review Accommodation & Transit →</span>
+            </a>
+
+            <a href="{% url 'yatras:kashmir_travel_guide' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">❄️</span>
+                    <h3 class="hub-title">Winter Travel Guide</h3>
+                </div>
+                <p class="hub-desc">December winter clothing tips, Vaishno Devi RFID registration, Gulmarg Gondola booking rules, and packing list.</p>
+                <span class="hub-link-text">Read Travel Preparation →</span>
+            </a>
+
+            <a href="{% url 'yatras:kashmir_policies' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">⚖️</span>
+                    <h3 class="hub-title">Policies</h3>
+                </div>
+                <p class="hub-desc">Advance payment terms, balance deadlines, and structured percentage-based cancellation refund schedule.</p>
+                <span class="hub-link-text">View Terms & Policies →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Important Notice Box -->
+    <section class="yatra-section">
+        <div class="notice-callout">
+            <h4 class="notice-callout-title">Important Notice Regarding December Batch Booking</h4>
+            <p class="notice-callout-text">
+                {{ package.confirmation_note }} Original government photo identification (Aadhaar Card) is mandatory for all travellers during train travel, hotel check-in, and Vaishno Devi yatra registration.
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock %}

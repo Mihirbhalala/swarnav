@@ -1,0 +1,175 @@
+{% extends 'yatras/kerala/base_kerala.html' %}
+{% load static %}
+
+{% block breadcrumb_active %}Overview{% endblock %}
+
+{% block yatra_content %}
+<div class="yatra-page-body">
+    <!-- Introduction Section -->
+    <section class="yatra-section">
+        <div class="editorial-intro-grid">
+            <div class="editorial-text">
+                <span class="section-badge">God’s Own Country</span>
+                <h2 class="yatra-section-title">The Grand 13-Day Kerala Experience</h2>
+                <div class="intro-paragraphs">
+                    {% for paragraph in package.introduction %}
+                    <p>{{ paragraph }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="editorial-sidebar">
+                <div class="quick-facts-card">
+                    <h3 class="quick-facts-title">Package Summary</h3>
+                    <ul class="quick-facts-list">
+                        <li>
+                            <span class="qf-label">Starting Point:</span>
+                            <span class="qf-value">{{ package.starting_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Ending Point:</span>
+                            <span class="qf-value">{{ package.ending_city }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Total Duration:</span>
+                            <span class="qf-value">{{ package.duration_display }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Starting Price:</span>
+                            <span class="qf-value"><strong>{{ package.starting_price }}</strong> <small>/ person</small></span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Departures:</span>
+                            <span class="qf-value">{{ package.departures_summary|default:"Monthly Batches Open" }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Accommodation:</span>
+                            <span class="qf-value">{{ package.accommodation_summary|default:"Deluxe Resorts &amp; Houseboat" }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Meals:</span>
+                            <span class="qf-value">{{ package.meals_summary|default:"Lunch &amp; Dinner per itinerary (Breakfast if included in package)" }}</span>
+                        </li>
+                        <li>
+                            <span class="qf-label">Transport:</span>
+                            <span class="qf-value">{{ package.transport_summary|default:"AC Train + Dedicated 2x2 AC Coach" }}</span>
+                        </li>
+                    </ul>
+                    <div class="qf-action">
+                        <a href="tel:{{ PHONE_RAW }}" class="btn btn-primary btn-full">
+                            <span>Call for Upcoming Dates</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Main Destinations of the Circuit -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Nature &amp; Heritage</span>
+            <h2 class="yatra-section-title">Key Destinations &amp; Highlights Covered</h2>
+            <p class="section-subtitle">
+                A grand journey connecting misty Western Ghats tea hills in Munnar, spice hills in Thekkady, serene backwaters in Alleppey, golden sands in Kovalam, and colonial maritime charm in Fort Kochi.
+            </p>
+        </div>
+
+        <div class="dhams-overview-grid">
+            {% for dham in package.dhams %}
+            <div class="dham-overview-card">
+                <div class="dham-card-top">
+                    <span class="dham-step-num">{{ dham.highlight }}</span>
+                    <h3 class="dham-card-name">{{ dham.name }}</h3>
+                    <p class="dham-card-significance">{{ dham.significance }}</p>
+                </div>
+                <p class="dham-card-desc">{{ dham.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Route Path Ribbon -->
+    <section class="yatra-section route-ribbon-section">
+        <div class="route-ribbon-card">
+            <h3 class="route-ribbon-title">Complete {{ package.duration_days|default:"13" }}-Day Kerala Tour Route</h3>
+            <p class="route-ribbon-desc">
+                Surat ➔ Western Ghats ➔ Munnar (3N) ➔ Thekkady (2N) ➔ Alleppey Houseboat (1N) ➔ Kovalam (2N) ➔ Trivandrum ➔ Fort Kochi (1N) ➔ Surat
+            </p>
+            <div class="route-actions">
+                <a href="{% url 'yatras:kerala_itinerary' %}" class="btn btn-secondary">
+                    <span>View Day-by-Day Itinerary (Days 1 to {{ package.duration_days|default:"13" }}) →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Hub Cards -->
+    <section class="yatra-section">
+        <div class="section-header text-center">
+            <span class="section-badge">Explore Every Detail</span>
+            <h2 class="yatra-section-title">Essential Package Information</h2>
+            <p class="section-subtitle">
+                Review complete details regarding daily schedule, inclusions, hotel standards, temple dress codes, and cancellation terms.
+            </p>
+        </div>
+
+        <div class="hub-grid">
+            <a href="{% url 'yatras:kerala_itinerary' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📅</span>
+                    <h3 class="hub-title">{{ package.duration_days|default:"13" }}-Day Itinerary</h3>
+                </div>
+                <p class="hub-desc">Full day-wise schedule from Surat departure to Munnar, Thekkady, Alleppey backwaters, Kovalam, and Fort Kochi.</p>
+                <span class="hub-link-text">Read Day-by-Day Plan →</span>
+            </a>
+
+            <a href="{% url 'yatras:kerala_package_details' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">📋</span>
+                    <h3 class="hub-title">Package Details</h3>
+                </div>
+                <p class="hub-desc">Detailed breakdown of included services, exclusions, conditional options, and coordinator support.</p>
+                <span class="hub-link-text">View Inclusions & Exclusions →</span>
+            </a>
+
+            <a href="{% url 'yatras:kerala_stay_and_travel' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🏨</span>
+                    <h3 class="hub-title">Stay & Travel</h3>
+                </div>
+                <p class="hub-desc">Information on triple-sharing resorts in Munnar, Thekkady, Kovalam, deluxe Alleppey Houseboat, and AC train transits.</p>
+                <span class="hub-link-text">Review Accommodation & Transit →</span>
+            </a>
+
+            <a href="{% url 'yatras:kerala_travel_guide' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">🌴</span>
+                    <h3 class="hub-title">Travel Guide</h3>
+                </div>
+                <p class="hub-desc">Packing advice for cool tea hills & tropical beaches, Padmanabhaswamy temple dress rules, and weather tips.</p>
+                <span class="hub-link-text">Read Travel Preparation →</span>
+            </a>
+
+            <a href="{% url 'yatras:kerala_policies' %}" class="hub-card">
+                <div class="hub-header">
+                    <span class="hub-icon">⚖️</span>
+                    <h3 class="hub-title">Policies</h3>
+                </div>
+                <p class="hub-desc">Advance payment terms, balance deadlines, and structured percentage-based cancellation refund schedule.</p>
+                <span class="hub-link-text">View Terms & Policies →</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Important Notice Box -->
+    <section class="yatra-section">
+        <div class="notice-callout">
+            <h4 class="notice-callout-title">Important Notice Regarding Temple Dress Code & Houseboat Operations</h4>
+            <p class="notice-callout-text">
+                {{ package.confirmation_note }} Traditional Indian dress is compulsory for entry into Sree Padmanabhaswamy Temple in Trivandrum: Dhoti (plain white mundu with bare upper chest) for men and sarees/traditional Indian wear for women. Houseboats operate air conditioning in bedrooms overnight from 9:00 PM to 6:00 AM as per state backwater cruise standards.
+            </p>
+        </div>
+    </section>
+</div>
+{% endblock %}

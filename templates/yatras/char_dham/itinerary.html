@@ -1,7 +1,7 @@
 {% extends 'yatras/char_dham/base_char_dham.html' %}
 {% load static %}
 
-{% block breadcrumb_active %}13-Day Itinerary{% endblock %}
+{% block breadcrumb_active %}{{ package.duration_days|default:"13" }}-Day Itinerary{% endblock %}
 
 {% block yatra_content %}
 <div class="yatra-page-body">
@@ -9,7 +9,7 @@
     <div class="itinerary-intro-bar">
         <div>
             <span class="section-badge">Day-by-Day Schedule</span>
-            <h2 class="yatra-section-title">Complete 13-Day Pilgrimage Itinerary</h2>
+            <h2 class="yatra-section-title">Complete {{ package.duration_days|default:"13" }}-Day Pilgrimage Itinerary</h2>
             <p class="section-subtitle">
                 Carefully planned route covering Yamunotri, Gangotri, Kedarnath, and Badrinath starting and ending in Surat.
             </p>

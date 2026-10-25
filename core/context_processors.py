@@ -1,9 +1,32 @@
 import datetime
 
+
 def business_info(request):
     """
     Centralized business details for Swarnav Tour & Travels.
+    Includes live active_tours status dictionary synced from database.
     """
+    active_tours = {
+        'char_dham': True,
+        'kashmir_paradise': True,
+        'rameshwaram_circuit': True,
+        'kerala_tour': True,
+        'jagannath_puri': True,
+        'panch_kedar': False,
+        'jharkhand_tour': False,
+        'nepal_pashupatinath_muktinath': False,
+    }
+    tours_map = {}
+    try:
+        from yatras.models import TourPackage
+        for t in TourPackage.objects.all():
+            key = t.slug.replace('-', '_')
+            active_tours[key] = t.is_active
+            tours_map[key] = t
+            tours_map[t.slug] = t
+    except Exception:
+        pass
+
     return {
         'BUSINESS_NAME': 'Swarnav Tour & Travels',
         'BRAND_NAME': 'Swarnav',
@@ -17,5 +40,8 @@ def business_info(request):
         'PRIMARY_REGION': 'Surat, Gujarat',
         'OPERATING_HOURS': 'Daily: 7:00 AM – 9:30 PM (IST)',
         'CURRENT_YEAR': datetime.date.today().year,
+        'active_tours': active_tours,
+        'tours_map': tours_map,
     }
+
 

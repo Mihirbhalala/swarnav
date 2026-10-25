@@ -44,19 +44,19 @@
                         </li>
                         <li>
                             <span class="qf-label">Departures:</span>
-                            <span class="qf-value">Scheduled seasonal batches</span>
+                            <span class="qf-value">{{ package.departures_summary|default:"Scheduled seasonal batches" }}</span>
                         </li>
                         <li>
                             <span class="qf-label">Accommodation:</span>
-                            <span class="qf-value">Economy (Triple-sharing)</span>
+                            <span class="qf-value">{{ package.accommodation_summary|default:"Economy (Triple-sharing)" }}</span>
                         </li>
                         <li>
                             <span class="qf-label">Meals:</span>
-                            <span class="qf-value">Lunch & Dinner per itinerary</span>
+                            <span class="qf-value">{{ package.meals_summary|default:"Lunch &amp; Dinner per itinerary" }}</span>
                         </li>
                         <li>
                             <span class="qf-label">Transport:</span>
-                            <span class="qf-value">Train + Mountain road vehicle</span>
+                            <span class="qf-value">{{ package.transport_summary|default:"Train + Mountain road vehicle" }}</span>
                         </li>
                     </ul>
                     <div class="qf-action">
@@ -132,7 +132,7 @@
             </p>
             <div class="route-actions">
                 <a href="{% url 'yatras:char_dham_itinerary' %}" class="btn btn-secondary">
-                    <span>View Day-by-Day Itinerary (Days 1 to 13) →</span>
+                    <span>View Day-by-Day Itinerary (Days 1 to {{ package.duration_days|default:"13" }}) →</span>
                 </a>
             </div>
         </div>
@@ -152,7 +152,7 @@
             <a href="{% url 'yatras:char_dham_itinerary' %}" class="hub-card">
                 <div class="hub-header">
                     <span class="hub-icon">📅</span>
-                    <h3 class="hub-title">13-Day Itinerary</h3>
+                    <h3 class="hub-title">{{ package.duration_days|default:"13" }}-Day Itinerary</h3>
                 </div>
                 <p class="hub-desc">Full day-wise schedule from Surat departure to Haridwar, Yamunotri, Gangotri, Kedarnath, and Badrinath.</p>
                 <span class="hub-link-text">Read Day-by-Day Plan →</span>

@@ -91,6 +91,8 @@ html {
     font-size: 16px;
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -113,6 +115,9 @@ body {
     font-weight: 400;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    max-width: 100%;
+    position: relative;
 }
 
 img {
@@ -1322,7 +1327,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .footer-description {
     font-size: var(--text-sm);
     line-height: 1.6;
-    color: #9EA8B6;
+    color: #CBD5E1;
 }
 
 .footer-heading {
@@ -1341,14 +1346,23 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 
 .footer-links a {
-    color: #9EA8B6;
+    color: #CBD5E1;
     font-size: var(--text-sm);
-    transition: color var(--transition-fast);
+    transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.footer-links a strong {
+    color: #F8FAFC;
+    font-weight: 600;
 }
 
 .footer-links a:hover {
     color: var(--color-gold);
     padding-left: 3px;
+}
+
+.footer-links a:hover strong {
+    color: var(--color-gold);
 }
 
 .footer-info-text {
@@ -3744,6 +3758,34 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     margin-bottom: 12px;
 }
 
+/* Active Tour Confirmed Date / Month Highlight Card */
+.tour-active-date-highlight {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    border: 1.5px solid #22c55e;
+    border-radius: 12px;
+    padding: 10px 14px;
+    margin: 12px 0 14px 0;
+    box-shadow: 0 3px 10px rgba(34, 197, 94, 0.16);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tour-card:hover .tour-active-date-highlight {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(34, 197, 94, 0.22);
+}
+
+@media (max-width: 480px) {
+    .tour-active-date-highlight {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
 .tour-brief-guide {
     font-size: 14.5px;
     line-height: 1.55;
@@ -4169,6 +4211,15 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     box-shadow: 0 0 0 3px rgba(99, 24, 24, 0.1);
 }
 
+/* Modal Background Lock */
+body.modal-open,
+html.modal-open {
+    overflow: hidden !important;
+    height: 100vh !important;
+    touch-action: none;
+    overscroll-behavior: none !important;
+}
+
 /* 9. AI Assistant Modal / Drawer */
 .ai-modal-overlay,
 .inquiry-modal-overlay {
@@ -4184,6 +4235,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     opacity: 0;
     visibility: hidden;
     transition: all 0.25s ease;
+    overscroll-behavior: contain;
 }
 
 .ai-modal-overlay.is-active,
@@ -4203,6 +4255,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     flex-direction: column;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    overscroll-behavior: contain;
 }
 
 .inquiry-modal-container {
@@ -4318,19 +4371,35 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 }
 
 .ai-lang-pill {
-    padding: 2px 8px;
-    border-radius: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
     background: #FFFFFF;
     border: 1px solid #FCD34D;
     color: #78350F;
     font-size: 11px;
-    font-weight: 500;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    outline: none;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+}
+
+.ai-lang-pill:hover {
+    background: #FEF3C7;
+    border-color: #D97706;
+    color: #92400E;
+    transform: translateY(-1px);
 }
 
 .ai-lang-pill.active {
     background: var(--color-maroon);
     color: #FFFFFF;
     border-color: var(--color-maroon);
+    box-shadow: 0 1px 4px rgba(74, 16, 16, 0.25);
 }
 
 .ai-modal-close,
@@ -4352,6 +4421,8 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .ai-modal-body {
     flex-grow: 1;
     overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -4691,23 +4762,40 @@ a:focus-visible, button:focus-visible, input:focus-visible {
     display: flex;
     gap: 10px;
     font-size: 13.5px;
+    align-items: flex-start;
 }
 
+.contact-detail-row .detail-icon {
+    font-size: 16px;
+    line-height: 1.3;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.site-footer .contact-detail-row strong,
 .contact-detail-row strong {
-    display: block;
-    color: var(--color-text-primary);
+    display: block !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    font-size: 13.5px !important;
+    margin-bottom: 2px !important;
 }
 
+.site-footer .contact-detail-row p,
+.site-footer .contact-detail-row a,
 .contact-detail-row p,
 .contact-detail-row a {
-    color: var(--color-text-secondary);
-    text-decoration: none;
-    margin: 0;
+    color: #CBD5E1 !important;
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+    text-decoration: none !important;
+    margin: 0 !important;
 }
 
+.site-footer .contact-detail-row a:hover,
 .contact-detail-row a:hover {
-    color: var(--color-maroon);
-    text-decoration: underline;
+    color: #FCD34D !important;
+    text-decoration: underline !important;
 }
 
 body.modal-open {

@@ -10,7 +10,7 @@
             <li class="breadcrumb-separator">/</li>
             <li><a href="{% url 'yatras:char_dham_overview' %}">Char Dham Yatra</a></li>
             <li class="breadcrumb-separator">/</li>
-            <li><a href="{% url 'yatras:char_dham_itinerary' %}">13-Day Itinerary</a></li>
+            <li><a href="{% url 'yatras:char_dham_itinerary' %}">{{ package.duration_days|default:"13" }}-Day Itinerary</a></li>
             <li class="breadcrumb-separator">/</li>
             <li class="breadcrumb-active" aria-current="page">Day {{ day.day }}</li>
         </ol>

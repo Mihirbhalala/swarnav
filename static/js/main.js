@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inquiryModal.classList.add('is-active');
         inquiryModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
+        document.documentElement.classList.add('modal-open');
 
         if (tourName && modalTourSelect) {
             // Find best matching option by value or text
@@ -128,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inquiryModal.classList.remove('is-active');
         inquiryModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
+        document.documentElement.classList.remove('modal-open');
     }
 
     openInquiryBtns.forEach(btn => {
@@ -178,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
         aiModal.classList.add('is-active');
         aiModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
+        document.documentElement.classList.add('modal-open');
         if (aiUserInput) {
             setTimeout(() => aiUserInput.focus(), 150);
         }
@@ -188,6 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         aiModal.classList.remove('is-active');
         aiModal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('modal-open');
+        document.documentElement.classList.remove('modal-open');
     }
 
     if (openAiBtn) openAiBtn.addEventListener('click', openAiModal);
@@ -197,7 +201,54 @@ document.addEventListener('DOMContentLoaded', () => {
         aiModal.addEventListener('click', (e) => {
             if (e.target === aiModal) closeAiModal();
         });
+
+        // Intercept wheel events anywhere on modal overlay/container and redirect scroll to chatbot messages
+        aiModal.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!aiChatMessages) return;
+
+            // If user is hovering over suggestion chips and scrolling horizontally
+            const suggestionsWrap = e.target.closest('.suggestions-chips');
+            if (suggestionsWrap && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                suggestionsWrap.scrollLeft += e.deltaX;
+                return;
+            }
+
+            // Scroll the chatbot conversation messages directly instead of background page
+            aiChatMessages.scrollTop += e.deltaY;
+        }, { passive: false });
+
+        // Touch support: prevent background touch scrolling
+        let touchStartY = 0;
+        aiModal.addEventListener('touchstart', (e) => {
+            if (e.touches && e.touches.length > 0) {
+                touchStartY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        aiModal.addEventListener('touchmove', (e) => {
+            if (e.touches && e.touches.length > 0) {
+                const currentY = e.touches[0].clientY;
+                const deltaY = touchStartY - currentY;
+                touchStartY = currentY;
+
+                if (!e.target.closest('#ai-chat-messages') && !e.target.closest('.suggestions-chips')) {
+                    e.preventDefault();
+                    if (aiChatMessages) {
+                        aiChatMessages.scrollTop += deltaY;
+                    }
+                }
+            }
+        }, { passive: false });
     }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aiModal && aiModal.classList.contains('is-active')) {
+            closeAiModal();
+        }
+    });
 
     // --------------------------------------------------------------------------
     // Advanced RAG & Agentic AI Assistant Client (Gemini 2.5/1.5 Flash + Tool Calling)
@@ -205,6 +256,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetAiBtn = document.getElementById('ai-reset-chat-btn');
     const aiSuggestionsChips = document.getElementById('ai-suggestions-chips');
     const aiSubmitBtn = document.getElementById('ai-send-submit-btn');
+    const langPills = document.querySelectorAll('.ai-lang-pill');
+    let currentAiLang = 'en'; // default: 'en', 'gu', or 'hi'
+
+    const langPlaceholders = {
+        en: 'Ask in English (e.g. Kedarnath trek, price, meals)...',
+        gu: 'ગુજરાતીમાં પૂછો (દા.ત. કેદારનાથ યાત્રા, પેકેજ ભાવ, ભોજન)...',
+        hi: 'हिंदी में पूछें (जैसे केदारनाथ यात्रा, पैकेज मूल्य, भोजन)...'
+    };
+
+    const langSuggestions = {
+        en: [
+            'What is the starting date and starting package of Char Dham?',
+            'What is the date for Rameshwaram tour?',
+            'What meals and food are provided during the yatra?',
+            'What is the starting date and price of Kashmir tour?',
+            'Official Contact Details'
+        ],
+        gu: [
+            'ચારધામ યાત્રાની તારીખ અને પેકેજ ભાવ શું છે?',
+            'રામેશ્વરમ ટૂરની તારીખ શું છે?',
+            'કેરળ ટૂરની તારીખ શું છે?',
+            'જમવાની શું વ્યવસ્થા છે?',
+            'ઓફિસ સંપર્ક વિગતો'
+        ],
+        hi: [
+            'चारधाम यात्रा की तारीख और पैकेज मूल्य क्या है?',
+            'रामेश्वरम यात्रा की तारीख क्या है?',
+            'दिसंबर में कौन सी टूर है?',
+            'सात्विक व जैन भोजन व्यवस्था',
+            'संपर्क सूत्र एवं ऑफिस पता'
+        ]
+    };
+
+    function setAiLanguage(langCode, isManual = true) {
+        if (!langCode || !['en', 'gu', 'hi'].includes(langCode)) return;
+        currentAiLang = langCode;
+
+        langPills.forEach(pill => {
+            const isMatch = pill.getAttribute('data-lang') === langCode;
+            pill.classList.toggle('active', isMatch);
+            pill.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        });
+
+        if (aiUserInput && langPlaceholders[langCode]) {
+            aiUserInput.placeholder = langPlaceholders[langCode];
+        }
+
+        if (isManual && langSuggestions[langCode]) {
+            updateSuggestionChips(langSuggestions[langCode]);
+        }
+    }
+
+    langPills.forEach(pill => {
+        pill.addEventListener('click', (e) => {
+            e.preventDefault();
+            const langCode = pill.getAttribute('data-lang');
+            setAiLanguage(langCode, true);
+        });
+    });
+
+    // Auto-detect typed script
+    if (aiUserInput) {
+        aiUserInput.addEventListener('input', () => {
+            const val = aiUserInput.value;
+            if (/[\u0a80-\u0aff]/.test(val)) {
+                setAiLanguage('gu', false);
+            } else if (/[\u0900-\u097f]/.test(val)) {
+                setAiLanguage('hi', false);
+            }
+        });
+    }
 
     function getAiCsrfToken() {
         let cookieValue = '';
@@ -278,7 +400,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (sender === 'user') {
             bubble.textContent = content;
         } else {
-            bubble.innerHTML = formatMarkdownText(content);
+            if (typeof content === 'string' && (content.includes('<strong>') || content.includes('<p>') || content.includes('<br>') || content.includes('<ul>'))) {
+                bubble.innerHTML = content;
+            } else {
+                bubble.innerHTML = formatMarkdownText(content);
+            }
         }
 
         msgDiv.appendChild(bubble);
@@ -344,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
         typingDiv.innerHTML = `
             <div class="ai-bubble">
                 <span class="ai-typing-dots"><span></span><span></span><span></span></span>
-                <em>Consulting Swarnav Yatra RAG knowledge base...</em>
+                <em>Consulting Swarnav AI knowledge base...</em>
             </div>
         `;
         aiChatMessages.appendChild(typingDiv);
@@ -359,8 +485,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     'X-CSRFToken': csrfToken,
                     'X-Requested-With': 'XMLHttpRequest'
                 },
-                body: JSON.stringify({ message: trimmed })
+                body: JSON.stringify({
+                    message: trimmed,
+                    language: currentAiLang
+                })
             });
+
+            if (!response.ok) {
+                let errText = "I apologize, our assistant is temporarily unavailable. Please connect directly with our coordination team at +91 95868 25353.";
+                try {
+                    const errData = await response.json();
+                    if (errData && errData.error) errText = errData.error;
+                } catch (_) {}
+                typingDiv.remove();
+                appendMessage('bot', errText);
+                return;
+            }
 
             const data = await response.json();
             typingDiv.remove();
@@ -379,9 +519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error("AI Assistant API error:", err);
             typingDiv.remove();
-            appendMessage('bot', `🙏 Thank you for your question regarding <strong>"${trimmed}"</strong>.<br><br>
-                Swarnav Tour & Travels offers personalized assistance for Char Dham, Panch Kedar, Kashmir, South India, Jagannath Puri, and Nepal.<br><br>
-                For batch schedules or custom departure dates, connect directly with our coordination team at <strong>+91 95868 25353</strong> or on WhatsApp.`);
+            appendMessage('bot', `🙏 Thank you for your question regarding **"${trimmed}"**.\n\nSwarnav Tour & Travels offers personalized assistance for Char Dham, Panch Kedar, Kashmir, South India (Rameshwaram), Jagannath Puri, and Nepal.\n\nFor batch schedules or custom departure dates, connect directly with our coordination team at **+91 95868 25353** or on WhatsApp.`);
         } finally {
             if (aiSubmitBtn) aiSubmitBtn.disabled = false;
             if (aiUserInput) {
@@ -421,19 +559,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="ai-msg ai-msg-bot">
                             <div class="ai-bubble">
                                 🙏 <strong>Jai Shri Krishna / Har Har Mahadev!</strong>
-                                <p>Welcome to <strong>Swarnav Tour & Travels</strong>. I am your advanced AI pilgrimage guide, powered by real-time tour itineraries, route elevations, satvik meal plans, and booking records.</p>
-                                <p>You can ask me questions in <strong>English, ગુજરાતી, or हिंदी</strong> about our <strong>Char Dham (13 Days)</strong>, <strong>Panch Kedar</strong>, <strong>Jagannath Puri</strong>, <strong>Nepal</strong>, <strong>South India</strong>, or <strong>Kashmir</strong> tours.</p>
-                                <p>How may I serve your pilgrimage journey today?</p>
+                                <p>Welcome to <strong>Swarnav Tour & Travels</strong>. I am your RAG AI Assistant.</p>
+                                <p>Ask me any specific question about our yatras in <strong>English, ગુજરાતી, or हिंदी</strong>—such as starting dates, package prices, satvik food, or senior citizen care—and I will provide you with the exact answer.</p>
                             </div>
                         </div>
                     `;
                 }
 
                 updateSuggestionChips([
-                    "What is the 13-day Char Dham Yatra itinerary and price?",
-                    "Are these pilgrimages suitable for senior citizens? What about Kedarnath doli or helicopter?",
-                    "How much for 4 people on the Char Dham Yatra from Gujarat?",
-                    "Tell me about the Nepal Pashupatinath Muktinath tour."
+                    "What is the starting date and starting package of Char Dham?",
+                    "Can senior citizens get doli or helicopter for Kedarnath?",
+                    "What meals and food are provided during the yatra?",
+                    "What is the starting date and price of Kashmir tour?"
                 ]);
             }
         });

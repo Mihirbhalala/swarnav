@@ -60,6 +60,18 @@ class TourPackage(models.Model):
     
     # Media & Status
     image = models.CharField(max_length=255, default="images/kedarnath-temple.jpg", help_text="Static image path or asset URL")
+    is_active = models.BooleanField(
+        default=True,
+        verbose_name="Season / Batch Active",
+        help_text="Active for current season batch. Green Tick = Active; Red Cross = Inactive / Not active yet."
+    )
+    tour_date = models.CharField(
+        max_length=150,
+        blank=True,
+        default="",
+        verbose_name="Tour Date / Month",
+        help_text="Specific departure date (e.g. '15 Nov 2026', '1st Nov – 13th Nov') or starting month (e.g. 'November 2026') for active tours."
+    )
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='upcoming')
     status_label = models.CharField(max_length=100, blank=True, help_text="e.g. Complete Guide Available")
     is_completed = models.BooleanField(default=False, help_text="Whether full multi-page portal is available")
@@ -75,6 +87,35 @@ class TourPackage(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.duration_display})"
+
+    @property
+    def image_url(self):
+        """Return proper web-accessible URL for static or uploaded media."""
+        if not self.image:
+            from django.templatetags.static import static
+            return static('images/kedarnath-temple.jpg')
+        img_str = str(self.image).strip()
+        if img_str.startswith('http://') or img_str.startswith('https://') or img_str.startswith('/'):
+            return img_str
+        if img_str.startswith('media/'):
+            return f"/{img_str}"
+        from django.templatetags.static import static
+        return static(img_str)
+
+    def get_absolute_url(self):
+        """Link to either full multi-page portal or homepage card section."""
+        from django.urls import reverse
+        if self.slug == 'char-dham':
+            return reverse('yatras:char_dham_overview')
+        elif self.slug == 'jagannath-puri':
+            return reverse('yatras:puri_overview')
+        elif self.slug == 'kashmir-paradise':
+            return reverse('yatras:kashmir_overview')
+        elif self.slug == 'rameshwaram-circuit':
+            return reverse('yatras:rameshwaram_overview')
+        elif self.slug == 'kerala-tour':
+            return reverse('yatras:kerala_overview')
+        return f"/#tour-{self.slug}"
 
 
 class DhamDestination(models.Model):

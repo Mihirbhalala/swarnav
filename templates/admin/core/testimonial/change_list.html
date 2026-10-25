@@ -1,0 +1,83 @@
+{% extends "admin/change_list.html" %}
+{% load i18n static %}
+
+{% block content %}
+    <!-- ------------------------------------------------------------- -->
+    <!-- Pilgrim Post-Yatra Review Invitation & Share Link Control Box -->
+    <!-- ------------------------------------------------------------- -->
+    <div style="margin-bottom: 24px; background: linear-gradient(135deg, #090d16 0%, #1e293b 100%); border: 1px solid #334155; border-radius: 16px; padding: 24px; color: #ffffff; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);">
+        <div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 18px;">
+            <div>
+                <div style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 9999px; background: rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.45); color: #fbbf24; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                    ⭐ Dedicated Post-Yatra Review Invitation
+                </div>
+                <h2 style="font-size: 20px; font-weight: 800; color: #fef3c7; margin: 0 0 4px 0;">
+                    Shareable Review Link (For Completed Pilgrims Only)
+                </h2>
+                <p style="font-size: 13px; color: #cbd5e1; margin: 0; max-width: 720px; line-height: 1.5;">
+                    Forward this link via WhatsApp or SMS exclusively to yatris who have finished their tour. Reviews submitted through this link immediately reflect on the live website under the <strong>Reviews</strong> tab.
+                </p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <a href="/reviews/" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; background: rgba(255, 255, 255, 0.1); color: #f8fafc; font-size: 12px; font-weight: 700; text-decoration: none; border: 1px solid rgba(255, 255, 255, 0.2);">
+                    🌐 View Live Reviews Tab ↗
+                </a>
+                <a href="{{ review_submit_url }}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; background: rgba(245, 158, 11, 0.15); color: #fbbf24; font-size: 12px; font-weight: 700; text-decoration: none; border: 1px solid rgba(245, 158, 11, 0.35);">
+                    👁️ Test Review Form ↗
+                </a>
+            </div>
+        </div>
+
+        <!-- Copyable Link Bar & WhatsApp Action -->
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+            <div style="flex: 1; min-width: 260px;">
+                <label for="admin-review-link-input" style="display: block; font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px; letter-spacing: 0.05em;">
+                    Private Review URL
+                </label>
+                <input type="text" id="admin-review-link-input" readonly value="{{ review_submit_url }}"
+                       style="width: 100%; background: #090d16; border: 1px solid #475569; border-radius: 6px; padding: 8px 12px; color: #fef08a; font-family: monospace; font-size: 13px; font-weight: 600;"
+                       onclick="this.select();">
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 18px;">
+                <!-- 1-Click Copy Button -->
+                <button type="button" id="copy-review-link-btn" onclick="copyAdminReviewLink()"
+                        style="display: inline-flex; align-items: center; gap: 6px; background: #f59e0b; color: #0f172a; font-weight: 800; font-size: 13px; padding: 9px 16px; border-radius: 8px; border: none; cursor: pointer; transition: background 0.15s ease;">
+                    <span id="copy-btn-icon">📋</span>
+                    <span id="copy-btn-text">Copy Review Link</span>
+                </button>
+
+                <!-- 1-Click WhatsApp Forward -->
+                <a href="{{ review_whatsapp_share_url }}" target="_blank" rel="noopener noreferrer"
+                   style="display: inline-flex; align-items: center; gap: 6px; background: #16a34a; color: #ffffff; font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 8px; text-decoration: none; transition: background 0.15s ease;">
+                    <span>💬</span>
+                    <span>Forward on WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyAdminReviewLink() {
+            const input = document.getElementById('admin-review-link-input');
+            input.select();
+            input.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(input.value).then(function() {
+                const textSpan = document.getElementById('copy-btn-text');
+                const iconSpan = document.getElementById('copy-btn-icon');
+                textSpan.innerText = '✓ Link Copied!';
+                iconSpan.innerText = '✅';
+                setTimeout(function() {
+                    textSpan.innerText = 'Copy Review Link';
+                    iconSpan.innerText = '📋';
+                }, 2500);
+            }).catch(function() {
+                document.execCommand('copy');
+                alert('Review link copied to clipboard!');
+            });
+        }
+    </script>
+
+    {{ block.super }}
+{% endblock %}

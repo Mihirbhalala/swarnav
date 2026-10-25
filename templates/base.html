@@ -15,8 +15,140 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Stylesheet with Cache-Buster -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={% now 'U' %}">
+    <style>
+        .site-footer .contact-detail-row strong {
+            color: #FFFFFF !important;
+            display: block !important;
+            font-weight: 600 !important;
+        }
+        .site-footer .contact-detail-row p,
+        .site-footer .contact-detail-row a {
+            color: #CBD5E1 !important;
+        }
+        .site-footer .contact-detail-row a:hover {
+            color: #FCD34D !important;
+            text-decoration: underline !important;
+        }
+
+        /* ==========================================================================
+           MOBILE-ONLY OVERRIDES (Screen width <= 768px)
+           Strictly scoped to mobile devices; 100% untouched on desktop
+           ========================================================================== */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden !important;
+                max-width: 100vw !important;
+                width: 100% !important;
+                position: relative;
+            }
+            .top-contact-strip {
+                padding: 6px 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                overflow-x: hidden !important;
+            }
+            .strip-inner {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 6px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+                box-sizing: border-box !important;
+            }
+            .strip-left {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                gap: 6px !important;
+                width: 100% !important;
+            }
+            .strip-badge {
+                font-size: 11px !important;
+                padding: 2px 7px !important;
+                border-radius: 3px !important;
+                white-space: nowrap !important;
+            }
+            .strip-location {
+                font-size: 12px !important;
+                white-space: nowrap !important;
+                color: #E8D8CA !important;
+            }
+            .strip-right {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 5px 8px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+            .strip-hours {
+                display: none !important;
+            }
+            .strip-lang-wrap {
+                margin: 0 !important;
+                padding: 2px 6px !important;
+                flex-shrink: 0 !important;
+                display: inline-flex !important;
+                align-items: center !important;
+            }
+            .strip-lang-pill {
+                font-size: 11px !important;
+                padding: 1px 4px !important;
+            }
+            .strip-link {
+                font-size: 12px !important;
+                padding: 3px 6px !important;
+                white-space: nowrap !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 4px !important;
+            }
+            .strip-link.phone-link,
+            .strip-link.phone-link span,
+            .strip-link.phone-link strong {
+                white-space: nowrap !important;
+                display: inline-flex !important;
+                align-items: center !important;
+            }
+            .strip-link.whatsapp-link {
+                white-space: nowrap !important;
+            }
+            .strip-link.admin-strip-link {
+                white-space: nowrap !important;
+                font-size: 11px !important;
+                padding: 2px 7px !important;
+            }
+            .floating-actions {
+                bottom: 16px !important;
+                right: 14px !important;
+                gap: 8px !important;
+            }
+            .floating-btn {
+                width: 44px !important;
+                height: 44px !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.22) !important;
+            }
+            .floating-icon {
+                font-size: 18px !important;
+            }
+            .floating-wa-btn svg {
+                width: 22px !important;
+                height: 22px !important;
+            }
+            .floating-tooltip {
+                display: none !important;
+            }
+        }
+    </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -40,18 +172,18 @@
                 </div>
                 <span class="strip-hours">{{ OPERATING_HOURS }}</span>
                 <a href="tel:{{ PHONE_RAW }}" class="strip-link phone-link" aria-label="Call Swarnav at {{ PHONE_NUMBER }}">
-                    <svg class="icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+                    <svg class="icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
                         <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/>
                     </svg>
                     <span>Helpline: <strong>{{ PHONE_NUMBER }}</strong></span>
                 </a>
                 <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="strip-link whatsapp-link" aria-label="WhatsApp Swarnav Tour & Travels">
-                    <svg class="icon" viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
-                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                    <svg class="icon whatsapp-svg-icon" viewBox="0 0 24 24" width="16" height="16" fill="#25D366" aria-hidden="true">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413Z"/>
                     </svg>
                     <span>WhatsApp</span>
                 </a>
-                <a href="/admin/" target="_blank" class="strip-link" style="background: rgba(212, 160, 23, 0.25); border: 1px solid #d4a017; padding: 2px 9px; border-radius: 4px; color: #fef3c7; font-weight: 600; text-decoration: none;" aria-label="Admin Portal">
+                <a href="/admin/" target="_blank" class="strip-link admin-strip-link" style="background: rgba(212, 160, 23, 0.25); border: 1px solid #d4a017; padding: 2px 9px; border-radius: 4px; color: #fef3c7; font-weight: 600; text-decoration: none;" aria-label="Admin Portal">
                     <span>🔐 Admin</span>
                 </a>
             </div>
@@ -103,22 +235,36 @@
                                     </div>
                                     <ul class="dropdown-sublinks">
                                         <li>
-                                            <a href="{% url 'yatras:char_dham_overview' %}" class="dropdown-link featured-link">
-                                                <strong>Char Dham Yatra</strong>
-                                                <span class="link-meta">13 Days • Yamunotri, Gangotri, Kedarnath, Badrinath</span>
-                                                <span class="badge-featured">Active Guide</span>
+                                            <a href="{% url 'yatras:char_dham_overview' %}" class="dropdown-link {% if active_tours.char_dham %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.char_dham.name|default:"Char Dham Yatra" }}</strong>
+                                                <span class="link-meta">{{ tours_map.char_dham.duration_display|default:"13 Days" }} • {{ tours_map.char_dham.subtitle|default:"Yamunotri, Gangotri, Kedarnath, Badrinath" }}</span>
+                                                {% if active_tours.char_dham %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'core:home' %}#tour-panch-kedar" class="dropdown-link">
-                                                <strong>Panch Kedar Yatra</strong>
-                                                <span class="link-meta">10 Days • Tungnath & Holy Shiva Temples</span>
+                                            <a href="{% url 'core:home' %}#tour-panch-kedar" class="dropdown-link {% if active_tours.panch_kedar %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.panch_kedar.name|default:"Panch Kedar Yatra" }}</strong>
+                                                <span class="link-meta">{{ tours_map.panch_kedar.duration_display|default:"10 Days" }} • {{ tours_map.panch_kedar.subtitle|default:"Tungnath & Holy Shiva Temples" }}</span>
+                                                {% if active_tours.panch_kedar %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'core:home' %}#tour-kashmir-paradise" class="dropdown-link">
-                                                <strong>Kashmir Tour</strong>
-                                                <span class="link-meta">7 Days • Srinagar, Gulmarg & Pahalgam</span>
+                                            <a href="{% url 'yatras:kashmir_overview' %}" class="dropdown-link {% if active_tours.kashmir_paradise %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.kashmir_paradise.name|default:"Kashmir & Vaishno Devi" }}</strong>
+                                                <span class="link-meta">{{ tours_map.kashmir_paradise.duration_display|default:"11 Days" }} • {{ tours_map.kashmir_paradise.subtitle|default:"Opening New Batch in December" }}</span>
+                                                {% if active_tours.kashmir_paradise %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                     </ul>
@@ -132,15 +278,25 @@
                                     </div>
                                     <ul class="dropdown-sublinks">
                                         <li>
-                                            <a href="{% url 'core:home' %}#tour-rameshwaram-circuit" class="dropdown-link">
-                                                <strong>Rameshwaram Tour</strong>
-                                                <span class="link-meta">8 Days • Madurai, Rameshwaram, Kanyakumari</span>
+                                            <a href="{% url 'yatras:rameshwaram_overview' %}" class="dropdown-link {% if active_tours.rameshwaram_circuit %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.rameshwaram_circuit.name|default:"Rameshwaram Tour" }}</strong>
+                                                <span class="link-meta">{{ tours_map.rameshwaram_circuit.duration_display|default:"12 Days" }} • Starting From {{ tours_map.rameshwaram_circuit.starting_price|default:"₹30,000" }}</span>
+                                                {% if active_tours.rameshwaram_circuit %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'core:home' %}#tour-kerala-tour" class="dropdown-link">
-                                                <strong>Kerala Tour</strong>
-                                                <span class="link-meta">6 Days • Munnar Hills & Alleppey Backwaters</span>
+                                            <a href="{% url 'yatras:kerala_overview' %}" class="dropdown-link {% if active_tours.kerala_tour %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.kerala_tour.name|default:"Kerala Tour" }}</strong>
+                                                <span class="link-meta">{{ tours_map.kerala_tour.duration_display|default:"13 Days" }} • Starting From {{ tours_map.kerala_tour.starting_price|default:"₹32,000" }}</span>
+                                                {% if active_tours.kerala_tour %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                     </ul>
@@ -154,16 +310,25 @@
                                     </div>
                                     <ul class="dropdown-sublinks">
                                         <li>
-                                            <a href="{% url 'yatras:puri_overview' %}" class="dropdown-link featured-link">
-                                                <strong>Jagannath Puri Yatra</strong>
-                                                <span class="link-meta">11 Days • Puri, Kolkata, Gangasagar, Deoghar, Kashi</span>
-                                                <span class="badge-featured">Active Guide</span>
+                                            <a href="{% url 'yatras:puri_overview' %}" class="dropdown-link {% if active_tours.jagannath_puri %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.jagannath_puri.name|default:"Jagannath Puri Yatra" }}</strong>
+                                                <span class="link-meta">{{ tours_map.jagannath_puri.duration_display|default:"11 Days" }} • {{ tours_map.jagannath_puri.subtitle|default:"Puri, Kolkata, Gangasagar, Deoghar, Kashi" }}</span>
+                                                {% if active_tours.jagannath_puri %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{% url 'core:home' %}#tour-jharkhand-tour" class="dropdown-link">
-                                                <strong>Jharkhand Spiritual Tour</strong>
-                                                <span class="link-meta">5 Days • Baidyanath Jyotirlinga (Deoghar)</span>
+                                            <a href="{% url 'core:home' %}#tour-jharkhand-tour" class="dropdown-link {% if active_tours.jharkhand_tour %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.jharkhand_tour.name|default:"Jharkhand Spiritual Tour" }}</strong>
+                                                <span class="link-meta">{{ tours_map.jharkhand_tour.duration_display|default:"5 Days" }} • {{ tours_map.jharkhand_tour.subtitle|default:"Baidyanath Jyotirlinga (Deoghar)" }}</span>
+                                                {% if active_tours.jharkhand_tour %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                     </ul>
@@ -177,9 +342,14 @@
                                     </div>
                                     <ul class="dropdown-sublinks">
                                         <li>
-                                            <a href="{% url 'core:home' %}#tour-nepal-pashupatinath-muktinath" class="dropdown-link">
-                                                <strong>Pashupatinath & Muktinath</strong>
-                                                <span class="link-meta">8 Days • Kathmandu, Pokhara, Muktinath Dham</span>
+                                            <a href="{% url 'core:home' %}#tour-nepal-pashupatinath-muktinath" class="dropdown-link {% if active_tours.nepal_pashupatinath_muktinath %}featured-link{% endif %}">
+                                                <strong>{{ tours_map.nepal_pashupatinath_muktinath.name|default:"Pashupatinath & Muktinath" }}</strong>
+                                                <span class="link-meta">{{ tours_map.nepal_pashupatinath_muktinath.duration_display|default:"8 Days" }} • {{ tours_map.nepal_pashupatinath_muktinath.subtitle|default:"Kathmandu, Pokhara, Muktinath Dham" }}</span>
+                                                {% if active_tours.nepal_pashupatinath_muktinath %}
+                                                    <span class="badge-featured" style="background: #166534; color: #ffffff;">✓ Active Guide</span>
+                                                {% else %}
+                                                    <span class="badge-upcoming" style="color: #94A3B8; font-size: 11px;">● Season Closed</span>
+                                                {% endif %}
                                             </a>
                                         </li>
                                     </ul>
@@ -204,6 +374,13 @@
                     <li class="nav-item">
                         <a href="{% url 'core:home' %}#contact" class="nav-link" id="nav-contact-link">
                             Contact
+                        </a>
+                    </li>
+
+                    <!-- Reviews Button -->
+                    <li class="nav-item">
+                        <a href="{% url 'core:reviews' %}" class="nav-link {% if request.resolver_match.url_name == 'reviews' %}active{% endif %}" id="nav-reviews-link">
+                            Reviews
                         </a>
                     </li>
 
@@ -279,7 +456,7 @@
             <!-- Brand & Company Info Column -->
             <div class="footer-col footer-brand-col">
                 <div class="footer-brand-header">
-                    <img src="{% static 'images/swarnav-logo.png' %}" alt="Swarnav Tour & Travels" class="footer-logo-img" width="220" height="84">
+                    <img src="{% static 'images/swarnav-logo-light.png' %}" alt="Swarnav Tour & Travels" class="footer-logo-img" width="220" height="84">
                 </div>
                 <p class="footer-tagline">{{ BUSINESS_TAGLINE }}</p>
                 <p class="footer-description">
@@ -296,14 +473,14 @@
             <div class="footer-col">
                 <h3 class="footer-heading">Our Tour Circuits</h3>
                 <ul class="footer-links">
-                    <li><a href="{% url 'yatras:char_dham_overview' %}"><strong>North India:</strong> Char Dham Yatra</a></li>
-                    <li><a href="{% url 'core:home' %}#tour-panch-kedar"><strong>North India:</strong> Panch Kedar Yatra</a></li>
-                    <li><a href="{% url 'core:home' %}#tour-kashmir-paradise"><strong>North India:</strong> Kashmir Valley Tour</a></li>
-                    <li><a href="{% url 'core:home' %}#tour-rameshwaram-circuit"><strong>South India:</strong> Rameshwaram Circuit</a></li>
-                    <li><a href="{% url 'core:home' %}#tour-kerala-tour"><strong>South India:</strong> Kerala Backwaters</a></li>
-                    <li><a href="{% url 'yatras:puri_overview' %}"><strong>East India:</strong> Jagannath Puri (11 Days)</a></li>
-                    <li><a href="{% url 'core:home' %}#tour-jharkhand-tour"><strong>East India:</strong> Baidyanath Jyotirlinga</a></li>
-                    <li><a href="{% url 'core:home' %}#tour-nepal-pashupatinath-muktinath"><strong>Nepal Tour:</strong> Pashupatinath Muktinath</a></li>
+                    <li><a href="{% url 'yatras:char_dham_overview' %}"><strong>North India:</strong> {{ tours_map.char_dham.name|default:"Char Dham Yatra" }}</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-panch-kedar"><strong>North India:</strong> {{ tours_map.panch_kedar.name|default:"Panch Kedar Yatra" }}</a></li>
+                    <li><a href="{% url 'yatras:kashmir_overview' %}"><strong>North India:</strong> {{ tours_map.kashmir_paradise.name|default:"Kashmir Paradise" }} ({{ tours_map.kashmir_paradise.duration_days|default:"11" }} Days)</a></li>
+                    <li><a href="{% url 'yatras:rameshwaram_overview' %}"><strong>South India:</strong> {{ tours_map.rameshwaram_circuit.name|default:"Rameshwaram Tour" }} ({{ tours_map.rameshwaram_circuit.duration_days|default:"12" }} Days)</a></li>
+                    <li><a href="{% url 'yatras:kerala_overview' %}"><strong>South India:</strong> {{ tours_map.kerala_tour.name|default:"Kerala Tour" }} ({{ tours_map.kerala_tour.duration_days|default:"13" }} Days)</a></li>
+                    <li><a href="{% url 'yatras:puri_overview' %}"><strong>East India:</strong> {{ tours_map.jagannath_puri.name|default:"Jagannath Puri" }} ({{ tours_map.jagannath_puri.duration_days|default:"11" }} Days)</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-jharkhand-tour"><strong>East India:</strong> {{ tours_map.jharkhand_tour.name|default:"Baidyanath Jyotirlinga" }}</a></li>
+                    <li><a href="{% url 'core:home' %}#tour-nepal-pashupatinath-muktinath"><strong>Nepal Tour:</strong> {{ tours_map.nepal_pashupatinath_muktinath.name|default:"Pashupatinath Muktinath" }}</a></li>
                 </ul>
             </div>
 
@@ -317,6 +494,7 @@
                     <li><a href="{% url 'yatras:char_dham_stay_and_travel' %}">Stay & Transport Details</a></li>
                     <li><a href="{% url 'yatras:char_dham_travel_guide' %}">Pilgrim Preparation & Health</a></li>
                     <li><a href="{% url 'yatras:char_dham_policies' %}">Booking & Cancellation Terms</a></li>
+                    <li><a href="{% url 'core:reviews' %}"><strong style="color: #fef3c7;">⭐ Pilgrim Reviews & Ratings</strong></a></li>
                 </ul>
             </div>
 
@@ -325,31 +503,31 @@
                 <h3 class="footer-heading">Direct Contact & Office</h3>
                 <div class="footer-contact-details">
                     <div class="contact-detail-row">
-                        <span class="detail-icon">📍</span>
+                        <span class="detail-icon" style="font-size: 16px; margin-top: 1px;">📍</span>
                         <div class="detail-text">
-                            <strong>Head Office:</strong>
-                            <p>{{ OFFICE_ADDRESS }}</p>
+                            <strong style="color: #FFFFFF !important; font-weight: 600; display: block; margin-bottom: 2px;">Head Office:</strong>
+                            <p style="color: #CBD5E1 !important; margin: 0; line-height: 1.45;">{{ OFFICE_ADDRESS }}</p>
                         </div>
                     </div>
                     <div class="contact-detail-row">
-                        <span class="detail-icon">📞</span>
+                        <span class="detail-icon" style="font-size: 16px; margin-top: 1px;">📞</span>
                         <div class="detail-text">
-                            <strong>Phone Helpline:</strong>
-                            <p><a href="tel:{{ PHONE_RAW }}">{{ PHONE_NUMBER }}</a></p>
+                            <strong style="color: #FFFFFF !important; font-weight: 600; display: block; margin-bottom: 2px;">Phone Helpline:</strong>
+                            <p style="margin: 0; line-height: 1.45;"><a href="tel:{{ PHONE_RAW }}" style="color: #CBD5E1 !important; text-decoration: none;">{{ PHONE_NUMBER }}</a></p>
                         </div>
                     </div>
                     <div class="contact-detail-row">
-                        <span class="detail-icon">💬</span>
+                        <span class="detail-icon" style="font-size: 16px; margin-top: 1px;">💬</span>
                         <div class="detail-text">
-                            <strong>WhatsApp Inquiries:</strong>
-                            <p><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer">{{ WHATSAPP_NUMBER }}</a></p>
+                            <strong style="color: #FFFFFF !important; font-weight: 600; display: block; margin-bottom: 2px;">WhatsApp Inquiries:</strong>
+                            <p style="margin: 0; line-height: 1.45;"><a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" style="color: #CBD5E1 !important; text-decoration: none;">{{ WHATSAPP_NUMBER }}</a></p>
                         </div>
                     </div>
                     <div class="contact-detail-row">
-                        <span class="detail-icon">⏰</span>
+                        <span class="detail-icon" style="font-size: 16px; margin-top: 1px;">⏰</span>
                         <div class="detail-text">
-                            <strong>Support Hours:</strong>
-                            <p>{{ OPERATING_HOURS }}</p>
+                            <strong style="color: #FFFFFF !important; font-weight: 600; display: block; margin-bottom: 2px;">Support Hours:</strong>
+                            <p style="color: #CBD5E1 !important; margin: 0; line-height: 1.45;">{{ OPERATING_HOURS }}</p>
                         </div>
                     </div>
                 </div>
@@ -391,10 +569,10 @@
                     <div class="ai-avatar">✨</div>
                     <div>
                         <div class="ai-title-row">
-                            <h3 class="ai-modal-title" id="ai-modal-title">Swarnav AI Yatra Assistant</h3>
-                            <span class="ai-badge-live">Gemini RAG Agent</span>
+                            <h3 class="ai-modal-title" id="ai-modal-title">Swarnav AI Assistant</h3>
+                            <span class="ai-badge-live">RAG AI Assistant</span>
                         </div>
-                        <p class="ai-modal-subtitle">Instant verified guidance • Itineraries, prices, darshan &amp; WhatsApp booking</p>
+                        <p class="ai-modal-subtitle">Instant verified answers • Starting dates, package prices, satvik meals &amp; booking</p>
                     </div>
                 </div>
                 <div class="ai-header-actions">
@@ -408,21 +586,20 @@
                 </div>
             </div>
 
-            <!-- Language Indicator / Quick Switcher -->
-            <div class="ai-lang-bar">
+            <!-- Language Switcher Bar -->
+            <div class="ai-lang-bar" role="tablist" aria-label="Select Assistant Language">
                 <span class="ai-lang-label">Languages Supported:</span>
-                <span class="ai-lang-pill active">English</span>
-                <span class="ai-lang-pill">ગુજરાતી</span>
-                <span class="ai-lang-pill">हिंदी</span>
+                <button type="button" class="ai-lang-pill active" data-lang="en" role="tab" aria-selected="true" title="Switch to English">English</button>
+                <button type="button" class="ai-lang-pill" data-lang="gu" role="tab" aria-selected="false" title="ગુજરાતી ભાષા પસંદ કરો">ગુજરાતી</button>
+                <button type="button" class="ai-lang-pill" data-lang="hi" role="tab" aria-selected="false" title="हिंदी भाषा चुनें">हिंदी</button>
             </div>
 
             <div class="ai-modal-body" id="ai-chat-messages">
                 <div class="ai-msg ai-msg-bot">
                     <div class="ai-bubble">
                         🙏 <strong>Jai Shri Krishna / Har Har Mahadev!</strong>
-                        <p>Welcome to <strong>Swarnav Tour & Travels</strong>. I am your advanced AI pilgrimage guide, powered by real-time tour itineraries, route elevations, satvik meal plans, and booking records.</p>
-                        <p>You can ask me questions in <strong>English, ગુજરાતી, or हिंदी</strong> about our <strong>Char Dham (13 Days)</strong>, <strong>Panch Kedar</strong>, <strong>Jagannath Puri</strong>, <strong>Nepal</strong>, <strong>South India</strong>, or <strong>Kashmir</strong> tours.</p>
-                        <p>How may I serve your pilgrimage journey today?</p>
+                        <p>Welcome to <strong>Swarnav Tour & Travels</strong>. I am your RAG AI Assistant.</p>
+                        <p>Ask me any specific question about our yatras in <strong>English, ગુજરાતી, or हिंदी</strong>—such as starting dates, package prices, satvik food, or senior citizen care—and I will provide you with the exact answer.</p>
                     </div>
                 </div>
             </div>
@@ -431,11 +608,11 @@
             <div class="ai-suggestions-wrap">
                 <span class="suggestions-label">Suggested Inquiries:</span>
                 <div class="suggestions-chips" id="ai-suggestions-chips">
-                    <button type="button" class="ai-chip" data-prompt="What is the 13-day Char Dham Yatra itinerary and price?">Char Dham Itinerary &amp; Price</button>
-                    <button type="button" class="ai-chip" data-prompt="Are these pilgrimages suitable for senior citizens? What about Kedarnath doli or helicopter?">Senior Citizen &amp; Palki / Heli</button>
-                    <button type="button" class="ai-chip" data-prompt="How much for 4 people on the Char Dham Yatra from Gujarat?">Estimate for 4 Pilgrims</button>
-                    <button type="button" class="ai-chip" data-prompt="Tell me about the Nepal Pashupatinath Muktinath tour.">Nepal Tour Details</button>
-                    <button type="button" class="ai-chip" data-prompt="Tell me about the 11-day Jagannath Puri and Varanasi tour.">Jagannath Puri Circuit</button>
+                    <button type="button" class="ai-chip" data-prompt="What is the starting date and starting package of Char Dham?">Char Dham Date &amp; Price</button>
+                    <button type="button" class="ai-chip" data-prompt="Can senior citizens get doli or helicopter for Kedarnath?">Senior Citizen Doli &amp; Helicopter</button>
+                    <button type="button" class="ai-chip" data-prompt="What meals and food are provided during the yatra?">Satvik &amp; Jain Food</button>
+                    <button type="button" class="ai-chip" data-prompt="What is the starting date and price of Kashmir tour?">Kashmir Batch &amp; Price</button>
+                    <button type="button" class="ai-chip" data-prompt="How do we book departures from Surat?">Booking from Surat</button>
                 </div>
             </div>
 
@@ -479,20 +656,20 @@
                         <select id="modal-tour-select" name="tour" class="form-select" required>
                             <option value="">-- Choose Your Destination --</option>
                             <optgroup label="North India">
-                                <option value="char-dham">Char Dham Yatra (13 Days – ₹30,000)</option>
-                                <option value="panch-kedar">Panch Kedar Yatra (10 Days – ₹26,500)</option>
-                                <option value="kashmir-paradise">Kashmir Tour (7 Days – ₹22,500)</option>
+                                <option value="char-dham">{{ tours_map.char_dham.name|default:"Char Dham Yatra" }} ({{ tours_map.char_dham.duration_days|default:"13" }} Days – {{ tours_map.char_dham.starting_price|default:"₹30,000" }})</option>
+                                <option value="panch-kedar">{{ tours_map.panch_kedar.name|default:"Panch Kedar Yatra" }} ({{ tours_map.panch_kedar.duration_days|default:"10" }} Days – {{ tours_map.panch_kedar.starting_price|default:"₹26,500" }})</option>
+                                <option value="kashmir-paradise">{{ tours_map.kashmir_paradise.name|default:"Kashmir Tour" }} ({{ tours_map.kashmir_paradise.duration_days|default:"11" }} Days – {{ tours_map.kashmir_paradise.starting_price|default:"₹30,000" }})</option>
                             </optgroup>
                             <optgroup label="South India">
-                                <option value="rameshwaram-circuit">Rameshwaram &amp; South Circuit (8 Days – ₹24,000)</option>
-                                <option value="kerala-tour">Kerala Tour (6 Days – ₹19,500)</option>
+                                <option value="rameshwaram-circuit">{{ tours_map.rameshwaram_circuit.name|default:"Rameshwaram & South Circuit" }} ({{ tours_map.rameshwaram_circuit.duration_days|default:"12" }} Days – {{ tours_map.rameshwaram_circuit.starting_price|default:"₹30,000" }})</option>
+                                <option value="kerala-tour">{{ tours_map.kerala_tour.name|default:"Kerala Tour" }} ({{ tours_map.kerala_tour.duration_days|default:"13" }} Days – {{ tours_map.kerala_tour.starting_price|default:"₹32,000" }})</option>
                             </optgroup>
                             <optgroup label="East India">
-                                <option value="jagannath-puri">Jagannath Puri Odisha (11 Days – ₹24,500)</option>
-                                <option value="jharkhand-tour">Jharkhand Spiritual Yatra (5 Days – ₹14,500)</option>
+                                <option value="jagannath-puri">{{ tours_map.jagannath_puri.name|default:"Jagannath Puri Odisha" }} ({{ tours_map.jagannath_puri.duration_days|default:"11" }} Days – {{ tours_map.jagannath_puri.starting_price|default:"₹24,500" }})</option>
+                                <option value="jharkhand-tour">{{ tours_map.jharkhand_tour.name|default:"Jharkhand Spiritual Yatra" }} ({{ tours_map.jharkhand_tour.duration_days|default:"5" }} Days – {{ tours_map.jharkhand_tour.starting_price|default:"₹14,500" }})</option>
                             </optgroup>
                             <optgroup label="Nepal Tour">
-                                <option value="nepal-pashupatinath-muktinath">Nepal Pashupatinath Muktinath (8 Days – ₹34,500)</option>
+                                <option value="nepal-pashupatinath-muktinath">{{ tours_map.nepal_pashupatinath_muktinath.name|default:"Nepal Pashupatinath Muktinath" }} ({{ tours_map.nepal_pashupatinath_muktinath.duration_days|default:"8" }} Days – {{ tours_map.nepal_pashupatinath_muktinath.starting_price|default:"₹34,500" }})</option>
                             </optgroup>
                             <option value="general">General Pilgrimage Inquiry</option>
                         </select>
@@ -554,8 +731,8 @@
             <span class="floating-tooltip">Ask AI Assistant</span>
         </button>
         <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="floating-btn floating-wa-btn" aria-label="Chat on WhatsApp">
-            <svg class="floating-icon-svg" viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
-                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+            <svg class="floating-icon-svg" viewBox="0 0 24 24" width="30" height="30" fill="#FFFFFF" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413Z"/>
             </svg>
             <span class="floating-tooltip">Chat with Coordinator</span>
         </a>

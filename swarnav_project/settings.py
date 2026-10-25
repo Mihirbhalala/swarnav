@@ -104,12 +104,48 @@ WSGI_APPLICATION = 'swarnav_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE_URL = os.environ.get('DATABASE_URL')
+DB_NAME = os.environ.get('DB_NAME')
+
+if DATABASE_URL:
+    try:
+        import dj_database_url
+        DATABASES = {
+            'default': dj_database_url.config(
+                default=DATABASE_URL,
+                conn_max_age=600,
+                conn_health_checks=True,
+            )
+        }
+    except Exception:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ.get('DB_NAME', 'swarnav_db'),
+                'USER': os.environ.get('DB_USER', 'postgres'),
+                'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+                'HOST': os.environ.get('DB_HOST', 'localhost'),
+                'PORT': os.environ.get('DB_PORT', '5432'),
+            }
+        }
+elif DB_NAME or os.environ.get('USE_POSTGRES', '').lower() in ('true', '1'):
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+            'NAME': DB_NAME or 'swarnav_db',
+            'USER': os.environ.get('DB_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+            'HOST': os.environ.get('DB_HOST', 'localhost'),
+            'PORT': os.environ.get('DB_PORT', '5432'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -222,9 +258,30 @@ UNFOLD = {
         },
     },
     "SIDEBAR": {
-        "show_search": True,
-        "show_all_applications": True,
+        "show_search": False,
+        "show_all_applications": False,
         "navigation": [
+            {
+                "title": "Tours & Pilgrimage Yatras",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "All Tour Packages",
+                        "icon": "explore",
+                        "link": reverse_lazy("admin:yatras_tourpackage_changelist"),
+                    },
+                    {
+                        "title": "➕ Add New Yatra",
+                        "icon": "add_circle",
+                        "link": reverse_lazy("admin:yatras_tourpackage_add"),
+                    },
+                    {
+                        "title": "Tour Categories",
+                        "icon": "category",
+                        "link": reverse_lazy("admin:core_tourcategory_changelist"),
+                    },
+                ],
+            },
             {
                 "title": "Pilgrim Inquiries & Leads",
                 "separator": True,
@@ -234,45 +291,25 @@ UNFOLD = {
                         "icon": "mail",
                         "link": reverse_lazy("admin:core_inquiry_changelist"),
                     },
+                ],
+            },
+            {
+                "title": "Pilgrim Reviews",
+                "separator": True,
+                "items": [
                     {
-                        "title": "Pilgrim Testimonials",
-                        "icon": "reviews",
+                        "title": "All Pilgrim Reviews",
+                        "icon": "rate_review",
                         "link": reverse_lazy("admin:core_testimonial_changelist"),
                     },
                 ],
             },
             {
-                "title": "Tours & Pilgrimage Circuits",
+                "title": "Website Setup",
                 "separator": True,
                 "items": [
                     {
-                        "title": "Tour Packages",
-                        "icon": "explore",
-                        "link": reverse_lazy("admin:yatras_tourpackage_changelist"),
-                    },
-                    {
-                        "title": "Itinerary Days",
-                        "icon": "calendar_today",
-                        "link": reverse_lazy("admin:yatras_itineraryday_changelist"),
-                    },
-                    {
-                        "title": "Dham Destinations",
-                        "icon": "pin_drop",
-                        "link": reverse_lazy("admin:yatras_dhamdestination_changelist"),
-                    },
-                ],
-            },
-            {
-                "title": "Portal & Content Setup",
-                "separator": True,
-                "items": [
-                    {
-                        "title": "Tour Categories",
-                        "icon": "category",
-                        "link": reverse_lazy("admin:core_tourcategory_changelist"),
-                    },
-                    {
-                        "title": "Why Choose Us",
+                        "title": "Why Choose Us (Trust)",
                         "icon": "verified",
                         "link": reverse_lazy("admin:core_whychooseus_changelist"),
                     },

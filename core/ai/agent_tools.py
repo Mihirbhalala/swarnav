@@ -88,9 +88,9 @@ def calculate_yatra_price(tour_slug: str = "char-dham", number_of_pilgrims: int 
         base_rate_map = {
             "char-dham": 30000,
             "panch-kedar": 26500,
-            "kashmir-paradise": 22500,
-            "rameshwaram-circuit": 24000,
-            "kerala-tour": 19500,
+            "kashmir-paradise": 30000,
+            "rameshwaram-circuit": 30000,
+            "kerala-tour": 32000,
             "jagannath-puri": 24500,
             "nepal-pashupatinath-muktinath": 34500,
             "jharkhand-tour": 14500

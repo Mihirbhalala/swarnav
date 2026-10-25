@@ -5,6 +5,9 @@ app_name = 'core'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('reviews/', views.reviews, name='reviews'),
+    path('pilgrim-review/', views.pilgrim_review_form, name='pilgrim_review'),
+    path('reviews/submit/', views.pilgrim_review_form, name='reviews_submit'),
     path('submit-inquiry/', views.submit_inquiry, name='submit_inquiry'),
     path('inquiry-success/<int:inquiry_id>/', views.inquiry_success, name='inquiry_success'),
     path('inquiry/<int:inquiry_id>/pdf/', views.inquiry_download_pdf, name='inquiry_pdf'),

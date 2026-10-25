@@ -125,7 +125,7 @@
                 <article class="tour-card" data-category="{{ category.id }}" id="tour-{{ tour.id }}">
                     <!-- Card Media & Badge -->
                     <div class="tour-card-media">
-                        <img src="{% static tour.image %}" 
+                        <img src="{% if tour.image_url %}{{ tour.image_url }}{% else %}{% static tour.image %}{% endif %}" 
                              alt="{{ tour.name }} - Swarnav Tour & Travels" 
                              class="tour-img" 
                              width="400" 
@@ -133,12 +133,18 @@
                              loading="lazy">
                         <span class="tour-region-pill">{{ category.name }}</span>
                         
-                        {% if tour.next_batch %}
-                            <span class="tour-status-tag" style="background: #f59e0b; color: #78350f; font-weight: 700;">★ Next Batch: {{ tour.next_batch }}</span>
-                        {% elif tour.is_completed %}
-                            <span class="tour-status-tag status-completed">★ Complete Guide</span>
+                        {% if tour.is_active %}
+                            {% if tour.tour_date %}
+                                <span class="tour-status-tag" style="background: linear-gradient(135deg, #15803d, #047857); color: #ffffff; font-weight: 800; box-shadow: 0 4px 12px rgba(21, 128, 61, 0.4); border: 1.5px solid rgba(255,255,255,0.4); padding: 6px 12px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 6px;">
+                                    ★ Active • 📅 {{ tour.tour_date }}
+                                </span>
+                            {% elif tour.next_batch %}
+                                <span class="tour-status-tag" style="background: #15803d; color: #ffffff; font-weight: 700;">★ Active • Next Batch: {{ tour.next_batch }}</span>
+                            {% else %}
+                                <span class="tour-status-tag status-completed" style="background: #15803d; color: #ffffff; font-weight: 700;">✓ Active • Bookings Open</span>
+                            {% endif %}
                         {% else %}
-                            <span class="tour-status-tag status-upcoming">● Upcoming Batches</span>
+                            <span class="tour-status-tag status-upcoming" style="background: #be123c; color: #ffffff; font-weight: 700;">● Not Active Yet (Season Closed)</span>
                         {% endif %}
                     </div>
 
@@ -151,6 +157,32 @@
 
                         <h3 class="tour-card-title">{{ tour.name }}</h3>
                         <p class="tour-card-tagline">{{ tour.tagline }}</p>
+
+                        <!-- Highlighted Date or Month for Active Tour -->
+                        {% if tour.is_active %}
+                        <div class="tour-active-date-highlight" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #22c55e; border-radius: 12px; padding: 10px 14px; margin: 12px 0 14px 0; box-shadow: 0 3px 10px rgba(34, 197, 94, 0.18);">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; border-radius: 10px; background: #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.08); font-size: 20px;">📅</div>
+                                <div>
+                                    <span style="display: block; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 0.05em; color: #15803d;">Active Tour Departure</span>
+                                    <strong style="font-size: 15px; font-weight: 800; color: #166534; line-height: 1.2;">
+                                        {% if tour.tour_date %}
+                                            {{ tour.tour_date }}
+                                        {% elif tour.next_batch %}
+                                            {{ tour.next_batch }}
+                                        {% elif tour.departures_summary %}
+                                            {{ tour.departures_summary }}
+                                        {% else %}
+                                            Current Season Batch Open
+                                        {% endif %}
+                                    </strong>
+                                </div>
+                            </div>
+                            <span style="display: inline-flex; align-items: center; font-size: 11px; font-weight: 800; color: #15803d; background: #ffffff; padding: 5px 10px; border-radius: 9999px; border: 1px solid #86efac; box-shadow: 0 1px 2px rgba(0,0,0,0.05); white-space: nowrap;">
+                                ✓ Seats Open
+                            </span>
+                        </div>
+                        {% endif %}
 
                         <!-- Home City Connect Note -->
                         <div class="tour-connect-badge">
@@ -185,12 +217,18 @@
                             </div>
 
                             <div class="tour-actions-wrap">
-                                {% if tour.is_completed and tour.link %}
+                                {% if tour.link %}
                                     <a href="{% url tour.link %}" class="btn btn-card-primary">
                                         {% if tour.id == 'char-dham' %}
                                             <span>Explore Char Dham →</span>
                                         {% elif tour.id == 'jagannath-puri' %}
                                             <span>Explore Jagannath Puri →</span>
+                                        {% elif tour.id == 'kashmir-paradise' %}
+                                            <span>Explore Kashmir Guide →</span>
+                                        {% elif tour.id == 'rameshwaram-circuit' %}
+                                            <span>Explore Rameshwaram Guide →</span>
+                                        {% elif tour.id == 'kerala-tour' %}
+                                            <span>Explore Kerala Guide →</span>
                                         {% else %}
                                             <span>Explore {{ tour.name }} →</span>
                                         {% endif %}
@@ -202,7 +240,7 @@
                                 {% endif %}
                                 <a href="https://wa.me/919586825353?text=Namaste%20Swarnav%20Travels,%20I%20want%20inquiry%20for%20{{ tour.name|urlencode }}%20(Starts%20from%20Surat)." target="_blank" rel="noopener noreferrer" class="btn-icon-wa" aria-label="WhatsApp inquiry for {{ tour.name }}">
                                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413Z"/>
                                     </svg>
                                 </a>
                             </div>
@@ -353,20 +391,20 @@
                         <select id="home-tour-select" name="tour" class="form-select" required>
                             <option value="">-- Choose Tour / Yatra --</option>
                             <optgroup label="North India">
-                                <option value="char-dham" selected>Char Dham Yatra (13 Days – ₹30,000)</option>
-                                <option value="panch-kedar">Panch Kedar Yatra (10 Days – ₹26,500)</option>
-                                <option value="kashmir-paradise">Kashmir Tour (7 Days – ₹22,500)</option>
+                                <option value="char-dham" selected>{{ tours_map.char_dham.name|default:"Char Dham Yatra" }} ({{ tours_map.char_dham.duration_days|default:"13" }} Days – {{ tours_map.char_dham.starting_price|default:"₹30,000" }})</option>
+                                <option value="panch-kedar">{{ tours_map.panch_kedar.name|default:"Panch Kedar Yatra" }} ({{ tours_map.panch_kedar.duration_days|default:"10" }} Days – {{ tours_map.panch_kedar.starting_price|default:"₹26,500" }})</option>
+                                <option value="kashmir-paradise">{{ tours_map.kashmir_paradise.name|default:"Kashmir Tour" }} ({{ tours_map.kashmir_paradise.duration_days|default:"11" }} Days – {{ tours_map.kashmir_paradise.starting_price|default:"₹30,000" }})</option>
                             </optgroup>
                             <optgroup label="South India">
-                                <option value="rameshwaram-circuit">Rameshwaram &amp; South Circuit (8 Days – ₹24,000)</option>
-                                <option value="kerala-tour">Kerala Tour (6 Days – ₹19,500)</option>
+                                <option value="rameshwaram-circuit">{{ tours_map.rameshwaram_circuit.name|default:"Rameshwaram & South Circuit" }} ({{ tours_map.rameshwaram_circuit.duration_days|default:"12" }} Days – {{ tours_map.rameshwaram_circuit.starting_price|default:"₹30,000" }})</option>
+                                <option value="kerala-tour">{{ tours_map.kerala_tour.name|default:"Kerala Tour" }} ({{ tours_map.kerala_tour.duration_days|default:"13" }} Days – {{ tours_map.kerala_tour.starting_price|default:"₹32,000" }})</option>
                             </optgroup>
                             <optgroup label="East India">
-                                <option value="jagannath-puri">Jagannath Puri Odisha (11 Days – ₹24,500)</option>
-                                <option value="jharkhand-tour">Jharkhand Spiritual Yatra (5 Days – ₹14,500)</option>
+                                <option value="jagannath-puri">{{ tours_map.jagannath_puri.name|default:"Jagannath Puri Odisha" }} ({{ tours_map.jagannath_puri.duration_days|default:"11" }} Days – {{ tours_map.jagannath_puri.starting_price|default:"₹24,500" }})</option>
+                                <option value="jharkhand-tour">{{ tours_map.jharkhand_tour.name|default:"Jharkhand Spiritual Yatra" }} ({{ tours_map.jharkhand_tour.duration_days|default:"5" }} Days – {{ tours_map.jharkhand_tour.starting_price|default:"₹14,500" }})</option>
                             </optgroup>
                             <optgroup label="Nepal Tour">
-                                <option value="nepal-pashupatinath-muktinath">Nepal Pashupatinath Muktinath (8 Days – ₹34,500)</option>
+                                <option value="nepal-pashupatinath-muktinath">{{ tours_map.nepal_pashupatinath_muktinath.name|default:"Nepal Pashupatinath Muktinath" }} ({{ tours_map.nepal_pashupatinath_muktinath.duration_days|default:"8" }} Days – {{ tours_map.nepal_pashupatinath_muktinath.starting_price|default:"₹34,500" }})</option>
                             </optgroup>
                             <option value="general">General Pilgrimage Inquiry</option>
                         </select>
@@ -440,7 +478,7 @@
                     </a>
                     <a href="{{ WHATSAPP_LINK }}" target="_blank" rel="noopener noreferrer" class="btn btn-contact-wa">
                         <svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 01-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.19-.09-1.12-.55-1.3-.61-.17-.06-.3-.09-.43.09-.13.19-.5 1.62-.61.75-.11.13-.23.15-.42.06-.19-.09-.81-.3-1.54-.95-.57-.51-.95-1.14-1.06-1.33-.11-.19-.01-.29.08-.38.08-.08.19-.23.28-.34.09-.11.13-.19.19-.32.06-.13.03-.25-.01-.34-.06-.09-.43-1.04-.59-1.43-.16-.37-.32-.32-.43-.33h-.37c-.13 0-.34.05-.52.24-.18.19-.68.66-.68 1.62 0 .95.69 1.88.79 2.01.09.13 1.36 2.08 3.3 2.92.46.2.82.32 1.1.41.46.15.89.13 1.22.08.37-.06 1.12-.46 1.28-.9.16-.45.16-.83.11-.9-.04-.08-.17-.13-.36-.23z"/>
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.82 11.82 0 00-3.48-8.413Z"/>
                         </svg>
                         <span>WhatsApp Inquiries</span>
                     </a>

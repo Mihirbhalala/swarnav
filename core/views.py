@@ -39,6 +39,7 @@ def home(request):
                     'image': 'images/kedarnath-temple.jpg',
                     'status': 'active',
                     'status_label': 'Next Batch: 1st Nov – 13th Nov (Open)',
+                    'tour_date': '1st Nov – 13th Nov',
                     'next_batch': '1st Nov – 13th Nov',
                     'is_completed': True,
                     'link': 'yatras:char_dham_overview',
@@ -78,26 +79,31 @@ def home(request):
                 {
                     'id': 'kashmir-paradise',
                     'name': 'Kashmir Tour (Paradise on Earth)',
-                    'tagline': 'Srinagar • Gulmarg • Pahalgam • Sonamarg • Dal Lake',
+                    'tagline': 'Katra (Vaishno Devi) • Shivkhori • Srinagar • Sonmarg • Gulmarg • Pahalgam • Amritsar',
                     'region': 'North India (Jammu & Kashmir)',
-                    'duration_days': 7,
-                    'duration_nights': 6,
-                    'duration_display': '7 Days / 6 Nights',
-                    'starting_price': '₹22,500',
-                    'price_note': 'per person (Starting price)',
-                    'origin': 'Starts from Surat (Gujarat) / Srinagar Hub',
+                    'duration_days': 11,
+                    'duration_nights': 10,
+                    'duration_display': '11 Days / 10 Nights',
+                    'starting_price': '₹30,000',
+                    'price_note': 'per person (Triple-sharing)',
+                    'origin': 'Starts & Ends in Surat, Gujarat',
                     'home_city_connect': 'Train or flight from your home city can be arranged',
-                    'image': 'images/kashmir-valley.jpg',
-                    'status': 'upcoming',
-                    'status_label': 'Seasonal Bookings Open',
-                    'is_completed': False,
+                    'image': 'images/gulmarg-snow-meadows.jpg',
+                    'status': 'active',
+                    'status_label': 'Opening New Batch in December',
+                    'tour_date': 'December 2026',
+                    'next_batch': 'Opening New Batch in December',
+                    'is_completed': True,
+                    'link': 'yatras:kashmir_overview',
                     'highlights': [
-                        'Traditional Dal Lake Houseboat stay with Shikara ride',
-                        'Gondola ride at snow-capped Gulmarg',
-                        'Scenic Betab & Aru Valleys in Pahalgam',
-                        'Comfortable transport & pure vegetarian meal options'
+                        'Opening New Batch in December (Winter Special)',
+                        'Mata Vaishno Devi & Shivkhori holy cave darshan',
+                        'Snow-clad Sonmarg, Gulmarg Gondola & Pahalgam Betaab Valley',
+                        'Srinagar Dal Lake traditional Shikara ride & Mughal Gardens',
+                        'Illuminated Sri Harmandir Sahib (Golden Temple) in Amritsar',
+                        'Surat to Katra & Amritsar to Surat AC Train transport included'
                     ],
-                    'brief_guide': 'Experience the breathtaking valleys, tranquil lakes, pine forests, and saffron fields of Kashmir with family-friendly comfort.'
+                    'brief_guide': 'Grand 11-day winter tour from Surat covering Mata Vaishno Devi, holy Shivkhori cave, heaven-on-earth Kashmir valleys, Dal Lake Shikara, and Amritsar Golden Temple. Opening New Batch in December!'
                 }
             ]
         },
@@ -111,50 +117,56 @@ def home(request):
                 {
                     'id': 'rameshwaram-circuit',
                     'name': 'Rameshwaram & South Divine Tour',
-                    'tagline': 'Madurai • Rameshwaram • Dhanushkodi • Kanyakumari',
-                    'region': 'South India (Tamil Nadu)',
-                    'duration_days': 8,
-                    'duration_nights': 7,
-                    'duration_display': '8 Days / 7 Nights',
-                    'starting_price': '₹24,000',
-                    'price_note': 'per person (Starting price)',
-                    'origin': 'Starts from Surat (Gujarat) / Madurai Hub',
+                    'tagline': 'Madurai • Rameshwaram • Dhanushkodi • Tiruchendur • Kanyakumari • Trivandrum',
+                    'region': 'South India (Tamil Nadu & Kerala)',
+                    'duration_days': 12,
+                    'duration_nights': 11,
+                    'duration_display': '12 Days / 11 Nights',
+                    'starting_price': '₹30,000',
+                    'price_note': 'per person (Triple-sharing)',
+                    'origin': 'Starts & Ends in Surat, Gujarat',
                     'home_city_connect': 'Train or flight from your home city can be arranged',
                     'image': 'images/rameshwaram-temple.jpg',
-                    'status': 'upcoming',
-                    'status_label': 'Year-Round Departures',
-                    'is_completed': False,
+                    'status': 'active',
+                    'status_label': 'Monthly Departures Open',
+                    'is_completed': True,
+                    'link': 'yatras:rameshwaram_overview',
                     'highlights': [
-                        'Sacred 22 Theerthams holy bath at Ramanathaswamy Temple',
-                        'Magnificent Meenakshi Amman Temple in Madurai',
-                        'Dhanushkodi Ram Setu point & Kanyakumari Sunset',
-                        'Air-conditioned coach & temple darshan guidance'
+                        'Sacred 22 Theerthams bath & Ramanathaswamy Temple Darshan',
+                        'Historic Madurai Meenakshi Amman Temple & Thirumalai Nayak Palace',
+                        'Full-day Dhanushkodi & Arichal Munai (Ram Setu viewpoint) excursion',
+                        'Seaside Tiruchendur Murugan Temple & Kanyakumari Sunrise / Sunset',
+                        'Vivekananda Rock Memorial & grand Sree Padmanabhaswamy Temple',
+                        'Lunch & dinner included (Breakfast if included in package)'
                     ],
-                    'brief_guide': 'One of India’s original Char Dham shrines where Lord Rama worshipped Shiva, linked with Madurai and Kanyakumari.'
+                    'brief_guide': 'Complete 12-day spiritual pilgrimage from Surat covering sacred Rameshwaram Jyotirlinga, Madurai Meenakshi, Dhanushkodi, Tiruchendur, Kanyakumari, and Trivandrum with AC train travel starting from ₹30,000.'
                 },
                 {
                     'id': 'kerala-tour',
                     'name': 'Kerala Tour (God’s Own Country)',
-                    'tagline': 'Munnar • Alleppey • Thekkady • Cochin',
+                    'tagline': 'Munnar Hills • Thekkady Wildlife • Alleppey Houseboat • Kovalam Beach • Fort Kochi',
                     'region': 'South India (Kerala)',
-                    'duration_days': 6,
-                    'duration_nights': 5,
-                    'duration_display': '6 Days / 5 Nights',
-                    'starting_price': '₹19,500',
-                    'price_note': 'per person (Starting price)',
-                    'origin': 'Starts from Surat (Gujarat) / Cochin Hub',
+                    'duration_days': 13,
+                    'duration_nights': 12,
+                    'duration_display': '13 Days / 12 Nights',
+                    'starting_price': '₹32,000',
+                    'price_note': 'per person (Triple-sharing)',
+                    'origin': 'Starts & Ends in Surat, Gujarat',
                     'home_city_connect': 'Train or flight from your home city can be arranged',
                     'image': 'images/kerala-backwaters.jpg',
-                    'status': 'upcoming',
-                    'status_label': 'Custom Batches Available',
-                    'is_completed': False,
+                    'status': 'active',
+                    'status_label': 'Monthly Departures Open',
+                    'is_completed': True,
+                    'link': 'yatras:kerala_overview',
                     'highlights': [
-                        'Munnar lush tea gardens & misty waterfalls',
-                        'Deluxe Alleppey Houseboat cruise in backwaters',
-                        'Spice plantation tour in Periyar (Thekkady)',
-                        'Family-friendly hotels with Gujarati & North Indian food options'
+                        'Munnar tea gardens, Mattupetty Dam & Echo Point (3 Nights)',
+                        'Thekkady spice plantations & Periyar Wildlife Sanctuary (2 Nights)',
+                        'Traditional Kerala Houseboat cruise & night stay in Alleppey Backwaters',
+                        'Kovalam Beach & sacred Sree Padmanabhaswamy Temple in Trivandrum (2 Nights)',
+                        'Historic Fort Kochi walk: Chinese Fishing Nets & St. Francis Church',
+                        'Lunch & dinner included (Breakfast if included in package)'
                     ],
-                    'brief_guide': 'A relaxing nature escape through Kerala’s emerald tea hills, tranquil backwaters, spice gardens, and Arabian sea beaches.'
+                    'brief_guide': 'Complete 13-day grand Kerala tour from Surat covering Munnar tea hills, Thekkady Periyar wildlife, Alleppey backwater houseboat, Kovalam beach, and Fort Kochi starting from ₹32,000.'
                 }
             ]
         },
@@ -251,7 +263,71 @@ def home(request):
         }
     ]
 
-    total_tours = sum(len(cat['tours']) for cat in tour_categories)
+    # --------------------------------------------------------------------------
+    # Dynamic DB Override: Sync with database so changes in admin panel show immediately
+    # --------------------------------------------------------------------------
+    from core.models import TourCategory, WhyChooseUs
+    from yatras.models import TourPackage
+
+    db_categories = TourCategory.objects.filter(is_active=True).prefetch_related('tours').order_by('order')
+    if db_categories.exists():
+        dynamic_categories = []
+        for cat in db_categories:
+            cat_tours = []
+            for tour in cat.tours.exclude(status='draft').order_by('order'):
+                tour_link = None
+                if tour.slug == 'char-dham':
+                    tour_link = 'yatras:char_dham_overview'
+                elif tour.slug == 'jagannath-puri':
+                    tour_link = 'yatras:puri_overview'
+                elif tour.slug == 'kashmir-paradise':
+                    tour_link = 'yatras:kashmir_overview'
+                elif tour.slug == 'rameshwaram-circuit':
+                    tour_link = 'yatras:rameshwaram_overview'
+                elif tour.slug == 'kerala-tour':
+                    tour_link = 'yatras:kerala_overview'
+
+                cat_tours.append({
+                    'id': tour.slug,
+                    'name': tour.name,
+                    'tagline': tour.tagline,
+                    'region': tour.region or cat.name,
+                    'duration_days': tour.duration_days,
+                    'duration_nights': tour.duration_nights,
+                    'duration_display': tour.duration_display,
+                    'starting_price': tour.starting_price,
+                    'price_note': tour.price_note,
+                    'origin': tour.origin or "Starts & Ends in Surat, Gujarat",
+                    'home_city_connect': tour.home_city_connect or "Train or flight from your home city can be arranged",
+                    'image': tour.image,
+                    'image_url': tour.image_url,
+                    'is_active': tour.is_active,
+                    'status': tour.status,
+                    'status_label': tour.status_label,
+                    'tour_date': tour.tour_date or (tour.status_label if ('Nov' in tour.status_label or 'Batch' in tour.status_label or 'Date' in tour.status_label or 'Dec' in tour.status_label) else ''),
+                    'next_batch': tour.tour_date or (tour.status_label if ('Nov' in tour.status_label or 'Batch' in tour.status_label or 'Date' in tour.status_label or 'Dec' in tour.status_label) else ''),
+                    'is_completed': tour.is_completed,
+                    'link': tour_link,
+                    'highlights': tour.highlights if isinstance(tour.highlights, list) else [],
+                    'brief_guide': tour.brief_guide,
+                    'departures_summary': tour.departures_summary,
+                    'departures_guidance': tour.departures_guidance,
+                    'accommodation_summary': tour.accommodation_summary,
+                    'meals_summary': tour.meals_summary,
+                    'transport_summary': tour.transport_summary,
+                })
+
+            if cat_tours:
+                dynamic_categories.append({
+                    'id': cat.slug,
+                    'name': cat.name,
+                    'tagline': cat.tagline,
+                    'badge': cat.badge,
+                    'description': cat.description,
+                    'tours': cat_tours,
+                })
+        if dynamic_categories:
+            tour_categories = dynamic_categories
 
     why_swarnav = [
         {
@@ -285,6 +361,19 @@ def home(request):
             'description': 'Full guidance and verification for mandatory state pilgrim registration (Uttarakhand Char Dham, Nepal Yatra permits, etc.).'
         }
     ]
+
+    db_why = WhyChooseUs.objects.filter(is_active=True).order_by('order')
+    if db_why.exists():
+        why_swarnav = [
+            {
+                'icon': item.icon,
+                'title': item.title,
+                'description': item.description,
+            }
+            for item in db_why
+        ]
+
+    total_tours = sum(len(cat['tours']) for cat in tour_categories)
 
     context = {
         'page_title': 'Swarnav Tour & Travels | Spiritual Pilgrimages & Nature Tours Across India & Nepal',
@@ -516,6 +605,156 @@ def inquiry_master_pdf(request):
     })
 
 
+@ensure_csrf_cookie
+def reviews(request):
+    """
+    Public Pilgrim Reviews & Testimonials page.
+    Displays verified yatra reviews, overall ratings, trust badges, and category filters.
+    Only shows verified reviews from pilgrims who completed their journeys.
+    """
+    from .models import Testimonial
+
+    selected_yatra = request.GET.get('yatra', '').strip()
+    selected_rating = request.GET.get('rating', '').strip()
+
+    reviews_qs = Testimonial.objects.all().order_by('-created_at')
+
+    if selected_yatra:
+        reviews_qs = reviews_qs.filter(yatra_name__icontains=selected_yatra)
+
+    if selected_rating and selected_rating.isdigit():
+        reviews_qs = reviews_qs.filter(rating=int(selected_rating))
+
+    all_reviews = list(Testimonial.objects.all())
+    total_reviews = len(all_reviews)
+
+    if total_reviews > 0:
+        avg_rating = round(sum(r.rating for r in all_reviews) / total_reviews, 1)
+        c5 = sum(1 for r in all_reviews if r.rating == 5)
+        c4 = sum(1 for r in all_reviews if r.rating == 4)
+        c3 = sum(1 for r in all_reviews if r.rating == 3)
+        c2 = sum(1 for r in all_reviews if r.rating == 2)
+        c1 = sum(1 for r in all_reviews if r.rating == 1)
+
+        rating_breakdown = [
+            {'stars': 5, 'count': c5, 'pct': round((c5 / total_reviews) * 100)},
+            {'stars': 4, 'count': c4, 'pct': round((c4 / total_reviews) * 100)},
+            {'stars': 3, 'count': c3, 'pct': round((c3 / total_reviews) * 100)},
+            {'stars': 2, 'count': c2, 'pct': round((c2 / total_reviews) * 100)},
+            {'stars': 1, 'count': c1, 'pct': round((c1 / total_reviews) * 100)},
+        ]
+        recommended_pct = round(((c5 + c4) / total_reviews) * 100)
+    else:
+        avg_rating = 5.0
+        rating_breakdown = []
+        recommended_pct = 100
+
+    yatra_options = [
+        'Char Dham Yatra',
+        'Panch Kedar Yatra',
+        'Kashmir Paradise & Mata Vaishno Devi',
+        'Rameshwaram & South Circuit',
+        'Kerala Tour (God\'s Own Country)',
+        'Jagannath Puri & Eastern Yatra',
+        'Jharkhand Spiritual Yatra (Baidyanath)',
+        'Nepal Pashupatinath Muktinath Tour',
+    ]
+
+    context = {
+        'page_title': 'Pilgrim Reviews & Testimonials | Swarnav Tour & Travels',
+        'meta_description': 'Read verified reviews and experiences from pilgrims who traveled with Swarnav Tour & Travels across Char Dham, Kashmir, Rameshwaram, Puri, Kerala, and Nepal. Departures from Gujarat.',
+        'reviews': reviews_qs,
+        'total_reviews': total_reviews,
+        'filtered_count': reviews_qs.count(),
+        'avg_rating': avg_rating,
+        'rating_breakdown': rating_breakdown,
+        'recommended_pct': recommended_pct,
+        'selected_yatra': selected_yatra,
+        'selected_rating': selected_rating,
+        'yatra_options': yatra_options,
+    }
+    return render(request, 'core/reviews.html', context)
+
+
+@ensure_csrf_cookie
+def pilgrim_review_form(request):
+    """
+    Dedicated Standalone Review Submission Page for completed pilgrims.
+    Shared privately by administrators via WhatsApp/SMS after yatra completion.
+    Supports sub-category ratings (Food, Transport, Stay, Coordination, Safety, Overall).
+    Written description is completely optional.
+    Submissions instantly reflect on the main website under the public Reviews tab.
+    """
+    from .models import Testimonial
+
+    yatra_options = [
+        'Char Dham Yatra',
+        'Panch Kedar Yatra',
+        'Kashmir Paradise & Mata Vaishno Devi',
+        'Rameshwaram & South Circuit',
+        'Kerala Tour (God\'s Own Country)',
+        'Jagannath Puri & Eastern Yatra',
+        'Jharkhand Spiritual Yatra (Baidyanath)',
+        'Nepal Pashupatinath Muktinath Tour',
+    ]
+
+    context = {
+        'yatra_options': yatra_options,
+        'submitted': False,
+        'error_msg': None,
+        'initial_name': request.GET.get('name', '').strip(),
+        'initial_city': request.GET.get('city', '').strip(),
+    }
+
+    if request.method == 'POST':
+        name = request.POST.get('pilgrim_name', '').strip()
+        city = request.POST.get('city', '').strip()
+        yatra = request.POST.get('yatra_name', '').strip()
+        review_text = request.POST.get('review_text', '').strip()
+
+        # Helper to parse star ratings (1 to 5, or None)
+        def parse_star(raw_val):
+            try:
+                v = int(raw_val)
+                if 1 <= v <= 5:
+                    return v
+            except (ValueError, TypeError):
+                pass
+            return None
+
+        rating_overall = parse_star(request.POST.get('rating_overall'))
+        rating_food = parse_star(request.POST.get('rating_food'))
+        rating_transport = parse_star(request.POST.get('rating_transport'))
+        rating_accommodation = parse_star(request.POST.get('rating_accommodation'))
+        rating_coordination = parse_star(request.POST.get('rating_coordination'))
+        rating_safety = parse_star(request.POST.get('rating_safety'))
+
+        if len(name) < 2:
+            context['error_msg'] = "Please enter your full name."
+        elif not yatra:
+            context['error_msg'] = "Please select the yatra or tour you completed."
+        elif not rating_overall:
+            context['error_msg'] = "Please select a rating for 'Overall Yatra Experience' (tap 1 to 5 stars)."
+        else:
+            Testimonial.objects.create(
+                pilgrim_name=name,
+                city=city or 'Gujarat, India',
+                yatra_name=yatra,
+                rating=rating_overall,
+                rating_food=rating_food,
+                rating_transport=rating_transport,
+                rating_accommodation=rating_accommodation,
+                rating_coordination=rating_coordination,
+                rating_safety=rating_safety,
+                review_text=review_text,
+                is_featured=True
+            )
+            context['submitted'] = True
+            context['pilgrim_name'] = name
+
+    return render(request, 'core/pilgrim_review_form.html', context)
+
+
 @csrf_exempt
 @require_POST
 def ai_chat_api(request):
@@ -534,6 +773,7 @@ def ai_chat_api(request):
             body = request.POST.dict()
 
         user_message = (body.get('message') or body.get('prompt') or '').strip()
+        requested_lang = (body.get('language') or body.get('lang') or '').strip().lower()
         if not user_message:
             return JsonResponse({'success': False, 'error': 'Message cannot be empty.'}, status=400)
 
@@ -543,7 +783,7 @@ def ai_chat_api(request):
             history = []
 
         from core.ai.agent_service import execute_agent_chat
-        result = execute_agent_chat(user_message, session_history=history)
+        result = execute_agent_chat(user_message, session_history=history, requested_lang=requested_lang)
 
         # Update session history (keep last 12 turns to preserve context without bloat)
         history.append({"sender": "user", "text": user_message})
