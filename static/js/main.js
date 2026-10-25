@@ -150,6 +150,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Expose globally
+    window.openInquiryModal = openInquiryModal;
+    window.openQuickInquiry = function(tour) {
+        if (tour === 'char-dham') {
+            window.open('https://wa.me/919586825353?text=Namaste%20Swarnav%20Travels%2C%20I%20want%20to%20inquire%20and%20register%20for%20the%20Char%20Dham%20Yatra%20(13%20Days%20%7C%20Yamunotri%2C%20Gangotri%2C%20Kedarnath%2C%20Badrinath)%20for%20the%20confirmed%20batch%20(1st%20Nov%20%E2%80%93%2013th%20Nov).%20Please%20share%20package%20details%2C%20pricing%2C%20and%20seat%20availability.', '_blank');
+        } else {
+            openInquiryModal(tour);
+        }
+    };
+
 
     // --------------------------------------------------------------------------
     // 4. Interactive AI Pilgrimage Assistant
