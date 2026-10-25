@@ -215,8 +215,8 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     f'Swarnav Tour & Travels <{EMAIL_HOST_USER}>' if EMAIL_HOST_USER else 'Swarnav Tour & Travels <swarnavtours01@gmail.com>'
 )
 
-# Base site URL for admin email links (set your domain in production or local Wi-Fi IP for phone access)
-SITE_URL = os.environ.get('SITE_URL', 'http://192.168.31.11:8000')
+# Base site URL for admin email links (set your domain in production or local development URL)
+SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
 
 # Django Unfold Modern Admin Configuration
 from django.urls import reverse_lazy

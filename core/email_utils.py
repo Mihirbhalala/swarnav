@@ -19,7 +19,7 @@ def send_admin_inquiry_notification(inquiry, site_url="http://127.0.0.1:8000"):
 
     ref_id = f"SW-INQ-{inquiry.id:04d}"
     subject = f"🕉️ New Registration Inquiry #{ref_id}: {inquiry.name} - {inquiry.get_tour_display()}"
-    base_url = getattr(settings, 'SITE_URL', None) or site_url
+    base_url = site_url or getattr(settings, 'SITE_URL', 'http://127.0.0.1:8000')
     admin_detail_url = f"{base_url}/admin/core/inquiry/{inquiry.id}/change/"
 
     # WhatsApp prefill link
