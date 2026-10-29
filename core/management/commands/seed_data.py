@@ -54,7 +54,18 @@ from yatras.data.kerala import (
 class Command(BaseCommand):
     help = "Seeds database with all tour circuits, full Char Dham and Jagannath Puri data, and why choose us features."
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--if-empty',
+            action='store_true',
+            help='Only seed when no tour packages exist yet (safe to run on every deploy).',
+        )
+
     def handle(self, *args, **options):
+        if options['if_empty'] and TourPackage.objects.exists():
+            self.stdout.write(self.style.NOTICE("Tour packages already exist, skipping seeding."))
+            return
+
         self.stdout.write(self.style.NOTICE("Beginning database seeding..."))
 
         # -------------------------------------------------------------
@@ -1040,11 +1051,10 @@ class Command(BaseCommand):
                 'name': 'Prakash Shah',
                 'phone': '+919876543210',
                 'tour': 'char-dham',
-                'number_of_pilgrims': 4,
-                'travel_month': 'May',
-                'message': 'We are 4 family members including 2 senior citizens. Please share batch dates and pricing details.',
+                'total_pilgrims': 4,
+                'message': 'We are 4 family members including 2 senior citizens. Planning to travel in May. Please share batch dates and pricing details.',
                 'status': 'new',
-                'notes': 'Called on May 10, shared brochure on WhatsApp.'
+                'admin_notes': 'Called on May 10, shared brochure on WhatsApp.'
             }
         ]
 

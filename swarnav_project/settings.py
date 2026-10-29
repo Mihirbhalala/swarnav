@@ -44,12 +44,39 @@ if env_file.exists():
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rap8pmbf1*mm4bfc+p^byfc$r@r!o^15l#6%%^j9+6-)z7_52i'
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-rap8pmbf1*mm4bfc+p^byfc$r@r!o^15l#6%%^j9+6-)z7_52i',  # local dev only
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Defaults to True locally; set DEBUG=False on Render.
+DEBUG = os.environ.get('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver', '*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
+CSRF_TRUSTED_ORIGINS = []
+
+# Render sets this automatically to e.g. swarnav.onrender.com
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    CSRF_TRUSTED_ORIGINS.append(f'https://{RENDER_EXTERNAL_HOSTNAME}')
+
+# Optional extra hosts (e.g. custom domain): comma-separated
+for host in filter(None, os.environ.get('EXTRA_ALLOWED_HOSTS', '').split(',')):
+    ALLOWED_HOSTS.append(host.strip())
+    CSRF_TRUSTED_ORIGINS.append(f'https://{host.strip()}')
+
+if DEBUG:
+    ALLOWED_HOSTS.append('*')
+
+# Render terminates HTTPS at its proxy
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -72,6 +99,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -188,8 +216,25 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+# WhiteNoise serves static files in production (compressed + cache-busted).
+# Locally (DEBUG=True) plain storage is used, so runserver and tests work without collectstatic.
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        if DEBUG
+        else "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
+}
+# A mistyped image path shows a broken image instead of crashing the whole page
+WHITENOISE_MANIFEST_STRICT = False
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Admin photo uploads go to Cloudinary when CLOUDINARY_URL is set
+# (Render's free disk is wiped on every restart); otherwise they are saved to MEDIA_ROOT.
+CLOUDINARY_URL = os.environ.get('CLOUDINARY_URL', '')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -208,6 +253,8 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True').lower() in ('true', '1',
 EMAIL_USE_SSL = os.environ.get('EMAIL_USE_SSL', 'False').lower() in ('true', '1', 't', 'yes')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+# Fail fast instead of hanging the inquiry form if the SMTP server is unreachable
+EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', 10))
 
 ADMIN_NOTIFICATION_EMAIL = os.environ.get('ADMIN_NOTIFICATION_EMAIL', 'swarnavtours01@gmail.com')
 DEFAULT_FROM_EMAIL = os.environ.get(
@@ -216,7 +263,10 @@ DEFAULT_FROM_EMAIL = os.environ.get(
 )
 
 # Base site URL for admin email links (set your domain in production or local development URL)
-SITE_URL = os.environ.get('SITE_URL', 'http://127.0.0.1:8000')
+SITE_URL = os.environ.get(
+    'SITE_URL',
+    f'https://{RENDER_EXTERNAL_HOSTNAME}' if RENDER_EXTERNAL_HOSTNAME else 'http://127.0.0.1:8000',
+)
 
 # Django Unfold Modern Admin Configuration
 from django.urls import reverse_lazy

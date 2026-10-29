@@ -192,7 +192,8 @@ class YatrasAdminAndFormsTests(TestCase):
         self.assertIn('Delete', del_html)
 
     def test_tour_package_image_url_and_absolute_url(self):
-        self.assertIn("kedarnath-temple.jpg", self.tour.image_url)
+        # Manifest storage may add a content hash, e.g. kedarnath-temple.949051622a87.jpg
+        self.assertRegex(self.tour.image_url, r"kedarnath-temple(\.[0-9a-f]+)?\.jpg$")
         self.assertIn("#tour-char-dham-test", self.tour.get_absolute_url())
 
 

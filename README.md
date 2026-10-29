@@ -91,6 +91,16 @@ Once running, access the portal:
 
 ---
 
+## ☁️ Free Deployment (Render + Neon)
+1. Create a free PostgreSQL database at [neon.tech](https://neon.tech) and copy its connection string.
+2. (Optional) Create a free [cloudinary.com](https://cloudinary.com) account and copy its `CLOUDINARY_URL`, so photos uploaded in admin are not lost when the server restarts.
+3. On [render.com](https://render.com), choose **New → Blueprint** and select this repository. Render reads [`render.yaml`](render.yaml) and asks for the secret values (`DATABASE_URL`, `GEMINI_API_KEY`, email login, `CLOUDINARY_URL`, first admin username/email/password).
+4. Every deploy runs [`build.sh`](build.sh): installs packages, collects static files, migrates, loads the tour data into an empty database, and creates the admin account if it doesn't exist.
+
+Free tier notes: the site sleeps after ~15 minutes without visitors (the first visit then takes ~1 minute), and Render's free tier has no shell, so run one-off commands from your computer with `DATABASE_URL` pointing at Neon.
+
+---
+
 ## 📚 Documentation & Sources
 - [CONTENT_SOURCES.md](CONTENT_SOURCES.md) - Official government and temple portals referenced for sacred shrine details and route information.
 - [IMAGE_SOURCES.md](IMAGE_SOURCES.md) - Complete attribution and usage rights for imagery across the portal.

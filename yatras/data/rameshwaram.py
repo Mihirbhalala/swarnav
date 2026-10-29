@@ -402,14 +402,14 @@ RAMESHWARAM_ITINERARY_DAYS = [
         'places_covered': [
             {
                 'name': 'Sree Padmanabhaswamy Temple',
-                'image': 'padmanabhaswamy_temple.jpg',
+                'image': 'padmanabhaswamy-temple.jpg',
                 'image_alt': 'Sree Padmanabhaswamy Temple in Trivandrum reflecting across the sacred pond',
                 'caption': 'Grand Padmanabhaswamy Temple',
                 'point': 'World-famous Kerala-Dravidian royal temple housing the magnificent 18-foot idol of Lord Vishnu reclining on Adisesha, observed through three sanctum doors.'
             },
             {
                 'name': 'Kovalam Beach',
-                'image': 'padmanabhaswamy_temple.jpg',
+                'image': 'padmanabhaswamy-temple.jpg',
                 'image_alt': 'Crescent coastline of Kovalam lighthouse beach with coconut palms',
                 'caption': 'Kovalam Arabian Sea Coastline',
                 'point': 'Famous crescent beach in Kerala shaded by thousands of coconut palms, ideal for relaxing by the Arabian Sea waves after temple darshan.'

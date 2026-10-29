@@ -1,0 +1,41 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Values marked "sync: false" are asked for in the Render dashboard when the Blueprint is created.
+services:
+  - type: web
+    name: swarnav
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: ./build.sh
+    startCommand: gunicorn swarnav_project.wsgi:application --workers 2 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      # Free PostgreSQL connection string from neon.tech
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      # Gmail address + 16-character App Password for inquiry notifications
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: ADMIN_NOTIFICATION_EMAIL
+        value: swarnavtours01@gmail.com
+      # Free cloudinary.com account, so photos uploaded in admin survive restarts
+      - key: CLOUDINARY_URL
+        sync: false
+      # First admin login, created on the first deploy
+      - key: DJANGO_SUPERUSER_USERNAME
+        sync: false
+      - key: DJANGO_SUPERUSER_EMAIL
+        sync: false
+      - key: DJANGO_SUPERUSER_PASSWORD
+        sync: false

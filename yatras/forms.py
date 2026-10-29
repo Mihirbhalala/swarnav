@@ -1,5 +1,6 @@
 import json
 from django import forms
+from django.conf import settings
 from django.core.files.storage import default_storage
 from unfold.widgets import UnfoldAdminTextareaWidget, UnfoldAdminTextInputWidget
 
@@ -124,8 +125,14 @@ class TourPackageForm(forms.ModelForm):
         instance = super().save(commit=False)
         image_file = self.cleaned_data.get('image_file')
         if image_file:
-            saved_path = default_storage.save(f"tours/{image_file.name}", image_file)
-            instance.image = f"media/{saved_path}"
+            if settings.CLOUDINARY_URL:
+                # cloudinary reads its credentials from the CLOUDINARY_URL env var
+                import cloudinary.uploader
+                result = cloudinary.uploader.upload(image_file, folder="swarnav/tours")
+                instance.image = result['secure_url']
+            else:
+                saved_path = default_storage.save(f"tours/{image_file.name}", image_file)
+                instance.image = f"media/{saved_path}"
         if commit:
             instance.save()
             self.save_m2m()
