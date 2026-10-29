@@ -20,8 +20,9 @@ from core.ai.rag_engine import retrieve_context
 
 logger = logging.getLogger(__name__)
 
-PHONE_NUMBER = "+91 95868 25353"
-WHATSAPP_LINK = "https://wa.me/919586825353"
+PHONE_NUMBER = "+91 97274 23555"
+WHATSAPP_NUMBER = "+91 96241 68555"
+WHATSAPP_LINK = "https://wa.me/919624168555"
 
 # Tour lookup configuration with priority keywords
 TOUR_LOOKUP = [
@@ -263,7 +264,7 @@ def _get_tour_itinerary_summary(tour, slug: str, specific_day: Optional[int] = N
         except Exception:
             pass
 
-    return f"Detailed day-by-day itinerary for {tour_name} is available in our brochure. Please connect with our team on WhatsApp ({PHONE_NUMBER}) to receive the complete PDF."
+    return f"Detailed day-by-day itinerary for {tour_name} is available in our brochure. Please connect with our team on WhatsApp ({WHATSAPP_NUMBER}) to receive the complete PDF."
 
 
 def _handle_month_query(month: str, lang: str) -> Dict[str, Any]:
@@ -276,28 +277,28 @@ def _handle_month_query(month: str, lang: str) -> Dict[str, Any]:
                 f"**दिसंबर (December)** में स्वर्णाव टूर एंड ट्रेवल्स की मुख्य यात्राएं:\n\n"
                 f"1. **कश्मीर टूर (Kashmir Paradise & Vaishno Devi)**: **दिसंबर 2026** में कन्फर्म विंटर बैच रवाना होगा (श्रीनगर, गुलमर्ग बर्फबारी/स्नो, पहलगाम, डल झील शिकारा और मां वैष्णो देवी दर्शन)।\n"
                 f"2. **रामेश्वरम व दक्षिण भारत यात्रा (Rameshwaram Tour)**: दिसंबर में सूरत से **मंथली शेड्यूल ग्रुप प्रस्थान** उपलब्ध है।\n\n"
-                f"दिसंबर बैच की सीट आरक्षण और तारीख की पुष्टि के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp पर संपर्क कर सकते हैं।"
+                f"दिसंबर बैच की सीट आरक्षण और तारीख की पुष्टि के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp (**{WHATSAPP_NUMBER}**) पर संपर्क कर सकते हैं।"
             )
         elif lang == "gu_script":
             reply = (
                 f"**ડિસેમ્બર (December)** મહિનામાં સ્વર્ણવ ટૂર એન્ડ ટ્રાવેલ્સની મુખ્ય યાત્રાઓ:\n\n"
                 f"૧. **કાશ્મીર અને વૈષ્ણોદેવી ટૂર**: **ડિસેમ્બર ૨૦૨૬** માં કન્ફર્મ વિન્ટર બેચ સુરતથી રવાના થશે (બરફબારી/સ્નો, ગુલમર્ગ, સોનમર્ગ, પહેલગામ અને વૈષ્ણોદેવી દર્શન).\n"
                 f"૨. **રામેશ્વરમ અને દક્ષિણ ભારત યાત્રા**: ડિસેમ્બર માટે સુરતથી **દર મહિને નિયમિત ગ્રૂપ ટૂર** ઉપલબ્ધ છે.\n\n"
-                f"ડિસેમ્બર બેચની સીટ બુકિંગ માટે આપ સીધા **{PHONE_NUMBER}** પર અથવા WhatsApp દ્વારા સંપર્ક કરી શકો છો."
+                f"ડિસેમ્બર બેચની સીટ બુકિંગ માટે આપ સીધા **{PHONE_NUMBER}** પર અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા સંપર્ક કરી શકો છો."
             )
         elif lang == "gu_roman":
             reply = (
                 f"**December** mahina ma Swarnav Tour & Travels ni mukhya yatras:\n\n"
                 f"1. **Kashmir Tour & Vaishno Devi**: **December 2026** ma confirmed winter snow batch ravaana thase (Gulmarg, Pahalgam, Dal Lake Shikara ane Vaishno Devi darshan).\n"
                 f"2. **Rameshwaram & South Divine Tour**: December mate Surat thi **Monthly Scheduled Departures** available che.\n\n"
-                f"December batch ma seat booking mate tame **{PHONE_NUMBER}** par call athva WhatsApp kari shako cho."
+                f"December batch ma seat booking mate tame **{PHONE_NUMBER}** par call athva WhatsApp (**{WHATSAPP_NUMBER}**) kari shako cho."
             )
         else:
             reply = (
                 f"Departures scheduled for **December**:\n\n"
                 f"1. **Kashmir Tour (Paradise on Earth & Vaishno Devi)**: Confirmed winter batch in **December 2026** (snow season in Gulmarg, Sonmarg, Pahalgam, Dal Lake Shikara, and Katra Vaishno Devi).\n"
                 f"2. **Rameshwaram & South Divine Tour**: **Monthly Scheduled Departures** leaving from Surat Railway Station in December.\n\n"
-                f"To confirm seats or check specific calendar departure dates for December, connect directly with our coordination team at **{PHONE_NUMBER}** or via WhatsApp."
+                f"To confirm seats or check specific calendar departure dates for December, connect directly with our coordination team at **{PHONE_NUMBER}** or via WhatsApp (**{WHATSAPP_NUMBER}**)."
             )
         return {
             "reply": reply,
@@ -315,7 +316,7 @@ def _handle_month_query(month: str, lang: str) -> Dict[str, Any]:
                 f"1. **चारधाम यात्रा (Char Dham Yatra)**: कन्फर्म बैच **1st Nov – 13th Nov** (यमुनोत्री, गंगोत्री, केदारनाथ, बद्रीनाथ)।\n"
                 f"2. **जगन्नाथ पुरी व पूर्वी दिव्य यात्रा**: कन्फर्म बैच **November 2026** (पुरी, कोणार्क, गंगासागर, वाराणसी)।\n"
                 f"3. **रामेश्वरम व दक्षिण भारत यात्रा**: सूरत से नवंबर में मंथली ग्रुप प्रस्थान उपलब्ध है।\n\n"
-                f"सीट आरक्षण के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp पर संपर्क कर सकते हैं।"
+                f"सीट आरक्षण के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp (**{WHATSAPP_NUMBER}**) पर संपर्क कर सकते हैं।"
             )
         elif lang in ["gu_script", "gu_roman"]:
             reply = (
@@ -374,7 +375,7 @@ def _handle_month_query(month: str, lang: str) -> Dict[str, Any]:
             f"**{month_cap}** के लिए:\n\n"
             f"• **रामेश्वरम व दक्षिण भारत यात्रा** के लिए सूरत से **प्रतिमाह नियमित ग्रुप टूर (Monthly Scheduled Departures)** आयोजित किए जाते हैं।\n"
             f"• किसी भी महीने में परिवार या ग्रुप के लिए कस्टमाइज्ड स्पेशल पैकेज भी तैयार किए जाते हैं।\n\n"
-            f"{month_cap} में कन्फर्म तारीख व सीट उपलब्धता के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp पर संपर्क कर सकते हैं।"
+            f"{month_cap} में कन्फर्म तारीख व सीट उपलब्धता के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp (**{WHATSAPP_NUMBER}**) पर संपर्क कर सकते हैं।"
         )
     elif lang in ["gu_script", "gu_roman"]:
         reply = (
@@ -388,7 +389,7 @@ def _handle_month_query(month: str, lang: str) -> Dict[str, Any]:
             f"For **{month_cap}**:\n\n"
             f"• **Rameshwaram & South Divine Tour** offers **Monthly Scheduled Departures** leaving every month from Surat Railway Station.\n"
             f"• Customized family packages and senior citizen group departures can be arranged in any calendar month.\n\n"
-            f"To check exact dates for {month_cap}, please connect with our coordinator at **{PHONE_NUMBER}** or via WhatsApp."
+            f"To check exact dates for {month_cap}, please connect with our coordinator at **{PHONE_NUMBER}** or via WhatsApp (**{WHATSAPP_NUMBER}**)."
         )
     return {
         "reply": reply,
@@ -477,7 +478,7 @@ def _handle_contact_query(lang: str, tour_name: Optional[str] = None) -> Dict[st
         reply = (
             f"**સ્વર્ણવ ટૂર એન્ડ ટ્રાવેલ્સ — સંપર્ક વિગતો** ({tour_prefix_gu}):\n\n"
             f"📞 **ફોન / કૉલ**: **{PHONE_NUMBER}**\n"
-            f"💬 **WhatsApp**: **{PHONE_NUMBER}** ([WhatsApp પર ચેટ કરો]({WHATSAPP_LINK}))\n"
+            f"💬 **WhatsApp**: **{WHATSAPP_NUMBER}** ([WhatsApp પર ચેટ કરો]({WHATSAPP_LINK}))\n"
             f"📧 **ઈમેલ**: swarnavtours01@gmail.com\n"
             f"🏢 **મુખ્ય કાર્યાલય (Office)**: રિંગ રોડ, સુરત, ગુજરાત - 395002\n"
             f"⏰ **ઓફિસ સમય**: સવારે 7:00 થી રાત્રે 9:30 (દરરોજ)\n"
@@ -488,7 +489,7 @@ def _handle_contact_query(lang: str, tour_name: Optional[str] = None) -> Dict[st
         reply = (
             f"**स्वर्णाव टूर एंड ट्रेवल्स — संपर्क सूत्र (Contact Details)** ({tour_prefix_hi}):\n\n"
             f"📞 **फ़ोन / कॉल**: **{PHONE_NUMBER}**\n"
-            f"💬 **WhatsApp**: **{PHONE_NUMBER}** ([WhatsApp पर चैट करें]({WHATSAPP_LINK}))\n"
+            f"💬 **WhatsApp**: **{WHATSAPP_NUMBER}** ([WhatsApp पर चैट करें]({WHATSAPP_LINK}))\n"
             f"📧 **ईमेल**: swarnavtours01@gmail.com\n"
             f"🏢 **कार्यालय (Office)**: रिंग रोड, सूरत, गुजरात - 395002\n"
             f"⏰ **कार्य समय**: प्रतिदिन सुबह 7:00 से रात 9:30 तक\n"
@@ -499,7 +500,7 @@ def _handle_contact_query(lang: str, tour_name: Optional[str] = None) -> Dict[st
         reply = (
             f"**Swarnav Tour & Travels — Contact Details** ({tour_prefix}):\n\n"
             f"📞 **Phone / Call**: **{PHONE_NUMBER}**\n"
-            f"💬 **WhatsApp**: **{PHONE_NUMBER}** ([Chat on WhatsApp]({WHATSAPP_LINK}))\n"
+            f"💬 **WhatsApp**: **{WHATSAPP_NUMBER}** ([Chat on WhatsApp]({WHATSAPP_LINK}))\n"
             f"📧 **Email**: swarnavtours01@gmail.com\n"
             f"🏢 **Head Office**: Ring Road, Surat, Gujarat - 395002\n"
             f"⏰ **Timings**: Daily 7:00 AM – 9:30 PM (IST)\n"
@@ -510,7 +511,7 @@ def _handle_contact_query(lang: str, tour_name: Optional[str] = None) -> Dict[st
         reply = (
             f"**Swarnav Tour & Travels — Official Contact Details** ({tour_prefix}):\n\n"
             f"📞 **Phone / Call**: **{PHONE_NUMBER}**\n"
-            f"💬 **WhatsApp**: **{PHONE_NUMBER}** ([Chat directly on WhatsApp]({WHATSAPP_LINK}))\n"
+            f"💬 **WhatsApp**: **{WHATSAPP_NUMBER}** ([Chat directly on WhatsApp]({WHATSAPP_LINK}))\n"
             f"📧 **Email**: swarnavtours01@gmail.com\n"
             f"🏢 **Head Office**: Ring Road, Surat, Gujarat - 395002\n"
             f"⏰ **Operating Hours**: Daily 7:00 AM – 9:30 PM (IST)\n"
@@ -583,7 +584,7 @@ def _handle_booking_process_query(lang: str) -> Dict[str, Any]:
         reply = (
             f"**સ્વર્ણવ ટૂર એન્ડ ટ્રાવેલ્સમાં યાત્રા બુક કરવાની સરળ પ્રક્રિયા**:\n\n"
             f"૧. **યાત્રા અને તારીખ પસંદ કરો**: આપની મનપસંદ યાત્રા (ચારધામ, રામેશ્વરમ, કાશ્મીર, જગન્નાથ પુરી વગેરે) પસંદ કરો.\n"
-            f"૨. **કો-ઓર્ડિનેટરનો સંપર્ક કરો**: અમારા વરિષ્ઠ કો-ઓર્ડિનેટર સાથે **{PHONE_NUMBER}** પર કૉલ અથવા WhatsApp દ્વારા સીધી વાત કરો.\n"
+            f"૨. **કો-ઓર્ડિનેટરનો સંપર્ક કરો**: અમારા વરિષ્ઠ કો-ઓર્ડિનેટર સાથે **{PHONE_NUMBER}** પર કૉલ અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા સીધી વાત કરો.\n"
             f"૩. **ટોકન એડવાન્સ**: યાત્રીઓના નામ આપીને કન્ફર્મ AC ટ્રેન બર્થ અને હોટેલ રૂમ સુરક્ષિત કરવા માટે ટોકન એડવાન્સ જમા કરાવો.\n"
             f"૪. **ચેટમાં નંબર આપો**: આપ આ ચેટમાં આપનો ૧૦-અંકનો મોબાઈલ નંબર પણ લખી શકો છો, અમારી ટીમ તુરંત આપનો સંપર્ક કરશે."
         )
@@ -591,7 +592,7 @@ def _handle_booking_process_query(lang: str) -> Dict[str, Any]:
         reply = (
             f"**स्वर्णाव टूर एंड ट्रेवल्स में बुकिंग की सरल प्रक्रिया**:\n\n"
             f"1. **यात्रा और तारीख चुनें**: अपनी पसंद की तीर्थ यात्रा (चारधाम, रामेश्वरम, कश्मीर, जगन्नाथ पुरी आदि) का चयन करें।\n"
-            f"2. **हमसे संपर्क करें**: हमारे वरिष्ठ को-ऑर्डिनेटर को सीधे **{PHONE_NUMBER}** पर कॉल या WhatsApp करें।\n"
+            f"2. **हमसे संपर्क करें**: हमारे वरिष्ठ को-ऑर्डिनेटर को सीधे **{PHONE_NUMBER}** पर कॉल या WhatsApp (**{WHATSAPP_NUMBER}**) करें।\n"
             f"3. **टोकन एडवांस**: तीर्थयात्रियों के नाम दर्ज कराकर कन्फर्म AC ट्रेन सीट और होटल रिजर्व करने हेतु टोकन जमा करें।\n"
             f"4. **चैट में नंबर छोड़ें**: आप इस चैट में अपना 10-अंकों का मोबाइल नंबर भी लिख सकते हैं, हमारी टीम तुरंत कॉल करेगी।"
         )
@@ -599,7 +600,7 @@ def _handle_booking_process_query(lang: str) -> Dict[str, Any]:
         reply = (
             f"**How to Book Your Pilgrimage with Swarnav Tour & Travels**:\n\n"
             f"1. **Select Tour & Dates**: Choose your desired pilgrimage (e.g., Char Dham, Rameshwaram, Kashmir, Jagannath Puri).\n"
-            f"2. **Connect with Us**: Call or WhatsApp our senior coordinator at **{PHONE_NUMBER}** ([Chat on WhatsApp]({WHATSAPP_LINK})).\n"
+            f"2. **Connect with Us**: Call our senior coordinator at **{PHONE_NUMBER}** or WhatsApp **{WHATSAPP_NUMBER}** ([Chat on WhatsApp]({WHATSAPP_LINK})).\n"
             f"3. **Token Booking**: Submit pilgrim names and an advance token to secure your confirmed AC railway berths and hotel rooms.\n"
             f"4. **Instant Callback**: You can also enter your 10-digit mobile number in this chat, and our coordinator will call you back promptly."
         )
@@ -726,20 +727,20 @@ def _handle_general_fallback(lang: str) -> Dict[str, Any]:
         reply = (
             f"સ્વર્ણવ ટૂર એન્ડ ટ્રાવેલ્સ આપને યાત્રાઓની કન્ફર્મ તારીખો, પેકેજ ભાવ, રૂટ, શુદ્ધ સાત્વિક ભોજન અને સિનિયર સિટીઝન સુવિધાઓ વિશે સંપૂર્ણ માહિતી આપે છે.\n\n"
             f"આપ કઈ યાત્રા વિશે જાણવા માંગો છો (દા.ત. **ચારધામ, રામેશ્વરમ, કાશ્મીર, જગન્નાથ પુરી, નેપાળ, કેરળ કે પંચ કેદાર**)?\n\n"
-            f"વધુ માહિતી અથવા સીટ બુકિંગ માટે આપ સીધા અમારા વરિષ્ઠ કો-ઓર્ડિનેટરનો **{PHONE_NUMBER}** પર અથવા WhatsApp દ્વારા સંપર્ક કરી શકો છો."
+            f"વધુ માહિતી અથવા સીટ બુકિંગ માટે આપ સીધા અમારા વરિષ્ઠ કો-ઓર્ડિનેટરનો **{PHONE_NUMBER}** પર અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા સંપર્ક કરી શકો છો."
         )
     elif lang in ["hi_roman", "hi_script"]:
         reply = (
             f"स्वर्णाव टूर एंड ट्रेवल्स की सभी पवित्र तीर्थ यात्राओं की तारीख, पैकेज दर, यात्रा मार्ग, सात्विक भोजन और बुकिंग की पूरी जानकारी उपलब्ध है।\n\n"
             f"कृपया बताएं कि आप किस यात्रा के बारे में जानकारी चाहते हैं (जैसे **चारधाम, रामेश्वरम, कश्मीर, जगन्नाथ पुरी, नेपाल, केरल या पंच केदार**)?\n\n"
-            f"आप सीधे हमारे मुख्य को-ऑर्डिनेटर से **{PHONE_NUMBER}** पर या WhatsApp द्वारा संपर्क कर सकते हैं।"
+            f"आप सीधे हमारे मुख्य को-ऑर्डिनेटर से **{PHONE_NUMBER}** पर या WhatsApp (**{WHATSAPP_NUMBER}**) द्वारा संपर्क कर सकते हैं।"
         )
     else:
         reply = (
             f"I am here to assist you with all details regarding Swarnav Tour & Travels pilgrimage packages, "
             f"including confirmed departure dates, package pricing, itineraries, Satvik food, hotel stays, and booking procedures.\n\n"
             f"Could you please specify which yatra you are interested in (e.g. **Char Dham, Rameshwaram, Kashmir, Jagannath Puri, Nepal, Kerala, Panch Kedar**)?\n\n"
-            f"You can also contact our senior coordinator directly at **{PHONE_NUMBER}** (Call / WhatsApp)."
+            f"You can also contact our senior coordinator directly at **{PHONE_NUMBER}** (Call) or **{WHATSAPP_NUMBER}** (WhatsApp)."
         )
 
     return {
@@ -1035,17 +1036,17 @@ def _generate_precise_response(query: str, requested_lang: Optional[str] = None)
             if lang == "gu_script":
                 reply = (
                     f"**કેરળ ટૂર (Kerala Tour - God’s Own Country)** ની આગામી તારીખ હજુ કન્ફર્મ થઈ નથી.\n\n"
-                    f"વધુ માહિતી મેળવવા માટે કૃપા કરીને **{PHONE_NUMBER}** પર અથવા WhatsApp દ્વારા સંપર્ક કરો."
+                    f"વધુ માહિતી મેળવવા માટે કૃપા કરીને **{PHONE_NUMBER}** પર અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા સંપર્ક કરો."
                 )
             elif lang == "gu_roman":
                 reply = (
                     f"**Kerala Tour** ni next tour date haju confirm thay nathi.\n\n"
-                    f"Vadhu mahiti mate kripya **{PHONE_NUMBER}** par athva WhatsApp par contact karo."
+                    f"Vadhu mahiti mate kripya **{PHONE_NUMBER}** par athva WhatsApp (**{WHATSAPP_NUMBER}**) par contact karo."
                 )
             elif lang in ["hi_roman", "hi_script"]:
                 reply = (
                     f"**केरल टूर (Kerala Tour - God’s Own Country)** की अगली प्रस्थान तारीख अभी कन्फर्म नहीं हुई है।\n\n"
-                    f"अधिक जानकारी प्राप्त करने के लिए कृपया **{PHONE_NUMBER}** पर या WhatsApp द्वारा संपर्क करें।"
+                    f"अधिक जानकारी प्राप्त करने के लिए कृपया **{PHONE_NUMBER}** पर या WhatsApp (**{WHATSAPP_NUMBER}**) द्वारा संपर्क करें।"
                 )
             else:
                 reply = (
@@ -1068,22 +1069,22 @@ def _generate_precise_response(query: str, requested_lang: Optional[str] = None)
             if lang == "gu_script":
                 reply = (
                     f"**{tour_name}** માટે સુરત રેલવે સ્ટેશનથી **દર મહિને નિયમિત ગ્રૂપ ટૂર (Monthly Scheduled Departures)** આયોજિત કરવામાં આવે છે.\n\n"
-                    f"આગામી કન્ફર્મ પ્રસ્થાન તારીખ અને સીટ ઉપલબ્ધતા માટે આપ સીધા અમારા કો-ઓર્ડિનેટરનો **{PHONE_NUMBER}** પર અથવા WhatsApp દ્વારા સંપર્ક કરી શકો છો."
+                    f"આગામી કન્ફર્મ પ્રસ્થાન તારીખ અને સીટ ઉપલબ્ધતા માટે આપ સીધા અમારા કો-ઓર્ડિનેટરનો **{PHONE_NUMBER}** પર અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા સંપર્ક કરી શકો છો."
                 )
             elif lang == "gu_roman":
                 reply = (
                     f"**{tour_name}** mate Surat thi **Monthly Scheduled Departures** (dar mahine group batches) aayojit thay che.\n\n"
-                    f"Aagami confirmed tarikh ane seat booking mate tame seedha amara coordinator **{PHONE_NUMBER}** athva WhatsApp par sampark kari shako cho."
+                    f"Aagami confirmed tarikh ane seat booking mate tame seedha amara coordinator **{PHONE_NUMBER}** athva WhatsApp (**{WHATSAPP_NUMBER}**) par sampark kari shako cho."
                 )
             elif lang in ["hi_roman", "hi_script"]:
                 reply = (
                     f"**{tour_name}** के लिए सूरत रेलवे स्टेशन से **प्रतिमाह नियमित ग्रुप टूर (Monthly Scheduled Departures)** आयोजित किए जाते हैं।\n\n"
-                    f"आगामी कन्फर्म प्रस्थान तारीख और सीट उपलब्धता की जानकारी के लिए आप हमारे को-ઓર્ડિનેટર से **{PHONE_NUMBER}** या WhatsApp पर संपर्क कर सकते हैं।"
+                    f"आगामी कन्फर्म प्रस्थान तारीख और सीट उपलब्धता की जानकारी के लिए आप हमारे को-ઓર્ડિનેટર से **{PHONE_NUMBER}** या WhatsApp (**{WHATSAPP_NUMBER}**) पर संपर्क कर सकते हैं।"
                 )
             else:
                 reply = (
                     f"**{tour_name}** offers **Monthly Scheduled Departures** starting and ending at Surat Railway Station.\n\n"
-                    f"Regular group batches depart every month. For the upcoming confirmed calendar departure dates and seat reservations, please connect directly with our coordination team at **{PHONE_NUMBER}** or via WhatsApp."
+                    f"Regular group batches depart every month. For the upcoming confirmed calendar departure dates and seat reservations, please connect directly with our coordination team at **{PHONE_NUMBER}** or via WhatsApp (**{WHATSAPP_NUMBER}**)."
                 )
             return {"reply": reply, "suggested_questions": get_chips("date")}
 
@@ -1091,7 +1092,7 @@ def _generate_precise_response(query: str, requested_lang: Optional[str] = None)
             if lang == "gu_script":
                 reply = (
                     f"**{tour_name}** ની આગામી તારીખ હજુ કન્ફર્મ થઈ નથી.\n\n"
-                    f"વધુ માહિતી મેળવવા માટે કૃપા કરીને **{PHONE_NUMBER}** પર અથવા WhatsApp દ્વારા સંપર્ક કરો."
+                    f"વધુ માહિતી મેળવવા માટે કૃપા કરીને **{PHONE_NUMBER}** પર અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા સંપર્ક કરો."
                 )
             elif lang in ["hi_roman", "hi_script"]:
                 reply = (
@@ -1208,7 +1209,7 @@ def _generate_precise_response(query: str, requested_lang: Optional[str] = None)
             f"• શરૂઆતી પેકેજ ભાવ: **{starting_price}** પ્રતિ વ્યક્તિ\n"
             f"• પ્રસ્થાન: {date_str}\n"
             f"• પ્રસ્થાન સ્થળ: સુરત રેલવે સ્ટેશન\n\n"
-            f"સંપૂર્ણ બ્રોશર અથવા સીટ બુકિંગ માટે આપ **{PHONE_NUMBER}** પર અથવા WhatsApp દ્વારા અમારો સંપર્ક કરી શકો છો."
+            f"સંપૂર્ણ બ્રોશર અથવા સીટ બુકિંગ માટે આપ **{PHONE_NUMBER}** પર અથવા WhatsApp (**{WHATSAPP_NUMBER}**) દ્વારા અમારો સંપર્ક કરી શકો છો."
         )
     elif lang in ["hi_roman", "hi_script"]:
         reply = (
@@ -1216,7 +1217,7 @@ def _generate_precise_response(query: str, requested_lang: Optional[str] = None)
             f"• स्टार्टिंग पैकेज मूल्य: **{starting_price}** प्रति व्यक्ति\n"
             f"• शेड्यूल: {date_str}\n"
             f"• प्रस्थान: सूरत रेलवे स्टेशन\n\n"
-            f"विस्तृत ब्रोशर या सीट आरक्षण के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp पर संपर्क कर सकते हैं।"
+            f"विस्तृत ब्रोशर या सीट आरक्षण के लिए आप सीधे **{PHONE_NUMBER}** या WhatsApp (**{WHATSAPP_NUMBER}**) पर संपर्क कर सकते हैं।"
         )
     else:
         reply = (
@@ -1255,7 +1256,7 @@ def execute_agent_chat(user_message: str, session_history: Optional[List[Dict[st
         factual_result = {
             "reply": (
                 f"Swarnav Tour & Travels offers personalized pilgrimage services for Char Dham, "
-                f"Rameshwaram, Kashmir, Jagannath Puri, and Nepal. For immediate inquiries, please call or WhatsApp **{PHONE_NUMBER}**."
+                f"Rameshwaram, Kashmir, Jagannath Puri, and Nepal. For immediate inquiries, please call **{PHONE_NUMBER}** or WhatsApp **{WHATSAPP_NUMBER}**."
             ),
             "suggested_questions": [
                 "Which tours do you provide?",

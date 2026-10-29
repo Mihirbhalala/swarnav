@@ -406,7 +406,7 @@ def build_whatsapp_url(inquiry):
     Construct a URL-encoded WhatsApp link to Swarnav's verified business number.
     Contains inquiry reference ID, customer details, selected tour, and notes.
     """
-    business_number = "919586825353"
+    business_number = "919624168555"
     tour_name = inquiry.get_tour_display()
     ref_id = f"SW-INQ-{inquiry.id:04d}"
 

@@ -7,9 +7,9 @@ def clean_indian_phone(raw_phone):
     """
     Validate and normalize Indian phone numbers.
     Accepts:
-    - 10-digit numbers starting with 6, 7, 8, 9 (e.g. 9586825353, 95868 25353, 95868-25353)
-    - Numbers with +91 or 91 country code (e.g. +91 9586825353, 919586825353)
-    Returns normalized 10-digit phone string with +91 prefix e.g. '+919586825353'.
+    - 10-digit numbers starting with 6, 7, 8, 9 (e.g. 9727423555, 97274 23555, 97274-23555)
+    - Numbers with +91 or 91 country code (e.g. +91 9727423555, 919727423555)
+    Returns normalized 10-digit phone string with +91 prefix e.g. '+919727423555'.
     Raises forms.ValidationError for invalid numbers.
     """
     if not raw_phone:
@@ -34,7 +34,7 @@ def clean_indian_phone(raw_phone):
     # Now digits_only must be exactly 10 digits and start with 6, 7, 8, or 9
     if not re.match(r'^[6-9]\d{9}$', digits_only):
         raise forms.ValidationError(
-            "Please enter a valid 10-digit Indian mobile / WhatsApp number (e.g., 9586825353 or +91 95868 25353)."
+            "Please enter a valid 10-digit Indian mobile / WhatsApp number (e.g., 9727423555 or +91 97274 23555)."
         )
 
     return f"+91{digits_only}"
@@ -64,7 +64,7 @@ class InquiryForm(forms.ModelForm):
         widgets = {
             'tour': forms.Select(attrs={'class': 'form-select'}),
             'name': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g. Ramesh Patel'}),
-            'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g. 9586825353 or +91 95868 25353'}),
+            'phone': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g. 9727423555 or +91 97274 23555'}),
             'departure_city': forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'e.g. Surat, Ahmedabad, Rajkot'}),
             'total_pilgrims': forms.NumberInput(attrs={'class': 'form-input', 'min': '1', 'max': '100', 'placeholder': 'e.g. 4'}),
             'message': forms.Textarea(attrs={'class': 'form-textarea', 'rows': '2', 'placeholder': 'Preferred month, train/flight requests, or senior citizen care...'}),

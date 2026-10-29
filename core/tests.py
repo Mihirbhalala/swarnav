@@ -168,7 +168,7 @@ class InquirySubmissionViewTests(TestCase):
         data = response.json()
         self.assertTrue(data['success'])
         self.assertIn('whatsapp_url', data)
-        self.assertIn('wa.me/919586825353', data['whatsapp_url'])
+        self.assertIn('wa.me/919624168555', data['whatsapp_url'])
         self.assertIn('success_url', data)
 
         # Database verification
@@ -220,7 +220,7 @@ class InquirySubmissionViewTests(TestCase):
             consent_given=True
         )
         url = build_whatsapp_url(inquiry)
-        self.assertTrue(url.startswith('https://wa.me/919586825353?text='))
+        self.assertTrue(url.startswith('https://wa.me/919624168555?text='))
         
         # Decode and verify text content
         query_part = url.split('text=')[1]
@@ -386,8 +386,8 @@ class ExistingWebsitePagesTests(TestCase):
                 res = self.client.get(url)
                 self.assertEqual(res.status_code, 200)
                 # Ensure business phone and WhatsApp links exist
-                self.assertContains(res, '+91 95868 25353')
-                self.assertContains(res, 'wa.me/919586825353')
+                self.assertContains(res, '+91 97274 23555')
+                self.assertContains(res, 'wa.me/919624168555')
 
 
 class AIAssistantEndpointTests(TestCase):

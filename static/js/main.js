@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.openInquiryModal = openInquiryModal;
     window.openQuickInquiry = function(tour) {
         if (tour === 'char-dham') {
-            window.open('https://wa.me/919586825353?text=Namaste%20Swarnav%20Travels%2C%20I%20want%20to%20inquire%20and%20register%20for%20the%20Char%20Dham%20Yatra%20(13%20Days%20%7C%20Yamunotri%2C%20Gangotri%2C%20Kedarnath%2C%20Badrinath)%20for%20the%20confirmed%20batch%20(1st%20Nov%20%E2%80%93%2013th%20Nov).%20Please%20share%20package%20details%2C%20pricing%2C%20and%20seat%20availability.', '_blank');
+            window.open('https://wa.me/919624168555?text=Namaste%20Swarnav%20Travels%2C%20I%20want%20to%20inquire%20and%20register%20for%20the%20Char%20Dham%20Yatra%20(13%20Days%20%7C%20Yamunotri%2C%20Gangotri%2C%20Kedarnath%2C%20Badrinath)%20for%20the%20confirmed%20batch%20(1st%20Nov%20%E2%80%93%2013th%20Nov).%20Please%20share%20package%20details%2C%20pricing%2C%20and%20seat%20availability.', '_blank');
         } else {
             openInquiryModal(tour);
         }
@@ -492,7 +492,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                let errText = "I apologize, our assistant is temporarily unavailable. Please connect directly with our coordination team at +91 95868 25353.";
+                let errText = "I apologize, our assistant is temporarily unavailable. Please connect directly with our coordination team at +91 97274 23555.";
                 try {
                     const errData = await response.json();
                     if (errData && errData.error) errText = errData.error;
@@ -514,12 +514,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateSuggestionChips(data.suggested_questions);
                 }
             } else {
-                appendMessage('bot', (data && data.error) ? data.error : "I apologize, I could not complete that request. Please contact our team directly at +91 95868 25353.");
+                appendMessage('bot', (data && data.error) ? data.error : "I apologize, I could not complete that request. Please contact our team directly at +91 97274 23555.");
             }
         } catch (err) {
             console.error("AI Assistant API error:", err);
             typingDiv.remove();
-            appendMessage('bot', `🙏 Thank you for your question regarding **"${trimmed}"**.\n\nSwarnav Tour & Travels offers personalized assistance for Char Dham, Panch Kedar, Kashmir, South India (Rameshwaram), Jagannath Puri, and Nepal.\n\nFor batch schedules or custom departure dates, connect directly with our coordination team at **+91 95868 25353** or on WhatsApp.`);
+            appendMessage('bot', `🙏 Thank you for your question regarding **"${trimmed}"**.\n\nSwarnav Tour & Travels offers personalized assistance for Char Dham, Panch Kedar, Kashmir, South India (Rameshwaram), Jagannath Puri, and Nepal.\n\nFor batch schedules or custom departure dates, connect directly with our coordination team at **+91 97274 23555** or on WhatsApp at **+91 96241 68555**.`);
         } finally {
             if (aiSubmitBtn) aiSubmitBtn.disabled = false;
             if (aiUserInput) {

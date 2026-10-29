@@ -23,7 +23,7 @@ KERALA_PACKAGE = {
     'status_label': 'Upcoming Tour (Dates Announced Soon)',
     'image': 'images/kerala-backwaters.jpg',
     'departures_summary': 'Next departure date is not confirmed yet. Inquiries open.',
-    'departures_guidance': 'Next Kerala tour date is not confirmed yet. Please contact our coordination team at +91 95868 25353 or on WhatsApp for upcoming batch updates.',
+    'departures_guidance': 'Next Kerala tour date is not confirmed yet. Please contact our coordination team at +91 97274 23555 or on WhatsApp at +91 96241 68555 for upcoming batch updates.',
     'accommodation_summary': 'Deluxe hill resort in Munnar, nature hotel in Thekkady, traditional deluxe Kerala houseboat in Alleppey backwaters, beach hotel in Kovalam, city hotel in Kochi, and 4 nights in comfortable AC train berths.',
     'meals_summary': 'Wholesome pure vegetarian lunch and dinner prepared with Gujarati and North Indian taste preferences. Breakfast is provided if included in your selected package tier.',
     'transport_summary': 'Round-trip confirmed AC train travel (Surat to Kerala & Kochi to Surat) plus a dedicated air-conditioned coach for all mountain, forest, backwater, and coastal sightseeing.',
